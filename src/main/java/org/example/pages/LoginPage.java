@@ -57,8 +57,8 @@ public class LoginPage extends BasePage {
         try {
             By dialogLocator = By.tagName("dialog");
             wait.until(ExpectedConditions.presenceOfElementLocated(dialogLocator));
-            JavascriptExecutor jsს = (JavascriptExecutor) driver;
-            jsს.executeScript(
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript(
                     "var dialogs = document.querySelectorAll('dialog');" +
                             "dialogs.forEach(function(dialog) {" +
                             "   if (typeof dialog.close === 'function') { dialog.close(); }" +

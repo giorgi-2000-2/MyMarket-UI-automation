@@ -16,7 +16,6 @@ public class TestListener implements ITestListener {
     @Override
     public void onStart(ITestContext context) {
         System.out.println("Test suite Started : " + context.getName());
-        TestReporterContext.set(new ExtentTestReporter());
     }
 
     @Override
@@ -31,7 +30,6 @@ public class TestListener implements ITestListener {
     public void onTestSuccess(ITestResult result) {
         System.out.println("Test Success : " + result.getName());
         TestReporterContext.get().log(ReportStatus.PASS, "Test Passed");
-        TestReporterContext.get().unload();
     }
 
     @Override
@@ -68,21 +66,17 @@ public class TestListener implements ITestListener {
         } else {
             TestReporterContext.get().log(ReportStatus.FAIL, "Test failed: " + result.getThrowable().getMessage());
         }
-
-        TestReporterContext.get().unload();
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
         System.out.println("Test Skipped : " + result.getName());
         TestReporterContext.get().log(ReportStatus.SKIP, "Test Skipped");
-        TestReporterContext.get().unload();
     }
 
     @Override
     public void onFinish(ITestContext context) {
         System.out.println("Test suite finished : " + context.getName());
-        TestReporterContext.get().flush();
 
         try {
             File reportFile = new File(System.getProperty("user.dir") + "/report/extentReport.html");

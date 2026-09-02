@@ -1,5 +1,6 @@
 package org.example.pages;
 import org.example.BasePage;
+import org.example.utils.reporter.ITestReporter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -24,10 +25,11 @@ public class LoginPage extends BasePage {
 
     @FindBy(xpath = "(//button[contains(text(),'შესვლა')])[1]")
     WebElement loginBtn;
+    private final ITestReporter reporter;
 
-
-    public LoginPage(WebDriver driver) {
+    public LoginPage(WebDriver driver, ITestReporter reporter) {
         super(driver);
+        this.reporter = reporter;
         PageFactory.initElements(driver, this);
     }
 
@@ -40,7 +42,7 @@ public class LoginPage extends BasePage {
         click(userLoginBtn);
     }
 
-    public void Login(String userLogin, String passwordLogin) {
+    public void login(String userLogin, String passwordLogin) {
         clickLoginBtn();
         sendKeys(userNameField, userLogin);
         sendKeys(passwordField, passwordLogin);
@@ -68,9 +70,9 @@ public class LoginPage extends BasePage {
 
             wait.until(ExpectedConditions.invisibilityOfElementLocated(dialogLocator));
 
-            System.out.println("რეკლამის დიალოგის ფანჯარა (dialog) წარმატებით დაიხურა.");
+            reporter.info("რეკლამის დიალოგის ფანჯარა (dialog) წარმატებით დაიხურა.");
         } catch (Exception e) {
-            System.out.println("რეკლამის ფანჯარა არ გამოჩენილა.");
+            reporter.info("რეკლამის ფანჯარა არ გამოჩენილა.");
         }
 
 

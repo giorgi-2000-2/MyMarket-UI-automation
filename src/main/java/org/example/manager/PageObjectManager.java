@@ -1,10 +1,8 @@
 package org.example.manager;
-import org.example.BasePage;
 import org.example.DataProvider.DataProvider;
 import org.example.Steps.BusinessSteps;
 import org.example.pages.AdvertisementPage;
 import org.example.pages.LoginPage;
-import org.example.jsonmanager.HelperFunctions;
 import org.example.utils.reporter.ITestReporter;
 import org.openqa.selenium.WebDriver;
 import org.testng.asserts.SoftAssert;
@@ -12,7 +10,6 @@ import org.testng.asserts.SoftAssert;
 public class PageObjectManager {
     private final WebDriver driver;
     private final ITestReporter reporter;
-    private HelperFunctions helperFunctions;
     private LoginPage loginPage;
     private AdvertisementPage advertisementPage;
     private AssertManager assertHelper;
@@ -21,7 +18,6 @@ public class PageObjectManager {
     private DataProvider getDataProvider;
     private BusinessSteps getSteps;
     private SoftAssert getSoftAssert;
-    private BasePage basePage;
     public PageObjectManager(WebDriver driver, ITestReporter reporter) {
         this.driver = driver;
         this.reporter = reporter;
@@ -29,7 +25,7 @@ public class PageObjectManager {
 
 public DataProvider getDataProvider(){
         if(getDataProvider==null){
-            getDataProvider = new DataProvider(this,reporter);
+            getDataProvider = new DataProvider(getAssert(),reporter);
         }
         return getDataProvider;
 }
@@ -40,30 +36,24 @@ public DataProvider getDataProvider(){
         }
         return getSoftAssert;
  }
-public BasePage getBasePage(){
-        if(basePage==null){
-            basePage=new BasePage(driver);
-        }
-        return basePage;
 
-}
 public BusinessSteps getSteps(){
     if(getSteps==null){
-        getSteps = new BusinessSteps(this,reporter);
+        getSteps = new BusinessSteps(getAdPage(),getAssert(),getLoginPage(),reporter,getDataManager());
     }
     return getSteps;
 }
 
     public NewDataManager getDataManager() {
         if (dataManager == null) {
-            dataManager = new NewDataManager( this,reporter);
+            dataManager = new NewDataManager( getAdPage(),getDataProvider(),getBrandManager(),getAssert(),reporter);
         }
         return dataManager;
     }
 
     public LoginPage getLoginPage() {
         if (loginPage == null) {
-            loginPage = new LoginPage(driver);
+            loginPage = new LoginPage(driver,reporter);
         }
         return loginPage;
     }
@@ -84,15 +74,9 @@ public BusinessSteps getSteps(){
 
     public NewBrandManager getBrandManager() {
         if (brandManager == null) {
-            brandManager = new NewBrandManager(this,reporter);
+            brandManager = new NewBrandManager(getAdPage(),reporter,getAssert());
         }
         return brandManager;
     }
 
-    public HelperFunctions getHFunctions() {
-        if (helperFunctions == null) {
-            helperFunctions = new HelperFunctions( this,reporter);
-        }
-        return helperFunctions;
-    }
 }

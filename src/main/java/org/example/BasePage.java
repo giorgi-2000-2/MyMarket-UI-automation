@@ -11,10 +11,10 @@ import java.time.Duration;
 import java.util.Map;
 
 public class BasePage {
-    protected WebDriver driver;
-    protected WebDriverWait shortWait;
-    protected WebDriverWait wait;
-    protected WebDriverWait textWait;
+    public WebDriver driver;
+    public WebDriverWait shortWait;
+    public WebDriverWait wait;
+    public WebDriverWait textWait;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;

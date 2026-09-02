@@ -22,7 +22,7 @@ public class NewDataManager {
     public String titleText(WebElement locator) {
         String titleTxt =locator.getText();
         try {
-            textWait.until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(locator, titleTxt)));
+            pom.getBasePage().textWait.until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(locator, titleTxt)));
             return pom.getAdPage().getSplitString(locator.getText());
         } catch (Exception e) {
             return pom.getAdPage().getSplitString(locator.getText());
@@ -33,9 +33,9 @@ public class NewDataManager {
     public void ifEmpty(SoftAssert softAssert, NodeKey nodeName) {
         boolean bool = !pom.getAdPage().getMainElements().isEmpty();
         if (!bool) {
-            WebElement title = shortWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//*[@id=\"CatID\"]/div/div/div/div[1]/div[1]"))));
+            WebElement title = pom.getBasePage().shortWait.until(ExpectedConditions.visibilityOf(pom.getBasePage().driver.findElement(By.xpath("//*[@id=\"CatID\"]/div/div/div/div[1]/div[1]"))));
             pom.getAssert().assertWithLog( softAssert, nodeName,titleText(title),(pom.getAdPage().getTextTitle())," შედარება ");
-            scroll(pom.getAdPage().getDropdownCategory());
+            pom.getBasePage().scroll(pom.getAdPage().getDropdownCategory());
             pom.getAdPage().waitClick(pom.getAdPage().getDropdownCategory());
         } else {
             pom.getHFunctions().recursiveThree2(softAssert,nodeName);
@@ -53,7 +53,7 @@ public class NewDataManager {
         boolean bool = !pom.getAdPage().getMainElements().isEmpty();
         if (!bool) {
             pom.getAdPage().waitString(pom.getAdPage().getTitle());
-            WebElement title = shortWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"CatID\"]/div/div/div/div[1]/div[1]")));
+            WebElement title = pom.getBasePage().shortWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"CatID\"]/div/div/div/div[1]/div[1]")));
             String titleText = pom.getAdPage().getTitle().getText();
           if (!titleIsChecked) {
               pom.getAssert().assertWithLog(softAssert,CATEGORY, titleText(title), pom.getAdPage().getTextTitle(), " შედარება ");
@@ -62,7 +62,7 @@ public class NewDataManager {
           }
             pom.getDataProvider().itemToData(titleText, softAssert);
             pom.getHFunctions().checkBrandsInDataThree(softAssert,titleText,JSON_DATA, testCase.isCheck());
-            scroll(pom.getAdPage().getDropdownCategory());
+            pom.getBasePage().scroll(pom.getAdPage().getDropdownCategory());
             pom.getAdPage().waitClick(pom.getAdPage().getDropdownCategory());
         } else {
             pom.getHFunctions().recursiveThree(softAssert, testCase);

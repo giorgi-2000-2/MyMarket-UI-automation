@@ -97,8 +97,16 @@ private final ITestReporter reporter;
         return brandDropdownPlaceholder;
     }
 
+    public String titleText(WebElement locator) {
+        String titleTxt =locator.getText();
+        try {
+            textWait.until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(locator, titleTxt)));
+            return getSplitString(locator.getText());
+        } catch (Exception e) {
+            return getSplitString(locator.getText());
+        }}
 
-    public WebElement FindDropdownBrand(){
+    public WebElement findDropdownBrand(){
         waitElementToBeVisible(textWait,dropdownBrandContainer);
         return dropdownBrandContainer;
     }
@@ -188,7 +196,9 @@ public void clickCheckBtn(String categoryName) {
             String str = titleText.getText();
             textWait.until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(titleText, str)));
             return titleText.getText();
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            reporter.info("title არ გამოჩენილა "+ e.getMessage() );
+        }
         return titleText.getText();
     }
 
@@ -199,6 +209,7 @@ public void clickCheckBtn(String categoryName) {
                 textWait.until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(title, old)));
                 return title;
         } catch (Exception e) {
+            reporter.info("title არ შეცვლილა "+ e.getMessage() );
         }
         return title;
     }
@@ -220,7 +231,8 @@ public void clickCheckBtn(String categoryName) {
         });
         try { shortWait.until(ExpectedConditions.elementToBeClickable(element));
             click(element);
-        } catch (StaleElementReferenceException e) {}
+        } catch (StaleElementReferenceException e) {
+            reporter.info("ელემენტი არ არის კლიკებადი "+ e.getMessage());        }
     }
 
     public String getSplitString(String str){

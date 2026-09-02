@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="simpleTestCases" parallel="methods" thread-count="2">
+
+    <listeners>
+        <listener class-name="org.example.utils.reporter.TestListener"/>
+    </listeners>
+
+    <test name="UI and API Tests">
+        <classes>
+            <class name="org.example.Advertisement.AdvertisementTest">
+<!--                <methods>-->
+<!--                    <include name="testCategoryDataValidation2"/>-->
+<!--                </methods>-->
+            </class>
+        </classes>
+    </test>
+
+</suite>

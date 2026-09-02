@@ -2,7 +2,7 @@ package org.example;
 import org.example.Annotations.NavigationToAdvertisementPage;
 import org.example.manager.PageObjectManager;
 import org.example.utils.DriverManager;
-import org.example.utils.ConfigReader;
+import org.example.utils.config.ConfigReader;
 import org.example.utils.reporter.ExtentTestReporter;
 import org.example.utils.reporter.ITestReporter;
 import org.example.utils.reporter.TestReporterContext;

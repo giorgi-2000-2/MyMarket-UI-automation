@@ -1,5 +1,5 @@
 package org.example;
-import org.example.utils.ConfigReader;
+import org.example.utils.config.ConfigReader;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -56,6 +56,9 @@ public class BasePage {
         String[] arr = str.split(" -> ");
         return arr[arr.length-1];
     }
+
+
+
     public void waitClick(WebElement element) {
         waitElementToBeVisible(shortWait, element);
         shortWait.until(d -> {
@@ -78,21 +81,6 @@ public class BasePage {
 
         }
     }
-
-    // უნივერსალური მეთოდი ტექსტის შეცვლის დასალოდებლად
-    public void waitForTextToDisappear(WebElement element, String textToDisappear) {
-        textWait.until(ExpectedConditions.not(
-                ExpectedConditions.textToBePresentInElement(element, textToDisappear)
-        ));
-    }
-
-    // სტრინგის დაყოფის ზოგადი მეთოდი
-    public String getLastSplitString(String str, String regex) {
-        String[] arr = str.split(regex);
-        return arr[arr.length - 1];
-    }
-
-
 
     public String titleText(WebElement locator) {
         String titleTxt =locator.getText();

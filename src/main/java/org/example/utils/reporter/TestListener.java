@@ -1,7 +1,7 @@
 package org.example.utils.reporter;
 
 import org.apache.commons.io.FileUtils;
-import org.example.utils.DriverManager;
+import org.example.utils.reporter.driver.DriverManager;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -22,20 +22,20 @@ public class TestListener implements ITestListener {
     public void onTestStart(ITestResult result) {
         String testName = result.getMethod().getMethodName();
         System.out.println("Test Started : " + testName);
-        TestReporterContext.get().createTest(testName);
-        TestReporterContext.get().info("Test Started : " + testName);
+        TestReporterContext.report().info("Test Started : " + testName);
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
         System.out.println("Test Success : " + result.getName());
-        TestReporterContext.get().log(ReportStatus.PASS, "Test Passed");
+        TestReporterContext.report().log(ReportStatus.PASS, "Test Passed");
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
         System.out.println("Test Failed : " + result.getName());
-        WebDriver driver = DriverManager.getDriver();
+
+        WebDriver driver = new DriverManager().getDriver();
 
         boolean skipScreenshot = false;
         for (String group : result.getMethod().getGroups()) {
@@ -53,7 +53,7 @@ public class TestListener implements ITestListener {
                 File screenshot = ts.getScreenshotAs(OutputType.FILE);
                 FileUtils.copyFile(screenshot, new File("screenshots/" + result.getName() + ".png"));
 
-                TestReporterContext.get().logWithScreenshot(
+                TestReporterContext.report().logWithScreenshot(
                         ReportStatus.FAIL,
                         "Test failed: " + result.getThrowable().getMessage(),
                         base64Code
@@ -61,17 +61,17 @@ public class TestListener implements ITestListener {
 
             } catch (Exception e) {
                 System.out.println("სქრინშოთის გადაღება ვერ მოხერხდა: " + e.getMessage());
-                TestReporterContext.get().log(ReportStatus.FAIL, "Test failed without screenshot: " + result.getThrowable().getMessage());
+                TestReporterContext.report().log(ReportStatus.FAIL, "Test failed without screenshot: " + result.getThrowable().getMessage());
             }
         } else {
-            TestReporterContext.get().log(ReportStatus.FAIL, "Test failed: " + result.getThrowable().getMessage());
+            TestReporterContext.report().log(ReportStatus.FAIL, "Test failed: " + result.getThrowable().getMessage());
         }
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
         System.out.println("Test Skipped : " + result.getName());
-        TestReporterContext.get().log(ReportStatus.SKIP, "Test Skipped");
+        TestReporterContext.report().log(ReportStatus.SKIP, "Test Skipped");
     }
 
     @Override

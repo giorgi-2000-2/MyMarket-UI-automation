@@ -1,33 +1,24 @@
-package org.example.manager;
-import org.example.utils.reporter.ITestReporter;
+package org.example.asserts;
+import org.example.utils.reporter.IReportNode;
 import org.example.utils.reporter.NodeKey;
 import org.example.utils.reporter.ReportStatus;
 import org.testng.asserts.SoftAssert;
 
-public class AssertManager{
-    private final ITestReporter reporter;
-    public AssertManager(ITestReporter reporter) {
+public class AssertManager implements IAssertManager {
+    private final IReportNode reporter;
+    public AssertManager(IReportNode reporter) {
         this.reporter = reporter;
     }
 
     public void assertWithLog(SoftAssert softAssert, NodeKey nodeName, String actual, String expected, String description) {
         if (actual.equals(expected)) {
-            reporter.logToNode(nodeName,ReportStatus.PASS,description + " — წარმატებულია: " + actual);
+            reporter.logToNode(nodeName,ReportStatus.PASS,description + " — წარმატებულია: " +" — მოსალოდნელი: "+ expected + ", მიღებული "+actual);
             softAssert.assertEquals(actual, expected);
         } else {
             reporter.logToNode(nodeName,ReportStatus.FAIL, " — მოსალოდნელი: " + expected + ", მიღებული: " + actual);
             softAssert.assertEquals(actual, expected);}
     }
 
-    public void assertTrueWithLog(SoftAssert softAssert,NodeKey nodeKey,String actual,String expected, String description) {
-      boolean answer = actual.equals(expected);
-       softAssert.assertTrue(actual.equals(expected));
-        if (answer) {
-            reporter.logToNode(nodeKey,ReportStatus.PASS,description);
-        } else {
-            reporter.logToNode(nodeKey,ReportStatus.FAIL, description + " წარუმატებელია " + " არსებული იყო ეს – "+ actual + " მოსალოდნელი იყო ეს "+ expected);
-        }
-    }
 
     public void assertTrueWithLog(SoftAssert softAssert, NodeKey nodeKey, boolean answer, String description) {
 

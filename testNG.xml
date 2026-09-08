@@ -9,7 +9,7 @@
 
     <test name="UI and API Tests">
         <classes>
-            <class name="org.example.Advertisement.AdvertisementTest">
+            <class name="org.example.advertisement.AdvertisementTest">
 <!--                <methods>-->
 <!--                    <include name="testCategoryDataValidation2"/>-->
 <!--                </methods>-->

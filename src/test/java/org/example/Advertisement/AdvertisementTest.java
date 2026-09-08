@@ -1,8 +1,8 @@
-package org.example.Advertisement;
-import org.example.Annotations.NavigationToAdvertisementPage;
+package org.example.advertisement;
+import org.example.annotations.NavigationToAdvertisementPage;
 import org.example.BaseTest;
-import org.example.DataProvider.CategoryTestCase;
-import org.example.DataProvider.CategoryTestCases;
+import org.example.dataprovider.CategoryTestCase;
+import org.example.dataprovider.CategoryTestCaseProvider;
 import org.example.utils.reporter.TestListener;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -12,26 +12,26 @@ import org.testng.annotations.Test;
 public class AdvertisementTest extends BaseTest {
 
     @NavigationToAdvertisementPage
-    @Test(dataProvider = "categoryBackClick",dataProviderClass = CategoryTestCases.class)
-    public void testCategoryBackClick(CategoryTestCase testCase) {
-        getPom().getSteps().checkMainAsserts(softassert.get(), testCase);
-        getPom().getSteps().checkBackClickInCategories(softassert.get());
+    @Test(dataProvider = "categoryBackClick",dataProviderClass = CategoryTestCaseProvider.class)
+    public void testBackClickRestoresPreviousCategoryList(CategoryTestCase testCase) {
+        getPom().assertSteps().checkMainAsserts(softassert.get(), testCase);
+        getPom().steps().checkAllCategoryBackClickNavigation(softassert.get());
         softassert.get().assertAll();
     }
 
     @NavigationToAdvertisementPage
-    @Test(dataProvider = "categoryTitleMatches",dataProviderClass = CategoryTestCases.class)
-    public void testSelectedCategoryTitleMatchesPreview(CategoryTestCase testCase) {
-        getPom().getSteps().checkMainAsserts(softassert.get(), testCase);
-        getPom().getSteps().checkAllCategoryItems(softassert.get(),testCase);
+    @Test(dataProvider = "CategoriesAndBrandsDataCheck",dataProviderClass = CategoryTestCaseProvider.class)
+    public void testSelectedCategoryTitleMatchesPreviewTitle(CategoryTestCase testCase)  {
+        getPom().assertSteps().checkMainAsserts(softassert.get(), testCase);
+        getPom().steps().checkAllCategoryItems(softassert.get(),testCase);
         softassert.get().assertAll();
     }
 
     @NavigationToAdvertisementPage
-    @Test(dataProvider = "CategoriesAndBrandsDataCheck", dataProviderClass = CategoryTestCases.class)
-    public void testAllCategoriesAndBrand(CategoryTestCase testCase) {
-        getPom().getSteps().checkMainAsserts(softassert.get(), testCase);
-        getPom().getSteps().checkAllCategoryItemsData(softassert.get(),testCase);
+    @Test(dataProvider = "CategoriesAndBrandsDataCheck", dataProviderClass = CategoryTestCaseProvider.class)
+    public void testEveryCategoryAndBrandExistsInCatalog(CategoryTestCase testCase) {
+        getPom().assertSteps().checkMainAsserts(softassert.get(), testCase);
+        getPom().steps().checkAllCategories(softassert.get(),testCase);
         softassert.get().assertAll();
     }
 

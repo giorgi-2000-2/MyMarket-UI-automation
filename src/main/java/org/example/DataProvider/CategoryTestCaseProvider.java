@@ -1,101 +1,116 @@
-package org.example.DataProvider;
+package org.example.dataprovider;
 
+import org.example.di.SuiteContext;
+import org.example.utils.config.IBtnUrl;
 import org.testng.annotations.DataProvider;
 
-public class CategoryTestCases {
+import static org.example.pages.CategoryNameBtn.*;
+
+public class CategoryTestCaseProvider {
+private final IBtnUrl configuration;
+
+
+    public CategoryTestCaseProvider() {
+        this(SuiteContext.btnUrl());
+    }
+
+    public CategoryTestCaseProvider(IBtnUrl configuration) {
+        this.configuration = configuration;
+    }
 
     @DataProvider(name = "CategoriesAndBrandsDataCheck")
-    public static Object[][] getCategoriesAndBrandsDataCheckTestCase() {
+    public Object[][] getCategoriesAndBrandsDataCheckTestCase() {
+
         return new Object[][] {
                 {
                         CategoryTestCase.builder()
-                                .section("გაყიდვა")
-                                .expectedUrl("https://mymarket.ge/ka/pr-form/sell")
+                                .section(SELLBTN)
+                                .expectedUrl(configuration.sellUrl())
                                 .checkBrands(true)
                                 .build()
                 },
                 {
                         CategoryTestCase.builder()
-                                .section("გაყიდვა")
-                                .expectedUrl("https://mymarket.ge/ka/pr-form/sell")
+                                .section(SELLBTN)
+                                .expectedUrl(configuration.sellUrl())
                                 .checkBrands(false)
                                 .build()
                 },
 
                 {
                         CategoryTestCase.builder()
-                                .section("ყიდვა")
-                                .expectedUrl("https://mymarket.ge/ka/pr-form?Org=1&PCat=0")
+                                .section(BUYBTN)
+                                .expectedUrl(configuration.buyUrl())
                                 .checkBrands(true)
                                 .build()
                 },
                 {
                         CategoryTestCase.builder()
-                                .section("ყიდვა")
-                                .expectedUrl("https://mymarket.ge/ka/pr-form?Org=1&PCat=0")
+                                .section(BUYBTN)
+                                .expectedUrl(configuration.buyUrl())
                                 .checkBrands(false)
                                 .build()
                 },
                 {
                         CategoryTestCase.builder()
-                                .section("გაქირავება")
-                                .expectedUrl("https://www.mymarket.ge/ka/pr-form?Org=2&PCat=2")
+                                .section(RENTBTN)
+                                .expectedUrl(configuration.rentUrl())
                                 .checkBrands(false)
                                 .build()
                 },
                 {
                         CategoryTestCase.builder()
-                                .section("მომსახურება")
-                                .expectedUrl("https://www.mymarket.ge/ka/pr-form?Org=3&PCat=1")
+                                .section(SERVICEBTN)
+                                .expectedUrl(configuration.serviceUrl())
                                 .checkBrands(false)
                                 .skipTitleCheck(true)
                                 .build()
                 },
-        };
+       };
     }
 
 
 
     @DataProvider(name = "categoryTitleMatches")
-    public static Object[][] getCategoryTitleMatchesTestCase() {
+    public Object[][] getCategoryTitleMatchesTestCase() {
         return new Object[][] {
 
                 {
                         CategoryTestCase.builder()
-                                .section("გაქირავება")
-                                .expectedUrl("https://www.mymarket.ge/ka/pr-form?Org=2&PCat=2")
+                                .section(RENTBTN)
+                                .expectedUrl(configuration.rentUrl())
                                 .build()
                 },
         };
     }
 
     @DataProvider(name = "categoryBackClick")
-    public static Object[][] getCategoryBackClickTestCase() {
+    public Object[][] getCategoryBackClickTestCase() {
         return new Object[][] {
                 {
                         CategoryTestCase.builder()
-                                .section("გაყიდვა")
-                                .expectedUrl("https://mymarket.ge/ka/pr-form/sell")
+                                .section(SELLBTN)
+                                .expectedUrl(configuration.sellUrl())
                                 .build()
                 },
 
                 {
                         CategoryTestCase.builder()
-                                .section("ყიდვა")
-                                .expectedUrl("https://mymarket.ge/ka/pr-form?Org=1&PCat=0")
+                                .section(BUYBTN)
+                                .expectedUrl(configuration.buyUrl())
                                 .build()
                 },
 
                 {
                         CategoryTestCase.builder()
-                                .section("გაქირავება")
-                                .expectedUrl("https://www.mymarket.ge/ka/pr-form?Org=2&PCat=2")
+                                .section(RENTBTN)
+                                .expectedUrl(configuration.rentUrl())
                                 .build()
                 },
                 {
                         CategoryTestCase.builder()
-                                .section("მომსახურება")
-                                .expectedUrl("https://www.mymarket.ge/ka/pr-form?Org=3&PCat=1")
+                                .section(SERVICEBTN)
+                                .expectedUrl(configuration.serviceUrl())
                                 .skipTitleCheck(true)
                                 .build()
                 }

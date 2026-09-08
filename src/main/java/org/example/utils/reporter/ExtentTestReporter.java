@@ -7,7 +7,7 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class ExtentTestReporter implements ITestReporter {
+public class ExtentTestReporter implements IReportLifecycle, IReportTree,IReportNode {
 
     private volatile ExtentReports extent;
     private final ThreadLocal<ExtentTest> test = new ThreadLocal<>();

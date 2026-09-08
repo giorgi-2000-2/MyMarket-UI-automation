@@ -2,28 +2,39 @@ package org.example.utils.reporter;
 
 public final class TestReporterContext {
 
-    private static final ThreadLocal<ITestReporter> REPORTER = new ThreadLocal<>();
+    private static final ThreadLocal<IReportTree> WRITER = new ThreadLocal<>();
+    private static final ThreadLocal<IReportLifecycle> LIFECYCLE = new ThreadLocal<>();
 
-    private TestReporterContext() {}
 
-
-    public static void set(ITestReporter reporter) {
-        REPORTER.set(reporter);
+    private TestReporterContext() {
     }
 
-    public static ITestReporter get() {
-        ITestReporter reporter = REPORTER.get();
+    public static <R extends IReportTree & IReportLifecycle> void set(R reporter) {
+        WRITER.set(reporter);
+        LIFECYCLE.set(reporter);
+    }
+
+    public static IReportTree report() {
+        IReportTree reporter = WRITER.get();
         if (reporter == null) {
-            throw new IllegalStateException("ITestReporter არ არის ინიციალიზებული");
+            throw new IllegalStateException(
+                    "Reporter არ არის ინიციალიზებული");
         }
         return reporter;
     }
 
-    public static void remove() {
-        REPORTER.remove();
+    public static IReportLifecycle lifecycle() {
+        IReportLifecycle reporter = LIFECYCLE.get();
+        if (reporter == null) {
+            throw new IllegalStateException(
+                    "Reporter არ არის ინიციალიზებული");
+        }
+        return reporter;
     }
 
 
-
-
+    public static void remove() {
+        WRITER.remove();
+        LIFECYCLE.remove();
+    }
 }

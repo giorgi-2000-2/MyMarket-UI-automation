@@ -1,12 +1,14 @@
 package org.example.jsonmanager;
 
+import com.google.inject.Inject;
 import org.example.dataprovider.SectionNames;
-import org.example.manager.SubcategorySearch;
 import org.example.utils.reporter.stringutils.CategoryPath;
 import org.json.JSONObject;
 public class JsonFinder {
     private final SubcategorySearch helper;
 private final JsonReaders jsonReader;
+
+    @Inject
     public JsonFinder(SubcategorySearch helper, JsonReaders jsonReader ) {
         this.helper = helper;
         this.jsonReader = jsonReader;

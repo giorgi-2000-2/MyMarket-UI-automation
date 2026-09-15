@@ -1,8 +1,8 @@
 package org.example.utils.config;
 
+
+import org.example.utils.config.properties.CategoryNameBtn;
+
 public interface IBtnUrl {
-    String sellUrl();
-    String buyUrl();
-    String rentUrl();
-    String serviceUrl();
+    String btnUrl(CategoryNameBtn section);
 }

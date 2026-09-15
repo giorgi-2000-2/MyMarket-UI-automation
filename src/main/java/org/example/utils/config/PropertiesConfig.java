@@ -1,14 +1,15 @@
 package org.example.utils.config;
+import com.google.inject.Inject;
+import org.example.utils.config.properties.CategoryNameBtn;
 
 import java.util.Properties;
 
 
-
-public class PropertiesConfig implements IWait,IBtnUrl,IUrlConfig,IUserConfig{
+public class PropertiesConfig implements IWait,IUrlConfig,IUserConfig,IPageConfig,IBtnUrl{
     private final String FILE = "config.properties";
     private final Properties props;
 
-
+    @Inject
     public PropertiesConfig() {
         Properties fromFile = ConfigSource.fromClasspath(FILE);
         this.props = fromFile;
@@ -34,26 +35,6 @@ return requireInt("short.wait");
     }
 
     @Override
-    public String sellUrl() {
-        return require("sell.url");
-    }
-
-    @Override
-    public String buyUrl() {
-        return require("buy.url");
-    }
-
-    @Override
-    public String rentUrl() {
-        return require("rent.url");
-    }
-
-    @Override
-    public String serviceUrl() {
-        return require("service.url");
-    }
-
-    @Override
     public String baseUrl() {
         return require("base.url");
     }
@@ -69,19 +50,27 @@ return requireInt("short.wait");
     }
 
     @Override
-    public String loginMail() {
-        return require("login.mail");
-    }
+    public String loginMail()     { return secret("MYMARKET_USER", "login.mail"); }
 
     @Override
-    public String loginPassword() {
-        return require("login.password");
-    }
+    public String loginPassword() { return secret("MYMARKET_PASSWORD", "login.password"); }
 
     @Override
     public String userId() {
         return require("login.id");
     }
+
+    @Override
+    public String expectedUserName() {
+        return require("name");
+    }
+
+    @Override
+    public String pageMainTitle() {
+        return require("ad.page.main.title");
+    }
+
+
 
 
 
@@ -97,7 +86,10 @@ return requireInt("short.wait");
         }
         return value.trim();
     }
-
+    private String secret(String envKey, String propKey) {
+        String fromEnv = System.getenv(envKey);
+        return (fromEnv != null && !fromEnv.isBlank()) ? fromEnv : require(propKey);
+    }
     private int requireInt(String key) {
         String value = require(key);
         try {
@@ -112,6 +104,9 @@ return requireInt("short.wait");
         return value != null && !value.trim().isEmpty();
     }
 
-
-
+    @Override
+    public String btnUrl(CategoryNameBtn section) {
+        return require(section.getUrlKey());
+    }
 }
+

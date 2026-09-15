@@ -1,17 +1,19 @@
 package org.example.utils.reporter;
-
 import org.apache.commons.io.FileUtils;
-import org.example.utils.reporter.driver.DriverManager;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.testng.asserts.SoftAssert;
 
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 
 public class TestListener implements ITestListener {
+
 
     @Override
     public void onStart(ITestContext context) {
@@ -34,9 +36,6 @@ public class TestListener implements ITestListener {
     @Override
     public void onTestFailure(ITestResult result) {
         System.out.println("Test Failed : " + result.getName());
-
-        WebDriver driver = new DriverManager().getDriver();
-
         boolean skipScreenshot = false;
         for (String group : result.getMethod().getGroups()) {
             if ("no-screenshot".equals(group)) {
@@ -44,6 +43,7 @@ public class TestListener implements ITestListener {
                 break;
             }
         }
+        WebDriver driver = (WebDriver) result.getAttribute("driver");
 
         if (!skipScreenshot && driver != null) {
             try {
@@ -66,6 +66,8 @@ public class TestListener implements ITestListener {
         } else {
             TestReporterContext.report().log(ReportStatus.FAIL, "Test failed: " + result.getThrowable().getMessage());
         }
+
+
     }
 
     @Override
@@ -85,8 +87,9 @@ public class TestListener implements ITestListener {
             } else {
                 System.out.println("რეპორტის ფაილი მითითებულ მისამართზე ვერ მოიძებნა!");
             }
-        } catch (Exception e) {
+        } catch (IOException | UnsupportedOperationException e) {
             System.out.println("ბრაუზერის ავტომატურად გახსნა ვერ მოხერხდა: " + e.getMessage());
         }
     }
+
 }

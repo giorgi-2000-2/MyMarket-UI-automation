@@ -5,13 +5,23 @@ import java.util.Arrays;
 public class StringSplitter {
 
 
-public CategoryPath parseString(String name){
-    String[] parts = name.split(" -> ");
-    String mainCategory = parts[0];
-    String itemName = parts[parts.length - 1];
-    String[] subCategories = Arrays.copyOfRange(parts, 1, parts.length - 1);
-    return new CategoryPath(mainCategory, itemName, subCategories);
-}
+    public CategoryPath parseString(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("სახელი ცარიელია");
+        }
+
+        String[] parts = name.split(" -> ");
+
+        String[] subCategories = parts.length > 2
+                ? Arrays.copyOfRange(parts, 1, parts.length - 1)
+                : new String[0];
+
+        return new CategoryPath(
+                parts[0].trim(),
+                parts[parts.length - 1].trim(),
+                subCategories
+        );
+    }
 
 
 

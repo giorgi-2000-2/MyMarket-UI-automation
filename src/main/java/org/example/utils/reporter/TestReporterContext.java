@@ -37,4 +37,6 @@ public final class TestReporterContext {
         WRITER.remove();
         LIFECYCLE.remove();
     }
+
+
 }

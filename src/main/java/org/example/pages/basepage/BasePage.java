@@ -1,15 +1,16 @@
 package org.example.pages.basepage;
-
+import com.google.inject.Inject;
 import lombok.Getter;
 import org.example.utils.Waits;
+import org.example.utils.driver.IDriver;
 import org.example.utils.reporter.stringutils.StringSplitter;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class BasePage {
-    protected final WebDriver driver;
+public class BasePage implements IBasePage {
+    protected final IDriver driver;
     protected final Waits waitUtils;
     protected final StringSplitter stringSplitter;
 @Getter
@@ -17,17 +18,16 @@ public class BasePage {
 @Getter
     protected final JavaScriptHelper jsHelper;
 
-
-    public BasePage(WebDriver driver, Waits waitUtils, StringSplitter stringSplitter) {
-        this.driver = driver;
-        this.waitUtils = waitUtils;
+    @Inject
+    public BasePage(IDriver driver, Waits waitUtils, StringSplitter stringSplitter,
+                    WaitHelper waitHelper, JavaScriptHelper jsHelper) {
+        this.driver         = driver;
+        this.waitUtils      = waitUtils;
         this.stringSplitter = stringSplitter;
-
-        this.waitHelper = new WaitHelper(waitUtils);
-        this.jsHelper = new JavaScriptHelper(driver);
-        PageFactory.initElements(driver, this);
+        this.waitHelper     = waitHelper;
+        this.jsHelper       = jsHelper;
+        PageFactory.initElements(driver.getDriver(), this);
     }
-
 
     public void sendKeys(WebElement locator, String text) {
         waitHelper.waitElementToBeVisible(waitUtils.getWait(), locator);
@@ -45,7 +45,7 @@ public class BasePage {
     }
 
     public String getCurrentURL() {
-        return driver.getCurrentUrl();
+        return driver.getDriver().getCurrentUrl();
     }
 
     public void scroll(WebElement element) {

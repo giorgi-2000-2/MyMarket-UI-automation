@@ -1,22 +1,21 @@
 package org.example.pages.advertisement;
-
-import org.example.pages.basepage.BasePage;
+import com.google.inject.Inject;
+import org.example.pages.basepage.IBasePage;
 import org.example.utils.Waits;
+import org.example.utils.driver.IDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 public class BrandDropdownComponent{
     private final Waits waitUtils;
-    private final BasePage basePage;
+    private final IBasePage basePage;
 
 
     @FindBy(xpath = "//*[@id=\"BrandID\"]/div/div/div[1]/div[2]")
@@ -24,11 +23,11 @@ public class BrandDropdownComponent{
 
     @FindBy(xpath = "//*[contains(@id,'react-select-') and contains(@id,'-placeholder')]")
     private WebElement brandDropdownPlaceholder;
-
-    public BrandDropdownComponent(WebDriver driver, Waits waitUtils, BasePage basePage) {
+    @Inject
+    public BrandDropdownComponent(IDriver driver, Waits waitUtils, IBasePage basePage) {
         this.waitUtils = waitUtils;
         this.basePage = basePage;
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(driver.getDriver(), this);
     }
 
     public WebElement getBrandContainer() {
@@ -81,5 +80,11 @@ public class BrandDropdownComponent{
 
         return brandNameList;
     }
+
+
+
+
+
+
 
 }

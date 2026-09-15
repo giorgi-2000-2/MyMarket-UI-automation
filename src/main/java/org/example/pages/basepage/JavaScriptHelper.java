@@ -1,24 +1,24 @@
 package org.example.pages.basepage;
-
+import com.google.inject.Inject;
+import org.example.utils.driver.IDriver;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import java.util.Map;
 
 public class JavaScriptHelper {
-    private final WebDriver driver;
-
-    public JavaScriptHelper(WebDriver driver) {
+    private final IDriver driver;
+    @Inject
+    public JavaScriptHelper(IDriver driver) {
         this.driver = driver;
     }
 
     public void scroll(WebElement element) {
-        ((JavascriptExecutor) driver)
+        ((JavascriptExecutor) driver.getDriver())
                 .executeScript("arguments[0].scrollIntoView({block:'center'});", element);
     }
 
     public boolean isElementInViewport(WebElement element) {
-        Map<String, Object> rect = (Map<String, Object>) ((JavascriptExecutor) driver)
+        Map<String, Object> rect = (Map<String, Object>) ((JavascriptExecutor) driver.getDriver())
                 .executeScript(
                         "var rect = arguments[0].getBoundingClientRect();" +
                                 "return {top: rect.top, bottom: rect.bottom, height: window.innerHeight};",

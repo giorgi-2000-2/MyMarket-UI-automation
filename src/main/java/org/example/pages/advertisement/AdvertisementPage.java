@@ -1,28 +1,25 @@
 package org.example.pages.advertisement;
+
+import com.google.inject.Inject;
 import lombok.Getter;
-import org.example.pages.basepage.BasePage;
+import org.example.pages.basepage.IBasePage;
 import org.example.utils.Waits;
-import org.example.utils.reporter.IReportTree;
-import org.openqa.selenium.WebDriver;
+import org.example.utils.driver.IDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class AdvertisementPage  {
-private final BasePage basePage;
+import static org.example.utils.config.UiText.CHOOSE_CATEGORY;
+
+public class AdvertisementPage implements IAdvertisementPage {
+    private final IBasePage basePage;
     private final Waits waitUtils;
 
-    @Getter
-    private final UserInfoComponent userInfo;
-
-    @Getter
-    private final CategoryDropdownComponent categoryDropdown;
-
-    @Getter
-    private final BrandDropdownComponent brandDropdown;
-
-    @Getter
-    private final TitleComponent titleComponent;
+    @Getter private final UserInfoComponent userInfo;
+    @Getter private final CategoryDropdownComponent categoryDropdown;
+    @Getter private final BrandDropdownComponent brandDropdown;
+    @Getter private final TitleComponent titleComponent;
 
     @FindBy(xpath = "//*[@data-testid='add-product-button']")
     private WebElement advertisementBtn;
@@ -30,24 +27,41 @@ private final BasePage basePage;
     @FindBy(xpath = "(//h1[contains(text(),'განცხადების დამატება')])[1]")
     private WebElement mainTitle;
 
-    public AdvertisementPage(WebDriver driver,BasePage basePage , IReportTree reporter, Waits waitUtils) {
+    @Inject
+    public AdvertisementPage(
+            IDriver driver,
+            IBasePage basePage,
+            Waits waitUtils,
+            UserInfoComponent userInfo,
+            CategoryDropdownComponent categoryDropdown,
+            BrandDropdownComponent brandDropdown,
+            TitleComponent titleComponent) {
+
         this.basePage = basePage;
         this.waitUtils = waitUtils;
-
-        this.userInfo = new UserInfoComponent(driver,waitUtils,basePage);
-        this.categoryDropdown = new CategoryDropdownComponent(driver,basePage,waitUtils, reporter);
-        this.brandDropdown = new BrandDropdownComponent( driver,waitUtils,basePage);
-        this.titleComponent = new TitleComponent( driver,waitUtils,basePage);
-        PageFactory.initElements(driver, this);
+        this.userInfo = userInfo;
+        this.categoryDropdown = categoryDropdown;
+        this.brandDropdown = brandDropdown;
+        this.titleComponent = titleComponent;
+        PageFactory.initElements(driver.getDriver(), this);
     }
 
+    @Override
     public void clickAdvertisementBtn() {
         basePage.getWaitHelper().waitElementToBeClickable(waitUtils.getWait(), advertisementBtn);
         basePage.click(advertisementBtn);
     }
 
+    @Override
     public WebElement getMainTitle() {
         basePage.getWaitHelper().waitElementToBeVisible(waitUtils.getWait(), mainTitle);
         return mainTitle;
+    }
+
+    @Override
+    public void waitString(WebElement element) {
+        waitUtils.getTextWait().until(ExpectedConditions.not(
+                ExpectedConditions.textToBePresentInElement(element, CHOOSE_CATEGORY.getPath())
+        ));
     }
 }

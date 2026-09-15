@@ -1,15 +1,15 @@
 package org.example.pages.advertisement;
-
-import org.example.pages.basepage.BasePage;
+import com.google.inject.Inject;
+import org.example.pages.basepage.IBasePage;
 import org.example.utils.Waits;
-import org.openqa.selenium.WebDriver;
+import org.example.utils.driver.IDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class UserInfoComponent  {
     private final Waits waitUtils;
-    private final BasePage basePage;
+    private final IBasePage basePage;
 
     @FindBy(xpath = "(//div[@class='font-bold font-size-16 text-truncate user-name'])[2]")
     private WebElement pageUserName;
@@ -22,11 +22,11 @@ public class UserInfoComponent  {
 
     @FindBy(xpath = "(//div[contains(text(),'ID ')])[2]")
     private WebElement userNameID;
-
-    public UserInfoComponent(WebDriver driver, Waits waitUtils , BasePage basePage) {
+    @Inject
+    public UserInfoComponent(IDriver driver, Waits waitUtils , IBasePage basePage) {
         this.waitUtils = waitUtils;
         this.basePage = basePage;
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(driver.getDriver(), this);
     }
 
     public String getPageUserName() {

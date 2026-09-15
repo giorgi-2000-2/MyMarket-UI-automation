@@ -1,22 +1,23 @@
 package org.example.pages.advertisement;
-
+import com.google.inject.Inject;
 import lombok.Getter;
-import org.example.pages.basepage.BasePage;
-import org.example.pages.CategoryNameBtn;
+import org.example.pages.basepage.IBasePage;
 import org.example.utils.Waits;
+import org.example.utils.config.properties.CategoryNameBtn;
 import org.example.utils.reporter.IReportTree;
+import org.example.utils.driver.IDriver;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.example.utils.config.UiText.BACK_CLICK;
+
 public class CategoryDropdownComponent {
-    private final BasePage basePage;
+    private final IBasePage basePage;
     private final Waits waitUtils;
     private final IReportTree reporter;
 
@@ -32,12 +33,12 @@ public class CategoryDropdownComponent {
     @FindBy(xpath = "//*[@id=\"CatID\"]/div/div/div/div[1]/div[1]")
     WebElement dropdownTitleText;
 
-
-    public CategoryDropdownComponent(WebDriver driver, BasePage basePage, Waits waitUtils, IReportTree reporter ) {
+    @Inject
+    public CategoryDropdownComponent(IDriver driver, IBasePage basePage, Waits waitUtils, IReportTree reporter ) {
         this.basePage = basePage;
         this.waitUtils = waitUtils;
         this.reporter = reporter;
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(driver.getDriver(), this);
     }
 
     public void clickDropdown() {
@@ -63,12 +64,12 @@ public class CategoryDropdownComponent {
 
     public boolean isBackButtonPresent() {
         List<WebElement> options = getOptions();
-        return !options.isEmpty() && options.get(0).getText().contains("უკან დაბრუნება");
+        return !options.isEmpty() && options.get(0).getText().contains(BACK_CLICK.getPath());
     }
 
     public void clickBackIfPresent() {
         List<WebElement> options = getOptions();
-        if (!options.isEmpty() && options.get(0).getText().contains("უკან დაბრუნება")) {
+        if (!options.isEmpty() && options.get(0).getText().contains(BACK_CLICK.getPath())) {
             basePage.scroll(options.get(0));
             basePage.waitClick(options.get(0));
         }

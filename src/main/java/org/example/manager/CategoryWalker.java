@@ -1,59 +1,35 @@
 package org.example.manager;
-import org.example.pages.basepage.BasePage;
-import org.example.pages.advertisement.AdvertisementPage;
-import org.openqa.selenium.WebElement;
 
-import java.util.List;
 
-public class CategoryWalker {
+import com.google.inject.Inject;
 
-    private final AdvertisementPage page;
-private final BasePage basePage;
-    public CategoryWalker(AdvertisementPage page, BasePage basePage) {
-        this.page = page;
-        this.basePage = basePage;
+public class CategoryWalker implements ICategoryWalker {
+
+    private final ICategoryNavigator navigator;
+    @Inject
+    public CategoryWalker(ICategoryNavigator navigator) {
+        this.navigator = navigator;
     }
 
-    public void walk(IAction leafAction)   {
-        page.getCategoryDropdown().clickDropdown();
+    public void walk(IAction leafAction) {
+        navigator.openDropdown();
         walkRecursive(leafAction);
     }
 
-    private void walkRecursive(IAction action)   {
-        List<WebElement> options = page.getCategoryDropdown().getOptions();
-        int startIndex = page.getCategoryDropdown().isBackButtonPresent() ? 1 : 0;
-        for (int i = startIndex; i < options.size(); i++) {
-            basePage.waitClick(page.getCategoryDropdown().getOptions().get(i));
-            if (isLeaf()) {
+    private void walkRecursive(IAction action) {
+        int start = navigator.startIndex();
+        int size = navigator.optionsCount();
+
+        for (int i = start; i <size; i++) {
+            navigator.clickOption(i);
+
+            if (navigator.isLeaf()) {
                 action.execute();
-                page.getCategoryDropdown().clickDropdown();
+                navigator.openDropdown();
             } else {
                 walkRecursive(action);
             }
         }
-        page.getCategoryDropdown().clickBackIfPresent();
-    }
-
-
-
-
-//    private void walkRecursives(IAction action)   {
-//        List<WebElement> options = page.getCategoryDropdown().getOptions();
-//        for (int i = 1; i < options.size(); i++) {
-//            basePage.waitClick(page.getCategoryDropdown().getOptions().get(i));
-//            if (isLeaf()) {
-//                action.execute();
-//                page.getCategoryDropdown().clickDropdown();
-//
-//            } else {
-//                walkRecursives(action);
-//            }
-//        }
-//        page.getCategoryDropdown().clickBackIfPresent();
-//    }
-
-
-    private boolean isLeaf() {
-        return page.getCategoryDropdown().getMainElements().isEmpty();
+        navigator.goBack();
     }
 }

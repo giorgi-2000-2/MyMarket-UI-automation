@@ -3,9 +3,6 @@
 
 <suite name="simpleTestCases" parallel="methods" thread-count="2">
 
-    <listeners>
-        <listener class-name="org.example.utils.reporter.TestListener"/>
-    </listeners>
 
     <test name="UI and API Tests">
         <classes>

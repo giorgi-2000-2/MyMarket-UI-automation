@@ -1,29 +1,31 @@
 package org.example;
+
+import com.google.inject.Inject;
 import org.example.annotations.NavigationToAdvertisementPage;
-import org.example.steps.BusinessSteps;
-import org.testng.asserts.SoftAssert;
+import org.example.dataprovider.CategoryTestCase;
+import org.example.di.modules.TestContext;
+import org.example.steps.IBusinessSteps;
 
 import java.lang.reflect.Method;
 
-
-
 public class TestDataPreparer {
-private final BusinessSteps steps;
-private final SoftAssert softAssert;
+    private final IBusinessSteps steps;
+    private final TestContext context;
 
-    public TestDataPreparer(BusinessSteps steps, SoftAssert softAssert) {
-
+    @Inject
+    public TestDataPreparer(IBusinessSteps steps, TestContext context) {
         this.steps = steps;
-        this.softAssert = softAssert;
+        this.context = context;
     }
 
-    public void prepare(Method method) {
-        boolean navigationToAdvertisementPage = method.isAnnotationPresent(NavigationToAdvertisementPage.class);
+    public void prepare(Method method, Object[] args) {
+        if (!method.isAnnotationPresent(NavigationToAdvertisementPage.class)) return;
 
-        if (navigationToAdvertisementPage) {
-            steps.NavigateToAdvertisementPage(softAssert);
+        steps.NavigateToAdvertisementPage();
 
+        if (args != null && args.length > 0 && args[0] instanceof CategoryTestCase testCase) {
+            context.setTestCase(testCase);
+            steps.navigationChecks(context.getTestCase());
         }
     }
-
 }

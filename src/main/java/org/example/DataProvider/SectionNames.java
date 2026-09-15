@@ -8,10 +8,6 @@ public enum SectionNames {
     RENTAL_CATEGORIES("rental_categories"),
     SERVICE_CATEGORIES("service_categories");
 
-
-
-
-
     private final String path;
 
     SectionNames(String path) {

@@ -1,11 +1,12 @@
 package org.example.steps;
-import org.example.asserts.IAssertManager;
-import org.example.pages.basepage.BasePage;
-import org.example.pages.advertisement.AdvertisementPage;
+import com.google.inject.Inject;
+import org.example.asserts.ISoftVerifier;
+import org.example.asserts.VerificationResult;
+import org.example.pages.advertisement.IAdvertisementPage;
 import org.example.pages.advertisement.CategoryDropdownComponent;
+import org.example.pages.basepage.IBasePage;
 import org.example.utils.reporter.IReportNode;
 import org.example.utils.reporter.ReportStatus;
-import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
@@ -13,20 +14,20 @@ import static org.example.utils.reporter.NodeKey.DROPDOWN;
 
 public class CategoryNavigationSteps {
 
-    private final AdvertisementPage advertisementPage;
-    private final BasePage basePage;
-    private final IAssertManager assertManager;
+    private final IAdvertisementPage advertisementPage;
+    private final IBasePage basePage;
+    private final ISoftVerifier assertManager;
     private final IReportNode report;
-
-    public CategoryNavigationSteps(AdvertisementPage advertisementPage, BasePage basePage,
-                                   IAssertManager assertManager, IReportNode report) {
+    @Inject
+    public CategoryNavigationSteps(IAdvertisementPage advertisementPage, IBasePage basePage,
+                                   ISoftVerifier assertManager, IReportNode report) {
         this.advertisementPage = advertisementPage;
         this.basePage = basePage;
         this.assertManager = assertManager;
         this.report = report;
     }
 
-    public void verifyBackClickRestoresList(SoftAssert softAssert) {
+    public void verifyBackClickRestoresList() {
         report.createNamedNode(DROPDOWN, "უკან დაბრუნების ნავიგაცია");
         dropdown().clickDropdown();
 
@@ -34,12 +35,12 @@ public class CategoryNavigationSteps {
         int startIndex = dropdown().isBackButtonPresent() ? 1 : 0;
 
         for (int i = startIndex; i < levelLabels.size(); i++) {
-            verifyOneCategory(softAssert, i, levelLabels);
+            verifyOneCategory( i, levelLabels);
         }
     }
 
 
-    private void verifyOneCategory(SoftAssert softAssert, int index, List<String> levelLabels) {
+    private void verifyOneCategory(int index, List<String> levelLabels) {
         String category = levelLabels.get(index);
         openCategory(index);
 
@@ -51,9 +52,11 @@ public class CategoryNavigationSteps {
 
         List<String> restored = goBack();
 
-        assertManager.assertWithLog(softAssert, DROPDOWN,
-                join(restored), join(levelLabels),
-                category + " — უკან დაბრუნება");
+        assertManager.check(DROPDOWN,  category + " — უკან დაბრუნება")
+                .expected(join(levelLabels))
+                .actual(join(restored));
+
+
     }
 
 

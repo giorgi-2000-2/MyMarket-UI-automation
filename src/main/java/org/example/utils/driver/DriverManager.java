@@ -1,10 +1,10 @@
-package org.example.utils.reporter.driver;
+package org.example.utils.driver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class DriverManager implements IDriver {
-    private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    private  ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     public WebDriver getDriver() {
         if (driver.get() == null) {
@@ -13,6 +13,12 @@ public class DriverManager implements IDriver {
         }
         return driver.get();
     }
+
+    public WebDriver getDriverOnly(){
+        return driver.get();
+    };
+
+
     public void quit() {
         if (driver.get() != null) {
             driver.get().quit();

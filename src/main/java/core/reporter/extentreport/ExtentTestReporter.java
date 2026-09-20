@@ -1,8 +1,8 @@
-package org.example.utils.reporter.extentreport;
+package core.reporter.extentreport;
 
-import org.example.utils.reporter.*;
-import org.example.utils.reporter.IReporter;
-
+import com.google.inject.Singleton;
+import core.reporter.*;
+@Singleton
 public class ExtentTestReporter implements IReportLifecycle, IReportTree, IReportNode, IReporter {
     private final ReportNodeManager nodeManager = new ReportNodeManager();
     private final ExtentLogger logger = new ExtentLogger(nodeManager);

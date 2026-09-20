@@ -1,4 +1,4 @@
-package org.example.utils.driver;
+package core.driver;
 import org.openqa.selenium.WebDriver;
 
 public interface IDriver {

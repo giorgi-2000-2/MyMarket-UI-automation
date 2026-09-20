@@ -1,4 +1,4 @@
-package org.example.utils.reporter;
+package core.reporter;
 
 public interface IReporter extends IReportNode,IReportTree,IReportLifecycle{
 }

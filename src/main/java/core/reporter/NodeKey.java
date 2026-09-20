@@ -1,4 +1,4 @@
-package org.example.utils.reporter;
+package core.reporter;
 
 public enum NodeKey {
     CLICK_BTN_CHECK,
@@ -7,5 +7,6 @@ public enum NodeKey {
     CATEGORY,
     JSON_DATA,
     BRAND_ITEM,
-    BRANDS
+    BRANDS,
+    PROFILE_CHECK
 }

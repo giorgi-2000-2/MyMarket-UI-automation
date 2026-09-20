@@ -1,4 +1,4 @@
-package org.example.utils.reporter;
+package core.reporter;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -6,9 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import org.testng.asserts.SoftAssert;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -17,25 +15,26 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onStart(ITestContext context) {
-        System.out.println("Test suite Started : " + context.getName());
+        System.out.println(ReportMessages.SUITE_STARTED.format(context.getName()));
     }
 
     @Override
     public void onTestStart(ITestResult result) {
         String testName = result.getMethod().getMethodName();
-        System.out.println("Test Started : " + testName);
-        TestReporterContext.report().info("Test Started : " + testName);
+        System.out.println(ReportMessages.TEST_STARTED.format(testName));
+        TestReporterContext.report().info(ReportMessages.TEST_STARTED.format(testName));
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        System.out.println("Test Success : " + result.getName());
-        TestReporterContext.report().log(ReportStatus.PASS, "Test Passed");
-    }
+        System.out.println(ReportMessages.TEST_SUCCESS.format(result.getName()));
+        TestReporterContext.report().log(ReportStatus.PASS, ReportMessages.TEST_PASSED.get());    }
+
 
     @Override
     public void onTestFailure(ITestResult result) {
-        System.out.println("Test Failed : " + result.getName());
+        System.out.println(ReportMessages.TEST_FAILED.format(result.getName()));
+
         boolean skipScreenshot = false;
         for (String group : result.getMethod().getGroups()) {
             if ("no-screenshot".equals(group)) {
@@ -43,7 +42,11 @@ public class TestListener implements ITestListener {
                 break;
             }
         }
+
         WebDriver driver = (WebDriver) result.getAttribute("driver");
+        String errorMessage = result.getThrowable() != null
+                ? result.getThrowable().getMessage()
+                : "";
 
         if (!skipScreenshot && driver != null) {
             try {
@@ -55,40 +58,44 @@ public class TestListener implements ITestListener {
 
                 TestReporterContext.report().logWithScreenshot(
                         ReportStatus.FAIL,
-                        "Test failed: " + result.getThrowable().getMessage(),
+                        ReportMessages.TEST_FAILED_MSG.format(errorMessage),
                         base64Code
                 );
 
             } catch (Exception e) {
-                System.out.println("სქრინშოთის გადაღება ვერ მოხერხდა: " + e.getMessage());
-                TestReporterContext.report().log(ReportStatus.FAIL, "Test failed without screenshot: " + result.getThrowable().getMessage());
+                System.out.println(ReportMessages.SCREENSHOT_FAILED.format(e.getMessage()));
+                TestReporterContext.report().log(
+                        ReportStatus.FAIL,
+                        ReportMessages.SCREENSHOT_FAILED.format(errorMessage)
+                );
             }
         } else {
-            TestReporterContext.report().log(ReportStatus.FAIL, "Test failed: " + result.getThrowable().getMessage());
+            TestReporterContext.report().log(
+                    ReportStatus.FAIL,
+                    ReportMessages.TEST_FAILED_MSG.format(errorMessage)
+            );
         }
-
-
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        System.out.println("Test Skipped : " + result.getName());
-        TestReporterContext.report().log(ReportStatus.SKIP, "Test Skipped");
+        System.out.println(ReportMessages.TEST_SKIPPED_LOG.format(result.getName()));
+        TestReporterContext.report().log(ReportStatus.SKIP, ReportMessages.TEST_SKIPPED.get());
     }
 
     @Override
     public void onFinish(ITestContext context) {
-        System.out.println("Test suite finished : " + context.getName());
+        System.out.println(ReportMessages.SUITE_FINISHED.format(context.getName()));
 
         try {
             File reportFile = new File(System.getProperty("user.dir") + "/report/extentReport.html");
             if (reportFile.exists()) {
                 java.awt.Desktop.getDesktop().browse(reportFile.toURI());
             } else {
-                System.out.println("რეპორტის ფაილი მითითებულ მისამართზე ვერ მოიძებნა!");
+                System.out.println(ReportMessages.REPORT_FILE_NOT_FOUND.get());
             }
         } catch (IOException | UnsupportedOperationException e) {
-            System.out.println("ბრაუზერის ავტომატურად გახსნა ვერ მოხერხდა: " + e.getMessage());
+            System.out.println(ReportMessages.BROWSER_OPEN_FAILED.format(e.getMessage()));
         }
     }
 

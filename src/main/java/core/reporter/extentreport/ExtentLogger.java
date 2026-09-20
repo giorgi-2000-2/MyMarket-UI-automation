@@ -1,9 +1,10 @@
-package org.example.utils.reporter.extentreport;
+package core.reporter.extentreport;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
-import org.example.utils.reporter.NodeKey;
-import org.example.utils.reporter.ReportStatus;
+import core.reporter.NodeKey;
+import core.reporter.ReportMessages;
+import core.reporter.ReportStatus;
 
 public class ExtentLogger {
     private final ReportNodeManager nodeManager;
@@ -26,7 +27,7 @@ public class ExtentLogger {
         if (node != null) {
             node.log(toExtentStatus(status), message);
         } else {
-            log(status, " Node '" + key + "' ვერ მოიძებნა: " + message);
+            log(status, ReportMessages.NODE_NOT_FOUND.format(key,message));
         }
     }
 

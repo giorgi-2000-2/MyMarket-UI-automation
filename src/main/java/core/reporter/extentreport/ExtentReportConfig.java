@@ -1,4 +1,4 @@
-package org.example.utils.reporter.extentreport;
+package core.reporter.extentreport;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;

@@ -1,4 +1,4 @@
-package org.example.utils.reporter;
+package core.reporter;
 
 public interface IReportNode {
     void createNamedNode(NodeKey key, String nodeName);

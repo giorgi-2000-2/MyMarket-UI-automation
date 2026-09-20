@@ -1,7 +1,8 @@
-package org.example.utils.reporter.extentreport;
+package core.reporter.extentreport;
 
 import com.aventstack.extentreports.ExtentTest;
-import org.example.utils.reporter.NodeKey;
+import core.reporter.NodeKey;
+import core.reporter.ReportMessages;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class ReportNodeManager {
         if (parent != null) {
             namedNodes.get().put(childKey, parent.createNode(childNodeName));
         } else {
-            System.out.println("მშობელი ნოუდი სახელით '" + parentKey + "' ვერ მოიძებნა. შვილი ნოუდი შეიქმნება მთავარ ტესტში.");
+            System.out.println(ReportMessages.PARENT_NODE_MISSING.format(parentKey));
             createNamedNode(childKey, childNodeName);
         }
     }

@@ -1,4 +1,4 @@
-package org.example.utils.config.properties;
+package core.config.properties;
 
 import org.openqa.selenium.By;
 

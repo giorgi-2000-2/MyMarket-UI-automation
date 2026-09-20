@@ -1,13 +1,16 @@
-package org.example.utils.reporter.stringutils;
+package core.reporter.stringutils;
+
+import com.google.inject.Singleton;
+import core.reporter.ReportMessages;
 
 import java.util.Arrays;
-
+@Singleton
 public class StringSplitter {
 
 
     public CategoryPath parseString(String name) {
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("სახელი ცარიელია");
+            throw new IllegalArgumentException(ReportMessages.NAME_ISEMPTY.get());
         }
 
         String[] parts = name.split(" -> ");

@@ -1,4 +1,4 @@
-package org.example.utils.config;
+package core.config;
 
 public interface IUserConfig {
     String loginMail();

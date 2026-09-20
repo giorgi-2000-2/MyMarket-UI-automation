@@ -1,4 +1,4 @@
-package org.example.utils.reporter.stringutils;
+package core.reporter.stringutils;
 import lombok.Getter;
 
 @Getter

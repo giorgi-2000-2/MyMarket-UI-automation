@@ -1,9 +1,10 @@
-package org.example.jsonmanager;
+package core.jsonmanager;
 
+import com.google.inject.Singleton;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+@Singleton
 public class SubcategorySearch {
 
     public boolean searchInSubcategories(JSONObject nodes, String[] subCats, int index, String itemName) {

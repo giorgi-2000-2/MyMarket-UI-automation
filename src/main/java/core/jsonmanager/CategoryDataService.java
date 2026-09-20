@@ -1,8 +1,9 @@
-package org.example.jsonmanager;
+package core.jsonmanager;
 import com.google.inject.Inject;
-import org.example.utils.reporter.stringutils.CategoryPath;
-import org.example.utils.reporter.stringutils.StringSplitter;
-
+import com.google.inject.Singleton;
+import core.reporter.stringutils.CategoryPath;
+import core.reporter.stringutils.StringSplitter;
+@Singleton
 public class CategoryDataService {
     private final StringSplitter stringSplitter;
     private final JsonFinder jsonFinder;

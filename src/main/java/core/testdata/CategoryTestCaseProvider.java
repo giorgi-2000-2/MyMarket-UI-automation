@@ -1,11 +1,11 @@
-package org.example.dataprovider;
+package core.testdata;
 import org.testng.annotations.DataProvider;
-import static org.example.utils.config.properties.CategoryNameBtn.*;
+
+import static core.config.properties.CategoryNameBtn.*;
 
 public class CategoryTestCaseProvider {
 
-    public CategoryTestCaseProvider() {
-    }
+
 
     @DataProvider(name = "CategoriesAndBrandsDataCheck")
     public Object[][] getCategoriesAndBrandsDataCheckTestCase() {

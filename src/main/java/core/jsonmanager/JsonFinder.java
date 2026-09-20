@@ -1,9 +1,11 @@
-package org.example.jsonmanager;
+package core.jsonmanager;
 
 import com.google.inject.Inject;
-import org.example.dataprovider.SectionNames;
-import org.example.utils.reporter.stringutils.CategoryPath;
+import com.google.inject.Singleton;
+import core.reporter.stringutils.CategoryPath;
 import org.json.JSONObject;
+
+@Singleton
 public class JsonFinder {
     private final SubcategorySearch helper;
 private final JsonReaders jsonReader;

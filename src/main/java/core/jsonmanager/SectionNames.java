@@ -1,4 +1,4 @@
-package org.example.dataprovider;
+package core.jsonmanager;
 
 import lombok.Getter;
 

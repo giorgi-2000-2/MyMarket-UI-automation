@@ -1,8 +1,9 @@
-package org.example.dataprovider;
+package core.testdata;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.example.utils.config.properties.CategoryNameBtn;
+import core.config.properties.CategoryNameBtn;
+import core.reporter.ReportMessages;
 
 @Getter
 @AllArgsConstructor
@@ -16,6 +17,6 @@ public class CategoryTestCase {
 
     @Override
     public String toString() {
-        return section + (checkBrands ? " ბრენდები" : "");
+        return section + (checkBrands ? ReportMessages.WITH_BRANDS_SUFFIX.get() : "");
     }
 }

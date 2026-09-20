@@ -1,8 +1,8 @@
 package org.example.advertisement;
-import org.example.annotations.NavigationToAdvertisementPage;
+import core.annotations.NavigationToAdvertisementPage;
 import org.example.BaseTest;
-import org.example.dataprovider.CategoryTestCase;
-import org.example.dataprovider.CategoryTestCaseProvider;
+import core.testdata.CategoryTestCase;
+import core.testdata.CategoryTestCaseProvider;
 import org.testng.annotations.Test;
 
 

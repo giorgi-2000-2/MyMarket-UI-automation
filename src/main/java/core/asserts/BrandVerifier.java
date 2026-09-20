@@ -1,26 +1,26 @@
-package org.example.manager;
+package core.asserts;
 import com.google.inject.Inject;
-import org.example.asserts.ISoftVerifier;
-import org.example.asserts.VerificationResult;
-import org.example.jsonmanager.CategoryDataService;
-import org.example.utils.reporter.IReportNode;
-import org.example.utils.reporter.NodeKey;
-import org.example.utils.reporter.ReportStatus;
+import core.jsonmanager.CategoryDataService;
+import core.reporter.IReportNode;
+import core.reporter.NodeKey;
+import core.reporter.ReportMessages;
+import core.reporter.ReportStatus;
 import org.json.JSONException;
+import core.annotations.TestScoped;
 
 import java.util.List;
 
-import static org.example.utils.reporter.NodeKey.JSON_DATA;
-
-public class BrandVerifier implements IBrandVerifier{
+import static core.reporter.NodeKey.JSON_DATA;
+@TestScoped
+public class BrandVerifier {
 
     private final IReportNode reporter;
     private final CategoryDataService categoryDataService;
-    private final ISoftVerifier assertManager;
+    private final SoftVerifier assertManager;
     @Inject
     public BrandVerifier(IReportNode reporter,
                          CategoryDataService categoryDataService,
-                         ISoftVerifier assertManager) {
+                         SoftVerifier assertManager) {
         this.reporter = reporter;
         this.categoryDataService = categoryDataService;
         this.assertManager = assertManager;
@@ -34,11 +34,11 @@ public class BrandVerifier implements IBrandVerifier{
         try {
             if (brands == null || brands.isEmpty()) {
                 reporter.logToNode(NodeKey.BRAND_ITEM, ReportStatus.INFO,
-                        " — ბრენდის dropdown არ არის, გამოტოვება");
+                        ReportMessages.BRAND_DROPDOWN_MISSING.get());
                 return;
             }
 
-            reporter.createChildNode(NodeKey.BRAND_ITEM, NodeKey.BRANDS, "ბრენდები");
+            reporter.createChildNode(NodeKey.BRAND_ITEM, NodeKey.BRANDS,  ReportMessages.BRANDS_NODE.get());
 
             for (String brand : brands) {
                 assertBrandExists(NodeKey.BRANDS, titleText, brand);
@@ -46,18 +46,18 @@ public class BrandVerifier implements IBrandVerifier{
 
         } catch (JSONException e) {
             reporter.logToNode(NodeKey.BRAND_ITEM, ReportStatus.INFO,
-                    titleText + " — ბრენდის შემოწმებისას შეცდომა: " + e.getMessage());
+                    titleText +  ReportMessages.BRAND_CHECK_ERROR.format(titleText, e.getMessage()));
         }
     }
 
 
     public void assertCategoryExists(String name) {
         boolean found = categoryDataService.exists(name);
-        assertManager.condition(JSON_DATA, name + " მოიძებნა", found);
+        assertManager.condition(JSON_DATA, ReportMessages.CATEGORY_FOUND.format(name), found);
     }
 
     public void assertBrandExists(NodeKey nodeKey, String categoryName, String brand) {
         boolean found = categoryDataService.brandExists(categoryName, brand);
-        assertManager.condition(nodeKey, categoryName + " შეიცავს " + brand, found);
+        assertManager.condition(nodeKey,  ReportMessages.CATEGORY_CONTAINS_BRAND.format(categoryName,brand), found);
     }
 }

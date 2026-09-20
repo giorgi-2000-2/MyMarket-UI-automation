@@ -1,7 +1,5 @@
-package org.example.annotations;
-
+package core.annotations;
 import com.google.inject.ScopeAnnotation;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

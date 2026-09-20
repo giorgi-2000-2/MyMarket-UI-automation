@@ -1,12 +1,14 @@
-package org.example.asserts;
+package core.asserts;
 
 import com.google.inject.Inject;
-import org.example.utils.reporter.IReportNode;
-import org.example.utils.reporter.NodeKey;
-import org.example.utils.reporter.ReportStatus;
+import core.reporter.IReportNode;
+import core.reporter.NodeKey;
+import core.reporter.ReportStatus;
 import org.testng.asserts.SoftAssert;
+import core.annotations.TestScoped;
 
-public class SoftVerifier implements ISoftVerifier {
+@TestScoped
+public class SoftVerifier  {
     private final SoftAssert softAssert;
     private final IReportNode report;
     @Inject
@@ -15,12 +17,12 @@ public class SoftVerifier implements ISoftVerifier {
         this.report = report;
     }
 
-    @Override
+
     public Check check(NodeKey node, String description) {
         return new Check(this, node, description);
     }
 
-    @Override
+
     public void condition(NodeKey node, String description, boolean passed) {
         VerificationResult result = new VerificationResult(description, "true", String.valueOf(passed), passed);
         record(node, result);
@@ -32,8 +34,4 @@ public class SoftVerifier implements ISoftVerifier {
         softAssert.assertTrue(result.isPassed(), result.message());
     }
 
-    @Override
-    public void assertAll() {
-        softAssert.assertAll();
-    }
 }

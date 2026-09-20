@@ -1,7 +1,8 @@
-package org.example.di.modules;
+package core.modules;
 
-import org.example.utils.reporter.ReportStatus;
-import org.example.utils.reporter.TestReporterContext;
+import core.reporter.ReportMessages;
+import core.reporter.ReportStatus;
+import core.reporter.TestReporterContext;
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
 import org.testng.ITestResult;
@@ -37,7 +38,7 @@ public class SoftAssertListener implements IInvokedMethodListener {
             }
 
             TestReporterContext.report().log(
-                    ReportStatus.WARNING, "დამატებითი soft-assert შეცდომები " + "(ტესტი უკვე ჩავარდნილი იყო):\n" + softError.getMessage());
+                    ReportStatus.WARNING, ReportMessages.EXTRA_SOFT_ERRORS.format(softError.getMessage()));
         }
     }
 }

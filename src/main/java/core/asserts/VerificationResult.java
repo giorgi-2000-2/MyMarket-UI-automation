@@ -1,4 +1,6 @@
-package org.example.asserts;
+package core.asserts;
+
+import core.reporter.ReportMessages;
 
 public final class VerificationResult {
     private final String description;
@@ -19,9 +21,9 @@ public final class VerificationResult {
 
     public String message() {
         if (passed) {
-            return String.format("✅ %s - მოლოდინი და რეალობა დაემთხვა: '%s'", description, actual);
+            return String.format(ReportMessages.PASS_MATCH.format(description,actual));
         } else {
-            return String.format("❌ %s - ველოდით: '%s', მივიღეთ: '%s'", description, expected, actual);
+            return String.format(ReportMessages.FAIL_MISMATCH.format(description,expected,actual));
         }
     }
 }

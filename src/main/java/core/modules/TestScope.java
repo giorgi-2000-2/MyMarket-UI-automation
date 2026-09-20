@@ -1,7 +1,9 @@
-package org.example.di.modules;
+package core.modules;
 import com.google.inject.Key;
 import com.google.inject.Provider;
 import com.google.inject.Scope;
+import core.reporter.ErrorMessages;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +15,7 @@ public class TestScope implements Scope {
     public void enter() {
         if (scopedObjects.get() != null) {
             throw new IllegalStateException(
-                    "TestScope უკვე გახსნილია ამ თრედზე — წინა ტესტს exit() არ გამოუძახებია");
+                    ErrorMessages.TEST_SCOPE_ALREADY_ENTERED.get());
         }
         scopedObjects.set(new HashMap<>());
     }
@@ -32,7 +34,7 @@ public class TestScope implements Scope {
                 Map<Key<?>, Object> objects = scopedObjects.get();
 
                 if (objects == null) {
-                    throw new IllegalStateException("TestScope-ის გარეთ მოთხოვნილია: " + key);
+                    throw new IllegalStateException(ErrorMessages.TEST_SCOPE_OUTSIDE.format(key));
                 }
 
 

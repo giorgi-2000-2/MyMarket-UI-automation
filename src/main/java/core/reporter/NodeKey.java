@@ -8,5 +8,7 @@ public enum NodeKey {
     JSON_DATA,
     BRAND_ITEM,
     BRANDS,
+    RETRY,
+    RETRY_ATTEMPT,
     PROFILE_CHECK
 }

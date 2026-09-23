@@ -27,6 +27,8 @@ public class ExtentTestReporter implements IReportLifecycle, IReportTree, IRepor
         logger.logToNode(key, status, message);
     }
 
+
+
     @Override
     public void log(ReportStatus status, String message) {
         logger.log(status, message);

@@ -1,7 +1,6 @@
 package web.steps;
 import com.google.inject.Inject;
-import core.steps.IBusinessSteps;
-import core.steps.IPageNavigator;
+import core.steps.*;
 import core.annotations.TestScoped;
 import core.testdata.CategoryTestCase;
 import web.manager.IAction;
@@ -10,15 +9,19 @@ import web.manager.ICategoryWalker;
 import static core.reporter.NodeKey.CATEGORY;
 
 @TestScoped
-public class WebBusinessSteps implements IBusinessSteps {
+public class WebBusinessSteps implements ICategoryCheckSteps, IBackNavigationSteps, ITitleCheckSteps,INavigationSteps {
     private final ICategoryWalker walker;
-    private  final DataStepsManager dataManager;
- private IPageNavigator navigator;
+    private final CategorySteps categorySteps;
+    private final BrandVerificationSteps brandVerificationSteps;
+    private final CategoryNavigationSteps navigationSteps;
+ private final IPageNavigator navigator;
 
     @Inject
-    public WebBusinessSteps(ICategoryWalker walker, DataStepsManager dataManager, IPageNavigator navigator) {
+    public WebBusinessSteps(ICategoryWalker walker , CategorySteps categorySteps, BrandVerificationSteps brandVerificationSteps, CategoryNavigationSteps navigationSteps, IPageNavigator navigator) {
         this.walker = walker;
-        this.dataManager = dataManager;
+        this.categorySteps = categorySteps;
+        this.brandVerificationSteps = brandVerificationSteps;
+        this.navigationSteps = navigationSteps;
         this.navigator = navigator;
     }
 
@@ -26,7 +29,7 @@ public class WebBusinessSteps implements IBusinessSteps {
         walker.walk(new IAction() {
             @Override
             public void execute() {
-                dataManager.verifyCategoryWithBrands( testCase);
+                brandVerificationSteps.verifyCategoryWithData( testCase);
             }
         });
     }
@@ -35,14 +38,14 @@ public class WebBusinessSteps implements IBusinessSteps {
         walker.walk(new IAction() {
             @Override
             public void execute() {
-                dataManager.verifyTitleMatchesPreview(CATEGORY,testCase);
+                categorySteps.processEmptyCategory(CATEGORY,testCase);
             }
         });
     }
 
 
     public void checkAllCategoryBackClickNavigation() {
-        dataManager.verifyBackClickNavigation();
+        navigationSteps.verifyBackClickRestoresList();
     }
 
     public void navigateToAdvertisementPage(  ) {

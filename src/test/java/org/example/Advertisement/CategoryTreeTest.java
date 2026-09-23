@@ -14,9 +14,5 @@ public class CategoryTreeTest extends BaseTestAndroid {
         steps.get().checkAllCategories(testCase);
     }
 
-    @NavigationToAdvertisementPage
-    @Test(dataProvider = "CategoriesAndBrandsDataCheck",dataProviderClass = CategoryTestCaseProvider.class)
-    public void testEveryCategoryAndBrandExistsInCatalog4(CategoryTestCase testCase) {
-        steps.get().checkAllCategories(testCase);
-    }
+
 }

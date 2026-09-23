@@ -2,14 +2,15 @@ package core.config;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import core.config.properties.CategoryNameBtn;
-import core.reporter.ReportMessages;
+import core.reporter.texts.ErrorMessages;
 import java.util.LinkedHashSet;
 import java.util.Properties;
 import java.util.Set;
 
+
 @Singleton
-public class PropertiesConfig implements IWait, IUrlConfig, IUserConfig, IPageConfig, IBtnUrl,
-        ICategoryLabels, IScrollConfig, IWaitSettings,IPatternConfig {
+public class PropertiesConfig implements IWait, IUrlConfig, IUserConfig, IPageConfig,
+        ICategoryLabels, IScrollConfig, IWaitSettings,IPatternConfig,IAppTree {
     private final String FILE = "config.properties";
     private final Properties props;
 
@@ -17,10 +18,6 @@ public class PropertiesConfig implements IWait, IUrlConfig, IUserConfig, IPageCo
     public PropertiesConfig() {
         Properties fromFile = ConfigSource.fromClasspath(FILE);
         this.props = fromFile;
-    }
-
-    PropertiesConfig(Properties props) {
-        this.props = props;
     }
 
 @Override
@@ -41,11 +38,6 @@ return requireInt("short.wait");
     @Override
     public String baseUrl() {
         return require("base.url");
-    }
-
-    @Override
-    public String visitUrl() {
-        return require("visit.url");
     }
 
     @Override
@@ -148,6 +140,16 @@ return requireInt("short.wait");
     @Override
     public String boundsPattern() {return require("pattern.bounds");}
 
+    @Override
+    public String btnUrl(CategoryNameBtn section) {
+        return require(section.getUrlKey());
+    }
+
+    @Override public int maxDepth()    { return requireInt("app.tree.max.depth"); }
+
+    @Override public String stateFile(){ return optional("app.tree.state.file"); }
+
+
     private String resolve(String key) {
         return props.getProperty(key);
 
@@ -156,7 +158,7 @@ return requireInt("short.wait");
     private String require(String key) {
         String value = resolve(key);
         if (!isUsable(value)) {
-            throw new IllegalStateException(ReportMessages.CONFIG_KEY_MISSING.format(key));
+            throw new IllegalStateException(ErrorMessages.CONFIG_KEY_MISSING.format(key));
         }
         return value.trim();
     }
@@ -170,7 +172,7 @@ return requireInt("short.wait");
             return Integer.parseInt(value);
         } catch (NumberFormatException e) {
             throw new IllegalStateException(
-                    ReportMessages.CONFIG_KEY_NOT_NUMBER.format(key,value + e));
+                    ErrorMessages.CONFIG_KEY_NOT_NUMBER.format(key,value + e));
         }
     }
     private Set<String> requireSet(String key) {
@@ -185,14 +187,17 @@ return requireInt("short.wait");
         }
         return result;
     }
-
+    private String optional(String key) {
+        String value = resolve(key);
+        return isUsable(value) ? value.trim() : "";
+    }
     private double requireDouble(String key) {
         String value = require(key);
         try {
             return Double.parseDouble(value);
         } catch (NumberFormatException e) {
             throw new IllegalStateException(
-                    ReportMessages.CONFIG_KEY_NOT_NUMBER.format(key, value));
+                    ErrorMessages.CONFIG_KEY_NOT_NUMBER.format(key, value));
         }
     }
 
@@ -202,16 +207,11 @@ return requireInt("short.wait");
             return Long.parseLong(value);
         } catch (NumberFormatException e) {
             throw new IllegalStateException(
-                    ReportMessages.CONFIG_KEY_NOT_NUMBER.format(key, value));
+                    ErrorMessages.CONFIG_KEY_NOT_NUMBER.format(key, value));
         }
     }
     private static boolean isUsable(String value) {
         return value != null && !value.trim().isEmpty();
-    }
-
-    @Override
-    public String btnUrl(CategoryNameBtn section) {
-        return require(section.getUrlKey());
     }
 
 

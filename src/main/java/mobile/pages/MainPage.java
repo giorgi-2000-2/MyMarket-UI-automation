@@ -1,10 +1,13 @@
 package mobile.pages;
 import com.google.inject.Inject;
+import core.config.IWait;
+import core.config.Waits;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import core.annotations.TestScoped;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 @TestScoped
 public class MainPage {
@@ -23,17 +26,26 @@ public class MainPage {
     @FindBy(xpath = "//android.view.View[@content-desc=\"ID 9060160\"]")
     public WebElement userId;
 
-
+private final Waits wait;
     @Inject
-    public MainPage(AppiumDriver driver) {
+    public MainPage(AppiumDriver driver, Waits wait) {
+        this.wait = wait;
+
         PageFactory.initElements(driver, this);
     }
+
+    public void waitToBevisible(WebElement element) {
+        wait.getWait().until(ExpectedConditions.visibilityOf(element));
+    }
+
+
     public String getProfileUserNameText() {
+        waitToBevisible(profileUserName);
         return profileUserName.getAttribute("content-desc");
     }
 
     public String getUserIdText() {
-
+        waitToBevisible(profileUserName);
         return userId.getAttribute("content-desc");
     }
 }

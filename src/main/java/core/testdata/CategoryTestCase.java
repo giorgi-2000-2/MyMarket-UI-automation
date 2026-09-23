@@ -1,9 +1,9 @@
 package core.testdata;
+import core.reporter.texts.UiText;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import core.config.properties.CategoryNameBtn;
-import core.reporter.ReportMessages;
 
 @Getter
 @AllArgsConstructor
@@ -17,6 +17,15 @@ public class CategoryTestCase {
 
     @Override
     public String toString() {
-        return section + (checkBrands ? ReportMessages.WITH_BRANDS_SUFFIX.get() : "");
+        return section + (checkBrands ? UiText.WITH_BRANDS_SUFFIX.get() : "");
     }
+
+
+    public String stateKey() {
+        String base = section.name();
+        if (checkBrands) base += "_brands";
+        if (skipTitleCheck) base += "_skipTitle";
+        return base;
+    }
+
 }

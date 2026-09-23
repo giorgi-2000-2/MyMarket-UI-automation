@@ -1,6 +1,8 @@
 package mobile.steps;
 import com.google.inject.Inject;
-import core.steps.IBusinessSteps;
+import core.steps.ICategoryCheckSteps;
+import core.utils.state.CrawlStateCreator;
+import core.utils.state.IState;
 import mobile.crawler.CategoryCrawler;
 import mobile.crawler.CategoryPathFormatter;
 import mobile.crawler.handler.LeafCategoryHandler;
@@ -10,19 +12,19 @@ import core.testdata.CategoryTestCase;
 import java.util.List;
 
 @TestScoped
-public class BusinessStepsMobile implements IBusinessSteps {
+public class BusinessStepsMobile implements ICategoryCheckSteps {
     private final CategoryCrawler walker;
     private final MobilePageNavigator navigator;
-    private final MobileDataStepsManager dataManager;
+    private final MobileBrandVerificationSteps brandVerificationSteps;
     private final CategoryPathFormatter pathFormatter;
-
+    private final CrawlStateCreator stateCreator;
     @Inject
-    public BusinessStepsMobile(CategoryCrawler walker, MobilePageNavigator navigator,
-                               MobileDataStepsManager dataManager, CategoryPathFormatter pathFormatter) {
+    public BusinessStepsMobile(CategoryCrawler walker, MobilePageNavigator navigator, MobileBrandVerificationSteps brandVerificationSteps, CategoryPathFormatter pathFormatter, CrawlStateCreator stateCreator) {
         this.walker = walker;
         this.navigator = navigator;
-        this.dataManager = dataManager;
+        this.brandVerificationSteps = brandVerificationSteps;
         this.pathFormatter = pathFormatter;
+        this.stateCreator = stateCreator;
     }
 
     public void navigateToAdvertisementPage() {
@@ -34,26 +36,14 @@ public class BusinessStepsMobile implements IBusinessSteps {
     }
 
     public void checkAllCategories(CategoryTestCase testCase) {
+        IState state = stateCreator.forCase(testCase);
         walker.crawl(new LeafCategoryHandler() {
             @Override
             public void handle(List<String> fullPath) {
-                dataManager.verifyCategoryWithBrands(pathFormatter.fullName(fullPath), testCase);
+                brandVerificationSteps.verifyCategoryWithData(pathFormatter.fullName(fullPath), testCase);
             }
-        });
+        },state);
     }
 
-    @Override
-    public void checkAllCategoryItems(CategoryTestCase testCase) {
-
-
-        
-    }
-
-    @Override
-    public void checkAllCategoryBackClickNavigation() {
-
-
-
-    }
 
 }

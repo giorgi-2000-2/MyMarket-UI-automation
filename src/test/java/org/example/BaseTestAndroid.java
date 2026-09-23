@@ -3,14 +3,14 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import core.driver.IDriver;
 import core.modules.CoreModule;
-import core.testdata.ITestDataPrepare;
-import mobile.dimodulemobile.MobileModule;
 import core.modules.SoftAssertListener;
+import core.modules.TestScope;
 import core.reporter.IReporter;
 import core.reporter.TestListener;
-import core.reporter.TestReporterContext;
+import core.testdata.ITestDataPrepare;
+import core.utils.TestAttributes;
+import mobile.dimodulemobile.MobileModule;
 import mobile.steps.BusinessStepsMobile;
-import core.modules.TestScope;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -31,13 +31,13 @@ public class BaseTestAndroid {
     @Inject protected Provider<BusinessStepsMobile> steps;
 
     @BeforeMethod(alwaysRun = true)
-    public void setup(Method method,Object[] args, ITestResult result) {
+    public void setup(Method method, Object[] args, ITestResult result) {
         TEST_SCOPE.enter();
-        TestReporterContext.set(reporter);
-        TestReporterContext.lifecycle().createTest(method.getName());
-        result.setAttribute("driver", driverManager.get().getDriver());
-        result.setAttribute("softAssert", soft.get());
-        dataPreparer.get().prepare(method,args);
+        result.setAttribute(TestAttributes.REPORTER.key(), reporter);
+        result.setAttribute(TestAttributes.DRIVER.key(), driverManager.get().getDriver());
+        result.setAttribute(TestAttributes.SOFT_ASSERT.key(), soft.get());
+        reporter.createTest(method.getName());
+        dataPreparer.get().prepare(method, args);
     }
 
     @AfterMethod(alwaysRun = true)
@@ -48,12 +48,9 @@ public class BaseTestAndroid {
             try {
                 TEST_SCOPE.exit();
             } finally {
-                TestReporterContext.lifecycle().flush();
-                TestReporterContext.lifecycle().unload();
-                TestReporterContext.remove();
+                reporter.flush();
+                reporter.unload();
             }
         }
     }
 }
-
-

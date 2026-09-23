@@ -1,8 +1,8 @@
 package core.modules;
-
-import core.reporter.ReportMessages;
+import core.reporter.IReportTree;
 import core.reporter.ReportStatus;
-import core.reporter.TestReporterContext;
+import core.reporter.texts.ErrorMessages;
+import core.utils.TestAttributes;
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
 import org.testng.ITestResult;
@@ -15,7 +15,7 @@ public class SoftAssertListener implements IInvokedMethodListener {
         if (!method.isTestMethod()) {
             return;
         }
-        if (!(result.getAttribute("softAssert")
+        if (!(result.getAttribute(TestAttributes.SOFT_ASSERT.key())
                 instanceof SoftAssert soft)) {
             return;
         }
@@ -37,8 +37,8 @@ public class SoftAssertListener implements IInvokedMethodListener {
                 result.setThrowable(softError);
             }
 
-            TestReporterContext.report().log(
-                    ReportStatus.WARNING, ReportMessages.EXTRA_SOFT_ERRORS.format(softError.getMessage()));
+            ((IReportTree) result.getAttribute(TestAttributes.REPORTER.key())).log(
+                    ReportStatus.WARNING, ErrorMessages.EXTRA_SOFT_ERRORS.format(softError.getMessage()));
         }
     }
 }

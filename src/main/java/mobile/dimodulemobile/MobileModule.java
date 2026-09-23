@@ -1,5 +1,4 @@
 package mobile.dimodulemobile;
-
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import core.driver.IDriver;
@@ -20,6 +19,8 @@ public class MobileModule extends AbstractModule {
         bind(IDriver.class).to(DriverManagerMobile.class);
         bind(ITestDataPrepare.class).to(TestDataPreparerMobile.class);
     }
+
+
     @Provides
     @TestScoped
     AndroidDriver androidDriver(DriverManagerMobile manager) { return manager.getDriver(); }

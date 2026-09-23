@@ -1,6 +1,4 @@
 package web.manager;
-
-
 import com.google.inject.Inject;
 
 public class CategoryWalker implements ICategoryWalker {

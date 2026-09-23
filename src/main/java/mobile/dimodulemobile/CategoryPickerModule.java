@@ -1,5 +1,4 @@
 package mobile.dimodulemobile;
-
 import com.google.inject.AbstractModule;
 import mobile.category.driver.Swiper;
 import mobile.category.driver.TouchSwiper;
@@ -27,5 +26,6 @@ public class CategoryPickerModule extends AbstractModule {
         bind(PageScroller.class).to(SwipePageScroller.class);
         bind(CategoryNamesCollector.class).to(ScrollingCategoryNamesCollector.class);
         bind(CategoryNavigator.class).to(CategoryPickerNavigator.class);
+
     }
 }

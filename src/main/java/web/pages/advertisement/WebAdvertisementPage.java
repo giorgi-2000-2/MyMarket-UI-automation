@@ -2,6 +2,8 @@ package web.pages.advertisement;
 import core.config.properties.Section;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+
+
 public class WebAdvertisementPage {
     private final WebDriver driver;
 

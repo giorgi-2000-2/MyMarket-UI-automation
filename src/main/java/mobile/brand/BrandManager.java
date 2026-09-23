@@ -38,9 +38,9 @@ public class BrandManager {
     public List<String> clickBrand(boolean found) {
         List<String> brandlist = new ArrayList<>();
         if (found) {
-            WebElement branddropdown = pageScroller.scrollToField("ბრენდი *");
-            if (branddropdown != null) {
-                branddropdown.click();
+            WebElement brandDropdown = pageScroller.scrollToField("ბრენდი *");
+            if (brandDropdown != null) {
+                brandDropdown.click();
                 brandlist = brandCollector.collectBrandsFromDropdown();
                 for (String name : brandlist) {
                     System.out.println(name);

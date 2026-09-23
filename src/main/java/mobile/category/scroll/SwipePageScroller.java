@@ -47,7 +47,6 @@ public class SwipePageScroller implements PageScroller {
         int startX = screen.getWidth() / 2;
         int startY = (int) (screen.getHeight() * 0.7);
         int endY = (int) (screen.getHeight() * 0.3);
-
         for (int i = 0; i < 2; i++) {
             Document doc = pageSourceParser.parse();
             NodeList all = doc.getElementsByTagName("*");

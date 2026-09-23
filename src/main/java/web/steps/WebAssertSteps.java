@@ -1,6 +1,7 @@
 package web.steps;
 import com.google.inject.Inject;
 import core.annotations.TestScoped;
+import core.reporter.NodeKey;
 import web.webasserts.TitleAsserts;
 import web.webasserts.CategoryAsserts;
 import web.webasserts.NavigationAsserts;
@@ -33,7 +34,7 @@ public class WebAssertSteps {
         userInfoAsserts.assertUserNameAndId( CLICK_BTN_CHECK);
     }
 
-    public void navigationToAdvertisementPageAsserts() {
+    public void navigationToAdvertisementPageAsserts( ) {
         navigationAsserts.assertAfterNavigatingToAdvertisementPage();
     }
 }

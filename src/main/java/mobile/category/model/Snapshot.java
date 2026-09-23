@@ -25,10 +25,6 @@ public final class Snapshot {
         return !items.isEmpty();
     }
 
-    public boolean atRoot() {
-        return breadcrumbs.isEmpty();
-    }
-
     public List<String> names() {
         List<String> out = new ArrayList<>(items.size());
         for (Item i : items) out.add(i.name);

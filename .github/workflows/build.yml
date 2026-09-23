@@ -23,7 +23,7 @@ jobs:
         run: mvn -B --no-transfer-progress clean test-compile
 
       - name: Run specific Unit Tests (TestNG Suite)
-        run: mvn -B --no-transfer-progress test -Dsurefire.suiteXmlFiles=src/test/resources/testng.xml
+        run: mvn -B --no-transfer-progress test -Dsurefire.suiteXmlFiles=testNGunit.xml
 
   qodana:
     name: Qodana Code Inspection

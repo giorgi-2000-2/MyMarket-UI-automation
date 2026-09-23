@@ -97,7 +97,9 @@
         <configuration>
           <suiteXmlFiles>
             <suiteXmlFile>testNG.xml</suiteXmlFile>
+            <suiteXmlFile>testNGunit.xml</suiteXmlFile>
           </suiteXmlFiles>
+
         </configuration>
       </plugin>
 

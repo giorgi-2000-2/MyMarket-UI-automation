@@ -1,4 +1,6 @@
 package org.example.unittest;
+import com.google.inject.Guice;
+import com.google.inject.Inject;
 import core.jsonmanager.SubcategorySearch;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -8,15 +10,11 @@ import org.testng.annotations.Test;
 
 
 public class SubcategorySearchTest {
-
-    private SubcategorySearch search;
-
+    @Inject private SubcategorySearch search;
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
-        search = new SubcategorySearch();
+        Guice.createInjector().injectMembers(this);
     }
-
-
     @Test(groups ="unit")
     public void searchInSubcategories_itemExistsAtLeaf_returnsTrue() {
         JSONObject main = categoryWithOneSub(

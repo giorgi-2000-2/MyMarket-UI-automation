@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="UnitTestSuite" parallel="classes" thread-count="3">
+
+    <test name="Unit Tests">
+        <groups>
+            <run>
+                <include name="unit"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="org.example.unittest.JsonFinderTest"/>
+            <class name="org.example.unittest.StringSplitterTest"/>
+            <class name="org.example.unittest.SubcategorySearchTest"/>
+        </classes>
+    </test>
+
+</suite>

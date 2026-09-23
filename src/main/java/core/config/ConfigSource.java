@@ -1,6 +1,5 @@
 package core.config;
-import core.reporter.ErrorMessages;
-
+import core.reporter.texts.ErrorMessages;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;

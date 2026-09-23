@@ -14,7 +14,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.ArrayList;
 import java.util.List;
 
-import static core.config.UiText.BACK_CLICK;
+import static core.reporter.texts.UiText.BACK_CLICK;
 @TestScoped
 public class CategoryDropdownComponent {
     private final BasePage basePage;
@@ -82,10 +82,7 @@ public class CategoryDropdownComponent {
 
     public boolean isOpen() {
         List<WebElement> elements = getMainElements();
-        if (elements.isEmpty()) {
-            return false;
-        }
-        return true;
+        return !elements.isEmpty();
     }
 
 }

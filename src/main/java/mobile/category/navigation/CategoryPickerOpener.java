@@ -1,8 +1,8 @@
 package mobile.category.navigation;
 import com.google.inject.Inject;
 import core.config.IWaitSettings;
-import core.reporter.ReportMessages;
-import io.appium.java_client.AppiumDriver;
+import core.reporter.texts.ErrorMessages;
+import core.reporter.texts.StepNames;
 import mobile.category.driver.WaitFactory;
 import mobile.category.model.Snapshot;
 import mobile.category.screen.RawScreenReader;
@@ -41,7 +41,7 @@ public class CategoryPickerOpener {
             } else break;
         }
         if (!snap.open()) {
-            throw new IllegalStateException(ReportMessages.CATEGORY_PICKER_OPEN_FAILED.get());
+            throw new IllegalStateException(ErrorMessages.CATEGORY_PICKER_OPEN_FAILED.get());
         }
     }
 

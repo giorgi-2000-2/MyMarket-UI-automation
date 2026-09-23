@@ -1,9 +1,8 @@
 package mobile.steps;
-
 import com.google.inject.Inject;
 import core.config.properties.CategoryNameBtn;
 import core.reporter.IReportTree;
-import core.reporter.ReportMessages;
+import core.reporter.texts.StepNames;
 import core.steps.IPageNavigator;
 import mobile.mobileasserts.MobileAssertSteps;
 import mobile.pages.AdvertisementPage;
@@ -52,7 +51,7 @@ public class MobilePageNavigator implements IPageNavigator {
     }
 
     public void openAddAnnouncement() {
-        reporter.info(ReportMessages.NAVIGATE_TO_AD_PAGE.get());
+        reporter.info(StepNames.NAVIGATE_TO_AD_PAGE.get());
 
         advertisementPage.waitToBevisible(mainPage.MyOfficeBtn);
         mainPage.MyOfficeBtn.click();
@@ -63,7 +62,7 @@ public class MobilePageNavigator implements IPageNavigator {
 
     public void navigationMainCheck(CategoryTestCase testCase) {
         CategoryNameBtn section = testCase.getSection();
-        reporter.info(ReportMessages.CLICK_SECTION_BUTTON.format(section.getPath()));
+        reporter.info(StepNames.CLICK_SECTION_BUTTON.format(section.getPath()));
 
         WebElement sectionButton = mobileAdvertisementPage.sectionButton(section);
         advertisementPage.waitToBevisible(sectionButton);

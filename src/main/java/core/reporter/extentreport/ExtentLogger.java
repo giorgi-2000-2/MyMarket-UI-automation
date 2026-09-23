@@ -3,8 +3,8 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import core.reporter.NodeKey;
-import core.reporter.ReportMessages;
 import core.reporter.ReportStatus;
+import core.reporter.texts.ErrorMessages;
 
 public class ExtentLogger {
     private final ReportNodeManager nodeManager;
@@ -27,7 +27,7 @@ public class ExtentLogger {
         if (node != null) {
             node.log(toExtentStatus(status), message);
         } else {
-            log(status, ReportMessages.NODE_NOT_FOUND.format(key,message));
+            log(status, ErrorMessages.NODE_NOT_FOUND.format(key,message));
         }
     }
 

@@ -1,7 +1,6 @@
 package mobile.pages;
-
 import com.google.inject.Inject;
-import core.reporter.ReportMessages;
+import core.reporter.texts.ErrorMessages;
 import io.appium.java_client.AppiumDriver;
 import core.config.properties.CategoryNameBtn;
 import org.openqa.selenium.WebElement;
@@ -36,7 +35,7 @@ public class MobileAdvertisementPage {
             case BUYBTN:     return buyBtn;
             case RENTBTN:    return rentBtn;
             case SERVICEBTN: return serviceBtn;
-            default: throw new IllegalArgumentException(ReportMessages.UNKNOWN_MOBILE_SECTION.format(section));
+            default: throw new IllegalArgumentException(ErrorMessages.UNKNOWN_MOBILE_SECTION.format(section));
         }
     }
 

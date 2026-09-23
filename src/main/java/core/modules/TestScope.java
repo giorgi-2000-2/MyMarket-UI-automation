@@ -2,7 +2,7 @@ package core.modules;
 import com.google.inject.Key;
 import com.google.inject.Provider;
 import com.google.inject.Scope;
-import core.reporter.ErrorMessages;
+import core.reporter.texts.ErrorMessages;
 
 import java.util.HashMap;
 import java.util.Map;

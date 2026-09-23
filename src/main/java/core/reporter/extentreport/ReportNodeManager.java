@@ -2,7 +2,7 @@ package core.reporter.extentreport;
 
 import com.aventstack.extentreports.ExtentTest;
 import core.reporter.NodeKey;
-import core.reporter.ReportMessages;
+import core.reporter.texts.ErrorMessages;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -29,7 +29,7 @@ public class ReportNodeManager {
         if (parent != null) {
             namedNodes.get().put(childKey, parent.createNode(childNodeName));
         } else {
-            System.out.println(ReportMessages.PARENT_NODE_MISSING.format(parentKey));
+            System.out.println(ErrorMessages.PARENT_NODE_MISSING.format(parentKey));
             createNamedNode(childKey, childNodeName);
         }
     }

@@ -2,7 +2,7 @@ package core.jsonmanager;
 
 import com.google.inject.Singleton;
 import lombok.Getter;
-import core.reporter.ErrorMessages;
+import core.reporter.texts.ErrorMessages;
 import org.json.JSONException;
 import org.json.JSONObject;
 

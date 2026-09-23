@@ -1,6 +1,7 @@
 package mobile.steps;
 import com.google.inject.Inject;
 import core.jsonmanager.CategoryDataService;
+import core.reporter.texts.StepNames;
 import mobile.brand.BrandFinder;
 import mobile.brand.BrandManager;
 import mobile.crawler.handler.LeafCategoryHandler;
@@ -8,7 +9,6 @@ import core.annotations.TestScoped;
 import core.testdata.CategoryTestCase;
 import core.asserts.BrandVerifier;
 import core.reporter.IReportNode;
-import core.reporter.ReportMessages;
 
 
 import java.util.List;
@@ -37,11 +37,11 @@ private final BrandFinder brandFinder;
     public void verifyCategoryWithData(String child,CategoryTestCase testCase) {
         boolean checkBrands = testCase.isCheckBrands();
         String stepName = checkBrands
-                ? ReportMessages.CHECK_CATEGORIES_AND_BRANDS.get()
-                : ReportMessages.CHECK_CATEGORIES.get();
+                ? StepNames.CHECK_CATEGORIES_AND_BRANDS.get()
+                : StepNames.CHECK_CATEGORIES.get();
 
         reporter.createNamedNode(CATEGORY, stepName);
-        reporter.createNamedNode(JSON_DATA, ReportMessages.COMPARE_CATEGORIES_WITH_DATA.get());
+        reporter.createNamedNode(JSON_DATA, StepNames.COMPARE_CATEGORIES_WITH_DATA.get());
 
         brandVerifier.assertCategoryExists(child);
 

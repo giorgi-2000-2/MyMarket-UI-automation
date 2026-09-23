@@ -3,8 +3,10 @@ import com.google.inject.Inject;
 import core.jsonmanager.CategoryDataService;
 import core.reporter.IReportNode;
 import core.reporter.NodeKey;
-import core.reporter.ReportMessages;
 import core.reporter.ReportStatus;
+import core.reporter.texts.AssertMessages;
+import core.reporter.texts.ErrorMessages;
+import core.reporter.texts.StepNames;
 import org.json.JSONException;
 import core.annotations.TestScoped;
 
@@ -34,11 +36,11 @@ public class BrandVerifier {
         try {
             if (brands == null || brands.isEmpty()) {
                 reporter.logToNode(NodeKey.BRAND_ITEM, ReportStatus.INFO,
-                        ReportMessages.BRAND_DROPDOWN_MISSING.get());
+                        AssertMessages.BRAND_DROPDOWN_MISSING.get());
                 return;
             }
 
-            reporter.createChildNode(NodeKey.BRAND_ITEM, NodeKey.BRANDS,  ReportMessages.BRANDS_NODE.get());
+            reporter.createChildNode(NodeKey.BRAND_ITEM, NodeKey.BRANDS,  StepNames.BRANDS_NODE.get());
 
             for (String brand : brands) {
                 assertBrandExists(NodeKey.BRANDS, titleText, brand);
@@ -46,18 +48,18 @@ public class BrandVerifier {
 
         } catch (JSONException e) {
             reporter.logToNode(NodeKey.BRAND_ITEM, ReportStatus.INFO,
-                    titleText +  ReportMessages.BRAND_CHECK_ERROR.format(titleText, e.getMessage()));
+                    titleText +  ErrorMessages.BRAND_CHECK_ERROR.format(titleText, e.getMessage()));
         }
     }
 
 
     public void assertCategoryExists(String name) {
         boolean found = categoryDataService.exists(name);
-        assertManager.condition(JSON_DATA, ReportMessages.CATEGORY_FOUND.format(name), found);
+        assertManager.condition(JSON_DATA, AssertMessages.CATEGORY_FOUND.format(name), found);
     }
 
     public void assertBrandExists(NodeKey nodeKey, String categoryName, String brand) {
         boolean found = categoryDataService.brandExists(categoryName, brand);
-        assertManager.condition(nodeKey,  ReportMessages.CATEGORY_CONTAINS_BRAND.format(categoryName,brand), found);
+        assertManager.condition(nodeKey,  AssertMessages.CATEGORY_CONTAINS_BRAND.format(categoryName,brand), found);
     }
 }

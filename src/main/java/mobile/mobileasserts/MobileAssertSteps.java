@@ -1,8 +1,8 @@
 package mobile.mobileasserts;
 import com.google.inject.Inject;
 import core.reporter.IReportNode;
-import core.reporter.ReportMessages;
 import core.annotations.TestScoped;
+import core.reporter.texts.StepNames;
 
 import static core.reporter.NodeKey.PROFILE_CHECK;
 
@@ -18,7 +18,7 @@ public class MobileAssertSteps {
     }
 
     public void profileAsserts() {
-        reportNode.createNamedNode(PROFILE_CHECK, ReportMessages.PROFILE_CHECK.get());
+        reportNode.createNamedNode(PROFILE_CHECK, StepNames.PROFILE_CHECK.get());
         userInfoAsserts.assertUserNameAndId(PROFILE_CHECK);
     }
 }

@@ -2,9 +2,10 @@ package org.example.unittest;
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;
-import core.reporter.ReportMessages;
 import core.reporter.stringutils.CategoryPath;
 import core.reporter.stringutils.StringSplitter;
+import core.reporter.texts.ErrorMessages;
+import core.reporter.texts.StepNames;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -12,8 +13,7 @@ import org.testng.annotations.Test;
 
 public class StringSplitterTest {
 
-    @Inject
-    private StringSplitter splitter;
+    @Inject private StringSplitter splitter;
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
@@ -64,7 +64,7 @@ public class StringSplitterTest {
                 IllegalArgumentException.class,
                 () -> splitter.parseString(null)
         );
-        Assert.assertEquals(ex.getMessage(), ReportMessages.NAME_ISEMPTY.get());
+        Assert.assertEquals(ex.getMessage(), ErrorMessages.NAME_ISEMPTY.get());
     }
 
     @Test(groups ="unit",dataProvider = "blankNames")
@@ -73,7 +73,7 @@ public class StringSplitterTest {
                 IllegalArgumentException.class,
                 () -> splitter.parseString(blank)
         );
-        Assert.assertEquals(ex.getMessage(), ReportMessages.NAME_ISEMPTY.get());
+        Assert.assertEquals(ex.getMessage(), ErrorMessages.NAME_ISEMPTY.get());
     }
 
     @DataProvider

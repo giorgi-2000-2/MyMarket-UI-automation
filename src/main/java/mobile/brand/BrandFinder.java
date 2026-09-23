@@ -1,6 +1,8 @@
 package mobile.brand;
 
 import com.google.inject.Inject;
+import core.reporter.IReportTree;
+import core.reporter.texts.ErrorMessages;
 import mobile.category.screen.ScreenReader;
 import mobile.category.scroll.PageScroller;
 import org.openqa.selenium.WebElement;
@@ -12,14 +14,16 @@ public class BrandFinder {
     private final PageScroller pageScroller;
     private final ScreenReader screenReader;
     private final BrandNavigator brandNavigator;
+    private final IReportTree reportTree;
 
     @Inject
     public BrandFinder(PageScroller pageScroller,
                        ScreenReader screenReader,
-                       BrandNavigator brandNavigator) {
+                       BrandNavigator brandNavigator, IReportTree reportTree) {
         this.pageScroller = pageScroller;
         this.screenReader = screenReader;
         this.brandNavigator = brandNavigator;
+        this.reportTree = reportTree;
     }
 
     public boolean findBrandDropdown() {
@@ -27,23 +31,23 @@ public class BrandFinder {
         boolean characteristicsOpened = false;
 
         try {
-            WebElement maxasiatebeli = pageScroller.scrollToField("მახასიათებლები *");
-            if (maxasiatebeli != null) {
+            WebElement Characteristic = pageScroller.scrollToField("მახასიათებლები *");
+            if (Characteristic != null) {
                 screenReader.read();
-                maxasiatebeli.click();
+                Characteristic.click();
                 characteristicsOpened = true;
 
-                WebElement branddropdown = pageScroller.scrollToField("ბრენდი *");
-                if (branddropdown != null && branddropdown.isDisplayed()) {
+                WebElement brandDropdown = pageScroller.scrollToField("ბრენდი *");
+                if (brandDropdown != null && brandDropdown.isDisplayed()) {
                     found = true;
                 } else {
-                    System.out.println("⚠️ ბრენდის ველი ვერ მოიძებნა, ვბრუნდებით კატეგორიებში...");
+                    reportTree.info(ErrorMessages.BRAND_FIELD_NOT_FOUND_RETURNING.get());
                 }
             } else {
-                System.out.println("⚠️ მახასიათებლები ვერ მოიძებნა, ვბრუნდებით კატეგორიებში...");
+                reportTree.info(ErrorMessages.CHARACTERISTICS_NOT_FOUND_RETURNING.get());
             }
         } catch (Exception e) {
-            System.out.println("ბრენდი ვერ მოიძებნა: " + e.getMessage());
+            reportTree.info(ErrorMessages.BRAND_SEARCH_ERROR.format(e.getMessage()));
         }
 
         if (!found) {

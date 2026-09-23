@@ -1,11 +1,10 @@
 package web.pages.advertisement;
-
 import com.google.inject.Inject;
+import core.reporter.texts.UiText;
 import lombok.Getter;
 import core.annotations.TestScoped;
 import web.pages.basepage.BasePage;
 import core.config.Waits;
-import core.config.UiText;
 import core.driver.IDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

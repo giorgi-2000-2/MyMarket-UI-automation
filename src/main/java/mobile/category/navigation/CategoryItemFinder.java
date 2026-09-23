@@ -1,7 +1,7 @@
 package mobile.category.navigation;
 import com.google.inject.Inject;
 import core.config.IScrollConfig;
-import core.reporter.ReportMessages;
+import core.reporter.texts.ErrorMessages;
 import mobile.category.model.Item;
 import mobile.category.screen.ScreenReader;
 import mobile.category.scroll.ListScroller;
@@ -40,7 +40,7 @@ public class CategoryItemFinder {
         }
 
         if (target == null) {
-            throw new IllegalStateException(ReportMessages.CATEGORY_NOT_FOUND.format(name));
+            throw new IllegalStateException(ErrorMessages.CATEGORY_NOT_FOUND.format(name));
         }
         return target;
     }

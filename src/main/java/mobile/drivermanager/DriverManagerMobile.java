@@ -1,7 +1,7 @@
 package mobile.drivermanager;
 
 import core.driver.IDriver;
-import core.reporter.ReportMessages;
+import core.reporter.texts.ErrorMessages;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import core.annotations.TestScoped;
@@ -43,12 +43,12 @@ public class DriverManagerMobile implements IDriver {
         try {
             current.terminateApp(APP_PACKAGE);
         } catch (Exception e) {
-            System.out.println(ReportMessages.APP_TERMINATE_FAILED.format( e.getMessage()));
+            System.out.println(ErrorMessages.APP_TERMINATE_FAILED.format( e.getMessage()));
         } finally {
             try {
                 current.quit();
             } catch (Exception e) {
-                System.out.println(ReportMessages.APPIUM_SESSION_CLOSE_FAILED.format(e.getMessage()));
+                System.out.println(ErrorMessages.APPIUM_SESSION_CLOSE_FAILED.format(e.getMessage()));
             } finally {
                 driver.remove();
             }

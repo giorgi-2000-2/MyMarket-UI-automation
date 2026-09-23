@@ -2,11 +2,11 @@ package web.pages.login;
 
 import com.google.inject.Inject;
 import core.annotations.TestScoped;
+import core.reporter.texts.AssertMessages;
 import web.pages.basepage.BasePage;
 import core.config.Waits;
 import core.driver.IDriver;
 import core.reporter.IReportTree;
-import core.reporter.ReportMessages;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 @TestScoped
@@ -47,9 +47,9 @@ private final LoginPage loginPage;
             );
 
             waitUtils.getWait().until(ExpectedConditions.invisibilityOfElementLocated(dialogLocator));
-            reporter.info(ReportMessages.AD_DIALOG_CLOSED.get());
+            reporter.info(AssertMessages.AD_DIALOG_CLOSED.get());
         } catch (TimeoutException | NoSuchElementException e) {
-            reporter.info( ReportMessages.DIALOG_NOT_SHOWN.format(e.getClass().getSimpleName()));
+            reporter.info( AssertMessages.DIALOG_NOT_SHOWN.format(e.getClass().getSimpleName()));
         }
     }
 
@@ -60,9 +60,9 @@ private final LoginPage loginPage;
                     "var dialog = document.querySelector('dialog');" +
                             "if (dialog && typeof dialog.close === 'function') { dialog.close(); }"
             );
-            reporter.info(ReportMessages.DIALOG_CLOSED.get());
+            reporter.info(AssertMessages.DIALOG_CLOSED.get());
         } catch (JavascriptException | TimeoutException | NoSuchElementException e) {
-            reporter.info( ReportMessages.DIALOG_NOT_SHOWN.format(e.getClass().getSimpleName()));
+            reporter.info( AssertMessages.DIALOG_NOT_SHOWN.format(e.getClass().getSimpleName()));
 
         }
     }

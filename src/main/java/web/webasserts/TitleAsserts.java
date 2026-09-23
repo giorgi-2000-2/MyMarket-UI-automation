@@ -2,10 +2,11 @@ package web.webasserts;
 import com.google.inject.Inject;
 import core.annotations.TestScoped;
 import core.asserts.SoftVerifier;
+import core.reporter.texts.StepNames;
 import web.pages.advertisement.AdvertisementPage;
 import core.config.IPageConfig;
 import core.reporter.NodeKey;
-import core.reporter.ReportMessages;
+
 @TestScoped
 public class TitleAsserts {
     private final AdvertisementPage advertisementPage;
@@ -19,7 +20,7 @@ public class TitleAsserts {
     }
 
     public void assertMainTitle(NodeKey nodeKey) {
-        assertManager.check(nodeKey, ReportMessages.CHECK_MAIN_TITLE.get())
+        assertManager.check(nodeKey, StepNames.CHECK_MAIN_TITLE.get())
                 .expected(config.pageMainTitle())
                 .actual(advertisementPage.getMainTitle());
     }

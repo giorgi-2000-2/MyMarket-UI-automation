@@ -1,6 +1,6 @@
 package core.asserts;
 
-import core.reporter.ReportMessages;
+import core.reporter.texts.AssertMessages;
 
 public final class VerificationResult {
     private final String description;
@@ -21,9 +21,9 @@ public final class VerificationResult {
 
     public String message() {
         if (passed) {
-            return String.format(ReportMessages.PASS_MATCH.format(description,actual));
+            return String.format(AssertMessages.PASS_MATCH.format(description,actual));
         } else {
-            return String.format(ReportMessages.FAIL_MISMATCH.format(description,expected,actual));
+            return String.format(AssertMessages.FAIL_MISMATCH.format(description,expected,actual));
         }
     }
 }

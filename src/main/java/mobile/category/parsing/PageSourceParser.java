@@ -1,7 +1,7 @@
 package mobile.category.parsing;
 
 import com.google.inject.Inject;
-import core.reporter.ReportMessages;
+import core.reporter.texts.ErrorMessages;
 import io.appium.java_client.AppiumDriver;
 import org.w3c.dom.Document;
 
@@ -23,7 +23,7 @@ public class PageSourceParser {
             f.setNamespaceAware(false);
             this.xml = f.newDocumentBuilder();
         } catch (Exception e) {
-            throw new IllegalStateException(ReportMessages.XML_PARSER_CREATION_FAILED.format(e));
+            throw new IllegalStateException(ErrorMessages.XML_PARSER_CREATION_FAILED.format(e));
         }
     }
 
@@ -32,7 +32,7 @@ public class PageSourceParser {
             byte[] src = driver.getPageSource().getBytes(StandardCharsets.UTF_8);
             return xml.parse(new ByteArrayInputStream(src));
         } catch (Exception e) {
-            throw new IllegalStateException(ReportMessages.PAGE_SOURCE_PARSE_FAILED.format(e));
+            throw new IllegalStateException(ErrorMessages.PAGE_SOURCE_PARSE_FAILED.format(e));
         }
     }
 }

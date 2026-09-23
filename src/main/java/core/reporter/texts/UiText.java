@@ -1,4 +1,4 @@
-package core.config;
+package core.reporter.texts;
 
 import lombok.Getter;
 
@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum UiText {
     BACK_CLICK("უკან დაბრუნება"),
     CHOOSE_CATEGORY("აირჩიე/ჩაწერე კატეგორია"),
-    LOGIN_BUTTON("შესვლა");
+    LOGIN_BUTTON("შესვლა"),
+    WITH_BRANDS_SUFFIX(" ბრენდები");
 
     private final String value;
 

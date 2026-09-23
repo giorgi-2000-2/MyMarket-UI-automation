@@ -1,12 +1,12 @@
 package web.steps;
 import com.google.inject.Inject;
 import core.annotations.TestScoped;
+import core.reporter.texts.StepNames;
 import core.testdata.CategoryTestCase;
 import core.jsonmanager.CategoryDataService;
 import core.asserts.BrandVerifier;
 import web.pages.advertisement.AdvertisementPage;
 import core.reporter.IReportNode;
-import core.reporter.ReportMessages;
 
 import java.util.List;
 
@@ -32,11 +32,11 @@ public class BrandVerificationSteps {
 
     public void verifyCategoryWithData(CategoryTestCase testCase) {
         String stepName = testCase.isCheckBrands()
-                ? ReportMessages.CHECK_CATEGORIES_AND_BRANDS.get()
-                : ReportMessages.CHECK_CATEGORIES.get();
+                ? StepNames.CHECK_CATEGORIES_AND_BRANDS.get()
+                : StepNames.CHECK_CATEGORIES.get();
 
         reporter.createNamedNode(CATEGORY, stepName);
-        reporter.createNamedNode(JSON_DATA, ReportMessages.COMPARE_CATEGORIES_WITH_DATA.get());
+        reporter.createNamedNode(JSON_DATA, StepNames.COMPARE_CATEGORIES_WITH_DATA.get());
 
         adPage.waitString(adPage.getTitleComponent().getTitleAfterChange());
         String titleText = adPage.getTitleComponent().getTitleAfterChange().getText();

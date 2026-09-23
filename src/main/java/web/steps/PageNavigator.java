@@ -1,5 +1,6 @@
 package web.steps;
 import com.google.inject.Inject;
+import core.reporter.texts.StepNames;
 import core.steps.IPageNavigator;
 import core.testdata.CategoryTestCase;
 import web.pages.advertisement.AdvertisementPage;
@@ -7,7 +8,6 @@ import web.pages.login.DialogContent;
 import web.pages.login.LoginPage;
 import core.config.IUserConfig;
 import core.reporter.IReportTree;
-import core.reporter.ReportMessages;
 
 
 public class PageNavigator  implements IPageNavigator {
@@ -28,7 +28,7 @@ public class PageNavigator  implements IPageNavigator {
     }
 
     public void navigationMainCheck(CategoryTestCase testCase){
-        reporter.info(ReportMessages.CLICK_SECTION_BUTTON.format(testCase.getSection()));
+        reporter.info(StepNames.CLICK_SECTION_BUTTON.format(testCase.getSection()));
         advertisementPage.getCategoryDropdown().clickCategory(testCase.getSection());
         assertSteps.checkMainAsserts(testCase);
     }
@@ -40,9 +40,9 @@ public class PageNavigator  implements IPageNavigator {
     }
 
     public void loginAndNavigateToAdvertisementPage( ) {
-        reporter.info(ReportMessages.LOGIN.get());
+        reporter.info(StepNames.LOGIN.get());
         loginPage.login(userConfig.loginMail(), userConfig.loginPassword());
-        reporter.info(ReportMessages.NAVIGATE_TO_AD_PAGE.get());
+        reporter.info(StepNames.NAVIGATE_TO_AD_PAGE.get());
         advertisementPage.clickAdvertisementBtn();
         navigateToAdvertisementPage();
     }

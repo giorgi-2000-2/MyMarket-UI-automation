@@ -2,12 +2,12 @@ package web.steps;
 import com.google.inject.Inject;
 import core.asserts.SoftVerifier;
 import core.annotations.TestScoped;
+import core.reporter.texts.StepNames;
 import core.testdata.CategoryTestCase;
 import web.pages.advertisement.AdvertisementPage;
 import web.pages.basepage.BasePage;
 import core.reporter.IReportNode;
 import core.reporter.NodeKey;
-import core.reporter.ReportMessages;
 import org.openqa.selenium.WebElement;
 
 import static core.reporter.NodeKey.CATEGORY;
@@ -26,10 +26,10 @@ public class CategorySteps  {
     }
 
     public void processEmptyCategory( NodeKey nodeName, CategoryTestCase testCase) {
-        report.createNamedNode(CATEGORY, ReportMessages.SECTION_VIEW.format(testCase.getSection()));
+        report.createNamedNode(CATEGORY, StepNames.SECTION_VIEW.format(testCase.getSection()));
         WebElement title = advertisementPage.getCategoryDropdown().getDropdownTitleText();
 
-        assertManager.check(nodeName,ReportMessages.TITLE_COMPARE.get())
+        assertManager.check(nodeName,StepNames.TITLE_COMPARE.get())
                         .expected(advertisementPage.getTitleComponent().getPreviewTitleAfterChange())
                                 .actual(basePage.titleText(title));
 

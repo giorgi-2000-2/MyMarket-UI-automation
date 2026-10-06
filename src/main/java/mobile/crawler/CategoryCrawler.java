@@ -4,8 +4,8 @@ import com.google.inject.Inject;
 import core.reporter.stringutils.StringSplitter;
 import core.utils.state.IState;
 import mobile.crawler.handler.CategoryExistenceReporter;
-import mobile.crawler.handler.LeafCategoryHandler;
-import mobile.category.navigation.CategoryNamesCollector;
+import core.steps.LeafHandler;
+import mobile.category.navigation.ICategoryNamesCollector;
 import core.annotations.TestScoped;
 
 import java.util.ArrayList;
@@ -14,13 +14,13 @@ import java.util.List;
 
 @TestScoped
 public class CategoryCrawler {
-    private final CategoryNamesCollector namesCollector;
+    private final ICategoryNamesCollector namesCollector;
     private final CategoryUiCursor cursor;
     private final CategoryExistenceReporter existenceReporter;
     private final StringSplitter stringSplitter;
 
     @Inject
-    public CategoryCrawler(CategoryNamesCollector namesCollector, CategoryUiCursor cursor,
+    public CategoryCrawler(ICategoryNamesCollector namesCollector, CategoryUiCursor cursor,
                            CategoryExistenceReporter existenceReporter, StringSplitter stringSplitter) {
         this.namesCollector = namesCollector;
         this.cursor = cursor;
@@ -28,13 +28,13 @@ public class CategoryCrawler {
         this.stringSplitter = stringSplitter;
     }
 
-    public void crawl(LeafCategoryHandler leafHandler, IState state) {
+    public void crawl(LeafHandler leafHandler, IState state) {
         cursor.reset();
         dfs(new ArrayList<>(), leafHandler,state);
 
     }
 
-    private void dfs(List<String> path, LeafCategoryHandler leafHandler,IState state) {
+    private void dfs(List<String> path, LeafHandler leafHandler, IState state) {
         cursor.ensureAt(path);
 
         List<String> children = namesCollector.collectAllNames();

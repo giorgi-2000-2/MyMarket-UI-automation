@@ -1,22 +1,21 @@
 package mobile.crawler;
+
 import com.google.inject.Inject;
-import core.reporter.IReportNode;
-import core.reporter.NodeKey;
-import core.reporter.ReportStatus;
-import core.reporter.extentreport.RetryReporter;
-import mobile.category.navigation.CategoryNavigator;
+import core.utils.RetryPolicy;
+import mobile.category.navigation.ICategoryNavigator;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryUiCursor {
-    private final CategoryNavigator navigator;
-    private final RetryReporter retryReporter;
+    private final ICategoryNavigator navigator;
+    private final RetryPolicy retryPolicy;
     private List<String> uiPath = null;
 
     @Inject
-    public CategoryUiCursor(CategoryNavigator navigator , RetryReporter retryReporter) {
+    public CategoryUiCursor(ICategoryNavigator navigator, RetryPolicy retryPolicy) {
         this.navigator = navigator;
-        this.retryReporter = retryReporter;
+        this.retryPolicy = retryPolicy;
     }
 
     public void reset() {
@@ -26,39 +25,31 @@ public class CategoryUiCursor {
     public void markAt(List<String> path) {
         uiPath = path;
     }
-    public boolean clickChild(List<String> path, String child) {
-        RuntimeException last = null;
 
-        for (int attempt = 1; attempt <= 3; attempt++) {
-            try {
-                ensureAt(path);
-                return navigator.clickAndIsLeaf(child);
-            } catch (RuntimeException e) {
-                last = e;
-                uiPath = null;
-                retryReporter.logAttempt("clickChild", child, attempt, e);
-            }
-        }
-        throw last;
+    public boolean clickChild(List<String> path, String child) {
+        return retryPolicy.run(
+                "clickChild",
+                child,
+                () -> {
+                    ensureAt(path);
+                    return navigator.clickAndIsLeaf(child);
+                },
+                () -> uiPath = null
+        );
     }
 
     public void ensureAt(List<String> path) {
         if (path.equals(uiPath)) return;
 
-        RuntimeException last = null;
-
-        for (int attempt = 1; attempt <= 3; attempt++) {
-            try {
-                navigator.openAt(path);
-                uiPath = new ArrayList<>(path);
-                return;
-            } catch (RuntimeException e) {
-                last = e;
-                uiPath = null;
-                retryReporter.logAttempt("ensureAt", path.toString(), attempt, e);
-            }
-        }
-        throw last;
+        retryPolicy.run(
+                "ensureAt",
+                path.toString(),
+                () -> {
+                    navigator.openAt(path);
+                    uiPath = new ArrayList<>(path);
+                    return true;
+                },
+                () -> uiPath = null
+        );
     }
-
 }

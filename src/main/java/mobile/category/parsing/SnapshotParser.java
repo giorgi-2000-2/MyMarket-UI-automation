@@ -43,9 +43,9 @@ public class SnapshotParser {
 
         for (int i = 0; i < all.getLength(); i++) {
             Element el = (Element) all.item(i);
-            String desc = el.getAttribute("content-desc");
-            if (desc == null) continue;
-            desc = desc.trim();
+            String exact = el.getAttribute("content-desc");
+            if (exact == null) continue;
+            String desc = exact.trim();
             if (desc.isEmpty()) continue;
 
             if (confirmButton == null && el.getTagName().endsWith("Button")
@@ -57,7 +57,7 @@ public class SnapshotParser {
             Matcher m = patternConfig.matcher(desc);
             if (m.matches()) {
                 int[] b = boundsParser.parse(el.getAttribute("bounds"));
-                byRaw.putIfAbsent(desc, new Item(desc, m.group(1).trim(), b[0], b[1], b[3]));
+                byRaw.putIfAbsent(desc, new Item(exact, m.group(1).trim(), b[0], b[1], b[3]));
                 continue;
             }
             if (labels.systemLabels().contains(desc)) continue;

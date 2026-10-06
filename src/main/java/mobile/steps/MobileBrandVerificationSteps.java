@@ -4,7 +4,6 @@ import core.jsonmanager.CategoryDataService;
 import core.reporter.texts.StepNames;
 import mobile.brand.BrandFinder;
 import mobile.brand.BrandManager;
-import mobile.crawler.handler.LeafCategoryHandler;
 import core.annotations.TestScoped;
 import core.testdata.CategoryTestCase;
 import core.asserts.BrandVerifier;
@@ -16,12 +15,12 @@ import java.util.List;
 import static core.reporter.NodeKey.CATEGORY;
 import static core.reporter.NodeKey.JSON_DATA;
 @TestScoped
-public class MobileBrandVerificationSteps implements LeafCategoryHandler {
+public class MobileBrandVerificationSteps {
     private final BrandVerifier brandVerifier;
     private final IReportNode reporter;
     private final BrandManager brandManager;
     private final CategoryDataService categoryDataService;
-private final BrandFinder brandFinder;
+    private final BrandFinder brandFinder;
     @Inject
     public MobileBrandVerificationSteps(BrandVerifier brandVerifier,
                                         IReportNode reporter, BrandManager brandManager,
@@ -52,8 +51,4 @@ private final BrandFinder brandFinder;
         }
     }
 
-    @Override
-    public void handle(List<String> fullPath) {
-
-    }
 }

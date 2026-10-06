@@ -7,7 +7,7 @@ import core.reporter.ReportStatus;
 import core.reporter.texts.AssertMessages;
 import core.reporter.texts.ErrorMessages;
 import core.reporter.texts.StepNames;
-import org.json.JSONException;
+import core.exception.CatalogException;
 import core.annotations.TestScoped;
 
 import java.util.List;
@@ -46,7 +46,7 @@ public class BrandVerifier {
                 assertBrandExists(NodeKey.BRANDS, titleText, brand);
             }
 
-        } catch (JSONException e) {
+        } catch (CatalogException e) {
             reporter.logToNode(NodeKey.BRAND_ITEM, ReportStatus.INFO,
                     titleText +  ErrorMessages.BRAND_CHECK_ERROR.format(titleText, e.getMessage()));
         }

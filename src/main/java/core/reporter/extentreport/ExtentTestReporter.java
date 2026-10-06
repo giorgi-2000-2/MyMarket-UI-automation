@@ -1,11 +1,19 @@
 package core.reporter.extentreport;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import core.reporter.*;
 @Singleton
 public class ExtentTestReporter implements IReportLifecycle, IReportTree, IReportNode, IReporter {
-    private final ReportNodeManager nodeManager = new ReportNodeManager();
-    private final ExtentLogger logger = new ExtentLogger(nodeManager);
+    private final ReportNodeManager nodeManager;
+    private final ExtentLogger logger;
+    private final ExtentReportConfig extentReportConfig;
+@Inject
+    public ExtentTestReporter(ReportNodeManager nodeManager, ExtentLogger logger, ExtentReportConfig extentReportConfig) {
+        this.nodeManager = nodeManager;
+        this.logger = logger;
+    this.extentReportConfig = extentReportConfig;
+}
 
     @Override
     public void createTest(String testName) {
@@ -51,6 +59,6 @@ public class ExtentTestReporter implements IReportLifecycle, IReportTree, IRepor
 
     @Override
     public void flush() {
-        ExtentReportConfig.flush();
+        extentReportConfig.flush();
     }
 }

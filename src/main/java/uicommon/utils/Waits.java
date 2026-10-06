@@ -1,4 +1,4 @@
-package uicommon;
+package uicommon.utils;
 import com.google.inject.Inject;
 import core.config.IWait;
 import uicommon.driver.IDriver;

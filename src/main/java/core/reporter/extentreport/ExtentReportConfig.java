@@ -2,13 +2,16 @@ package core.reporter.extentreport;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
+@Singleton
 public final class ExtentReportConfig {
-    private static volatile ExtentReports extent;
+    private  volatile ExtentReports extent;
+@Inject
+    public ExtentReportConfig() {}
 
-    private ExtentReportConfig() {}
-
-    public static ExtentReports getInstance() {
+    public ExtentReports getInstance() {
         if (extent == null) {
             synchronized (ExtentReportConfig.class) {
                 if (extent == null) {
@@ -27,7 +30,7 @@ public final class ExtentReportConfig {
         return extent;
     }
 
-    public static void flush() {
+    public void flush() {
         if (extent != null) {
             extent.flush();
         }

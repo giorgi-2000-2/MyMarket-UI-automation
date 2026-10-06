@@ -2,13 +2,14 @@ package core.reporter.extentreport;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
+import com.google.inject.Inject;
 import core.reporter.NodeKey;
 import core.reporter.ReportStatus;
 import core.reporter.texts.ErrorMessages;
 
 public class ExtentLogger {
     private final ReportNodeManager nodeManager;
-
+    @Inject
     public ExtentLogger(ReportNodeManager nodeManager) {
         this.nodeManager = nodeManager;
     }

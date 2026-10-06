@@ -3,39 +3,30 @@ import com.google.inject.Inject;
 import core.annotations.TestScoped;
 import core.asserts.SoftVerifier;
 import core.reporter.texts.StepNames;
-import web.pages.advertisement.AdvertisementPage;
-import web.pages.basepage.BasePage;
-import core.config.IPageConfig;
 import core.config.IUrlConfig;
-import core.config.IUserConfig;
 import core.reporter.IReportNode;
+import web.pages.basepage.PageAction;
 
 import static core.reporter.NodeKey.NAVIGATION_AD_PAGE;
 @TestScoped
 public class NavigationAsserts {
-
-    private final AdvertisementPage advertisementPage;
-    private final BasePage basePage;
+    private final PageAction pageAction;
     private final IUrlConfig urlConfig;
-    private final IUserConfig userConfig;
+    private final TitleAsserts titleAsserts;
     private final SoftVerifier assertManager;
     private final IReportNode reportNode;
-    private final IPageConfig pageConfig;
+  private final UserInfoAsserts userInfoAsserts;
     @Inject
-    public NavigationAsserts(AdvertisementPage advertisementPage,
-                             BasePage basePage,
-                             IUrlConfig urlConfig,
-                             IUserConfig userConfig,
+    public NavigationAsserts(PageAction pageAction,
+                             IUrlConfig urlConfig, TitleAsserts titleAsserts,
                              SoftVerifier assertManager,
-                             IReportNode reportNode,
-                             IPageConfig pageConfig) {
-        this.advertisementPage = advertisementPage;
-        this.basePage = basePage;
+                             IReportNode reportNode, UserInfoAsserts userInfoAsserts) {
+        this.pageAction = pageAction;
         this.urlConfig = urlConfig;
-        this.userConfig = userConfig;
+        this.titleAsserts = titleAsserts;
         this.assertManager = assertManager;
         this.reportNode = reportNode;
-        this.pageConfig = pageConfig;
+        this.userInfoAsserts = userInfoAsserts;
     }
 
     public void assertAfterNavigatingToAdvertisementPage() {
@@ -43,19 +34,11 @@ public class NavigationAsserts {
 
         assertManager.check(NAVIGATION_AD_PAGE, StepNames.CHECK_URL.get())
                 .expected(urlConfig.baseUrl())
-                .actual(basePage.getCurrentURL());
+                .actual(pageAction.getCurrentURL());
 
-        assertManager.check(NAVIGATION_AD_PAGE, StepNames.CHECK_MAIN_TITLE.get())
-                .expected(pageConfig.pageMainTitle())
-                .actual(advertisementPage.getMainTitle());
+        titleAsserts.assertMainTitle(NAVIGATION_AD_PAGE);
+        userInfoAsserts.assertUserNameAndId(NAVIGATION_AD_PAGE);
 
-        assertManager.check(NAVIGATION_AD_PAGE, StepNames.CHECK_USER_NAME.get())
-                .expected(userConfig.expectedUserName())
-                .actual(advertisementPage.getUserInfo().getPageUserName());
-
-        assertManager.check(NAVIGATION_AD_PAGE, StepNames.CHECK_USER_ID.get())
-                .expected(userConfig.userId())
-                .actual(advertisementPage.getUserInfo().getUserNameID().getText());
     }
 
 }

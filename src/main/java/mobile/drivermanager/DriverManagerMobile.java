@@ -1,6 +1,6 @@
 package mobile.drivermanager;
 
-import core.driver.IDriver;
+import uicommon.driver.IDriver;
 import core.reporter.texts.ErrorMessages;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -9,12 +9,12 @@ import core.annotations.TestScoped;
 import java.net.MalformedURLException;
 import java.net.URL;
 @TestScoped
-public class DriverManagerMobile implements IDriver {
+public class DriverManagerMobile implements IDriver<AndroidDriver> {
+    private AndroidDriver driver;
     private static final String APP_PACKAGE = "ge.my.mymarket";
-    private final ThreadLocal<AndroidDriver> driver = new ThreadLocal<>();
 
     public AndroidDriver getDriver() {
-        if (driver.get() == null) {
+        if (driver == null) {
             try {
                 DesiredCapabilities cap = new DesiredCapabilities();
                 cap.setCapability("platformName", "android");
@@ -28,17 +28,16 @@ public class DriverManagerMobile implements IDriver {
                 cap.setCapability("appium:avdLaunchTimeout", "900000");
                 cap.setCapability("appium:forceAppLaunch", true);
                 cap.setCapability("appium:shouldTerminateApp", true);
-
-                driver.set(new AndroidDriver(new URL("http://127.0.0.1:4723"), cap));
+                driver = new AndroidDriver(new URL("http://127.0.0.1:4723"), cap);
             } catch (MalformedURLException e) {
                 throw new RuntimeException(e);
             }
         }
-        return driver.get();
+        return driver;
     }
 
     public void quit() {
-        AndroidDriver current = driver.get();
+        AndroidDriver current = driver;
         if (current == null) return;
         try {
             current.terminateApp(APP_PACKAGE);
@@ -50,7 +49,7 @@ public class DriverManagerMobile implements IDriver {
             } catch (Exception e) {
                 System.out.println(ErrorMessages.APPIUM_SESSION_CLOSE_FAILED.format(e.getMessage()));
             } finally {
-                driver.remove();
+                driver = null;
             }
         }
     }

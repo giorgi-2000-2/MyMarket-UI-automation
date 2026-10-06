@@ -1,4 +1,4 @@
-package uicommon;
+package uicommon.utils;
 
 import core.reporter.IReportTree;
 import core.reporter.ReportStatus;

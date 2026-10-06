@@ -1,22 +1,26 @@
 package web.pages.advertisement;
 import com.google.inject.Inject;
 import core.annotations.TestScoped;
-import web.pages.basepage.BasePage;
-import core.config.Waits;
-import core.driver.IDriver;
+import uicommon.utils.Waits;
+import uicommon.driver.IDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import web.pages.basepage.PageAction;
+import web.pages.basepage.JavaScriptHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 @TestScoped
 public class BrandDropdownComponent{
     private final Waits waitUtils;
-    private final BasePage basePage;
+    private final PageAction pageAction;
+    private final JavaScriptHelper javaScriptHelper;
+
 
 
     @FindBy(xpath = "//*[@id=\"BrandID\"]/div/div/div[1]/div[2]")
@@ -25,14 +29,15 @@ public class BrandDropdownComponent{
     @FindBy(xpath = "//*[contains(@id,'react-select-') and contains(@id,'-placeholder')]")
     private WebElement brandDropdownPlaceholder;
     @Inject
-    public BrandDropdownComponent(IDriver driver, Waits waitUtils, BasePage basePage) {
+    public BrandDropdownComponent(IDriver driver, Waits waitUtils, PageAction pageAction, JavaScriptHelper javaScriptHelper) {
         this.waitUtils = waitUtils;
-        this.basePage = basePage;
+        this.pageAction = pageAction;
+        this.javaScriptHelper = javaScriptHelper;
         PageFactory.initElements(driver.getDriver(), this);
     }
 
     public WebElement getBrandContainer() {
-        basePage.getWaitHelper().waitElementToBeVisible(waitUtils.getTextWait(), dropdownBrandContainer);
+        pageAction.waitElementToBeVisible(waitUtils.getTextWait(), dropdownBrandContainer);
         return dropdownBrandContainer;
     }
 
@@ -66,7 +71,7 @@ public class BrandDropdownComponent{
     private List<String> extractBrandNames() {
         List<String> brandNameList = new ArrayList<>();
 
-        basePage.waitClick(getBrandContainer());
+        pageAction.waitClick(getBrandContainer());
         List<WebElement> brandList = getBrandOptions();
 
         for (int i = 0; i < brandList.size(); i++) {
@@ -74,10 +79,10 @@ public class BrandDropdownComponent{
             if (i == 0 && text.equals("-")) {
                 continue;
             }
-            basePage.scroll(brandList.get(i));
+            javaScriptHelper.scroll(brandList.get(i));
             brandNameList.add(text);
         }
-        basePage.waitClick(getBrandContainer());
+        pageAction.waitClick(getBrandContainer());
 
         return brandNameList;
     }

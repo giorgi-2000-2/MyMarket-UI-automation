@@ -1,4 +1,4 @@
-package core.exeption;
+package core.exception;
 
 
 public class CategoryNotFoundException extends TransientUiException {

@@ -1,8 +1,7 @@
 package core.config;
 
-public interface ISettingsWait {
+public interface ITimeoutConfig {
     long transitionTimeoutMs();
     long openTimeoutMs();
     long pollMs();
-    public long defaultTimeoutMs();
 }

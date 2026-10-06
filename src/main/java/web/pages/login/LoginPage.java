@@ -1,14 +1,14 @@
 package web.pages.login;
-
 import com.google.inject.Inject;
 import lombok.Getter;
 import core.annotations.TestScoped;
-import web.pages.basepage.BasePage;
-import core.config.Waits;
-import core.driver.IDriver;
+import uicommon.utils.Waits;
+import uicommon.driver.IDriver;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import web.pages.basepage.PageAction;
+
 @TestScoped
 public class LoginPage {
     @Getter
@@ -29,24 +29,24 @@ public class LoginPage {
 
 
     private final Waits waitUtils;
-    private final BasePage basePage;
+    private final PageAction pageAction;
     @Inject
-    public LoginPage(IDriver driver , Waits waitUtils, BasePage basePage) {
+    public LoginPage(IDriver driver , Waits waitUtils, PageAction pageAction) {
         this.waitUtils = waitUtils;
-        this.basePage = basePage;
+        this.pageAction = pageAction;
         PageFactory.initElements(driver.getDriver(), this);
     }
 
     public void clickLoginBtn() {
-        basePage.getWaitHelper().waitElementToBeVisible(waitUtils.getShortWait(), userLoginBtn);
-        basePage.click(userLoginBtn);
+        pageAction.waitElementToBeVisible(waitUtils.getShortWait(), userLoginBtn);
+        pageAction.click(userLoginBtn);
     }
 
     public void login(String userLogin, String passwordLogin) {
         clickLoginBtn();
-        basePage.sendKeys(userNameField, userLogin);
-        basePage.sendKeys(passwordField, passwordLogin);
-        basePage.click(loginBtn);
+        pageAction.sendKeys(userNameField, userLogin);
+        pageAction.sendKeys(passwordField, passwordLogin);
+        pageAction.click(loginBtn);
     }
 
 

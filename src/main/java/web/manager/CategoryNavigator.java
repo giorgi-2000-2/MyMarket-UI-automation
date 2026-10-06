@@ -1,19 +1,20 @@
 package web.manager;
 import com.google.inject.Inject;
 import web.pages.advertisement.AdvertisementPage;
-import web.pages.basepage.BasePage;
 import org.openqa.selenium.WebElement;
+import web.pages.basepage.JavaScriptHelper;
+import web.pages.basepage.PageAction;
 
 import java.util.List;
 
 public class CategoryNavigator implements ICategoryNavigator {
 
     private final AdvertisementPage page;
-    private final BasePage basePage;
+    private final PageAction pageAction;
     @Inject
-    public CategoryNavigator(AdvertisementPage page, BasePage basePage) {
+    public CategoryNavigator(AdvertisementPage page , PageAction pageAction) {
         this.page = page;
-        this.basePage = basePage;
+        this.pageAction = pageAction;
     }
 
     public void openDropdown() {
@@ -22,7 +23,11 @@ public class CategoryNavigator implements ICategoryNavigator {
 
     public void clickOption(int index) {
         List<WebElement> options = page.getCategoryDropdown().getOptions();
-        basePage.waitClick(options.get(index));
+        pageAction.waitClick(options.get(index));
+    }
+    public String optionsCategory(int index) {
+        List<WebElement> options = page.getCategoryDropdown().getOptions();
+        return options.get(index).getText();
     }
 
     public void goBack() {

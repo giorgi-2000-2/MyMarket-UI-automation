@@ -1,4 +1,4 @@
-package core.exeption;
+package core.exception;
 
 
 public abstract class UiException extends RuntimeException {

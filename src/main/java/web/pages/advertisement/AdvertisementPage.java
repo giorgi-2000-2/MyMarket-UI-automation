@@ -3,16 +3,17 @@ import com.google.inject.Inject;
 import core.reporter.texts.UiText;
 import lombok.Getter;
 import core.annotations.TestScoped;
-import web.pages.basepage.BasePage;
-import core.config.Waits;
-import core.driver.IDriver;
+import uicommon.utils.Waits;
+import uicommon.driver.IDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import web.pages.basepage.PageAction;
+
 @TestScoped
 public class AdvertisementPage {
-    private final BasePage basePage;
+    private final PageAction pageAction;
     private final Waits waitUtils;
 
     @Getter private final UserInfoComponent userInfo;
@@ -29,14 +30,14 @@ public class AdvertisementPage {
     @Inject
     public AdvertisementPage(
             IDriver driver,
-            BasePage basePage,
+            PageAction pageAction,
             Waits waitUtils,
             UserInfoComponent userInfo,
             CategoryDropdownComponent categoryDropdown,
             BrandDropdownComponent brandDropdown,
             TitleComponent titleComponent) {
 
-        this.basePage = basePage;
+        this.pageAction = pageAction;
         this.waitUtils = waitUtils;
         this.userInfo = userInfo;
         this.categoryDropdown = categoryDropdown;
@@ -46,13 +47,13 @@ public class AdvertisementPage {
     }
 
     public void clickAdvertisementBtn() {
-        basePage.getWaitHelper().waitElementToBeClickable(waitUtils.getWait(), advertisementBtn);
-        basePage.click(advertisementBtn);
+        pageAction.waitElementToBeClickable(waitUtils.getWait(), advertisementBtn);
+        pageAction.click(advertisementBtn);
     }
 
 
     public String getMainTitle() {
-        basePage.getWaitHelper().waitElementToBeVisible(waitUtils.getWait(), mainTitle);
+        pageAction.waitElementToBeVisible(waitUtils.getWait(), mainTitle);
         return mainTitle.getText();
     }
 

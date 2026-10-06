@@ -1,5 +1,4 @@
-package mobile.crawler.handler;
-
+package core.steps;
 import java.util.List;
 
 public interface LeafHandler {

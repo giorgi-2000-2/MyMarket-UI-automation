@@ -2,9 +2,9 @@ package web.steps;
 import com.google.inject.Inject;
 import core.annotations.TestScoped;
 import core.reporter.texts.StepNames;
-import core.testdata.CategoryTestCase;
 import core.jsonmanager.CategoryDataService;
 import core.asserts.BrandVerifier;
+import core.testdata.CategoryTestCase;
 import web.pages.advertisement.AdvertisementPage;
 import core.reporter.IReportNode;
 

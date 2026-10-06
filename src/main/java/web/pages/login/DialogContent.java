@@ -1,14 +1,14 @@
 package web.pages.login;
-
 import com.google.inject.Inject;
 import core.annotations.TestScoped;
 import core.reporter.texts.AssertMessages;
-import web.pages.basepage.BasePage;
-import core.config.Waits;
-import core.driver.IDriver;
+import uicommon.utils.Waits;
+import uicommon.driver.IDriver;
 import core.reporter.IReportTree;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import web.pages.basepage.PageAction;
+
 @TestScoped
 public class DialogContent {
 
@@ -16,21 +16,21 @@ private final LoginPage loginPage;
     private final IDriver driver;
     private final Waits waitUtils;
     private final IReportTree reporter;
-    private final BasePage basePage;
+    private final PageAction pageAction;
     @Inject
-    public DialogContent(IDriver driver, LoginPage loginPage, Waits waitUtils, IReportTree reporter, BasePage basePage) {
+    public DialogContent(IDriver driver, LoginPage loginPage, Waits waitUtils, IReportTree reporter, PageAction pageAction) {
         this.loginPage = loginPage;
         this.driver = driver;
         this.waitUtils = waitUtils;
         this.reporter = reporter;
-        this.basePage = basePage;
+        this.pageAction = pageAction;
     }
 
 
     public void closeDialogContent() {
         By cookie = By.xpath("//*[@id=\"cookiescript_accept\"]");
         waitUtils.getWait().until(ExpectedConditions.presenceOfElementLocated(cookie));
-        basePage.click(loginPage.closeCookie);
+        pageAction.click(loginPage.closeCookie);
     }
 
     public void closePopUp() {

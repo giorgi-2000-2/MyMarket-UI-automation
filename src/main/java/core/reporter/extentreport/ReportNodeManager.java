@@ -1,19 +1,26 @@
 package core.reporter.extentreport;
 
 import com.aventstack.extentreports.ExtentTest;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import core.reporter.NodeKey;
 import core.reporter.texts.ErrorMessages;
 
 import java.util.EnumMap;
 import java.util.Map;
-
+@Singleton
 public class ReportNodeManager {
     private final ThreadLocal<ExtentTest> currentTest = new ThreadLocal<>();
     private final ThreadLocal<Map<NodeKey, ExtentTest>> namedNodes =
             ThreadLocal.withInitial(() -> new EnumMap<>(NodeKey.class));
+    private final ExtentReportConfig extentReportConfig;
+@Inject
+    public ReportNodeManager(ExtentReportConfig extentReportConfig) {
+        this.extentReportConfig = extentReportConfig;
+    }
 
     public void createTest(String testName) {
-        currentTest.set(ExtentReportConfig.getInstance().createTest(testName));
+        currentTest.set(extentReportConfig.getInstance().createTest(testName));
         namedNodes.get().clear();
     }
 

@@ -1,10 +1,11 @@
 package org.example.advertisement;
 
+import core.testdata.CategoryTestCase;
+import core.testdata.CategoryTestCaseProvider;
 import org.example.BaseTestAndroid;
 import org.testng.annotations.Test;
 import core.annotations.NavigationToAdvertisementPage;
-import core.testdata.CategoryTestCase;
-import core.testdata.CategoryTestCaseProvider;
+
 
 public class CategoryTreeTest extends BaseTestAndroid {
 

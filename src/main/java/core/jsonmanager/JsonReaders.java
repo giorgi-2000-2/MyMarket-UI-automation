@@ -1,30 +1,43 @@
 package core.jsonmanager;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import lombok.Getter;
+import core.config.ICatalogConfig;
 import core.reporter.texts.ErrorMessages;
+import lombok.Getter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+
+@Getter
 @Singleton
 public class JsonReaders {
-    @Getter
+
     private final JSONObject json;
 
-     {
-        try {
-            String path = "src/test/category.Json";
-            String content = new String(Files.readAllBytes(Paths.get(path)));
-            json = new JSONObject(content);
-        } catch (IOException | JSONException e) {
-            throw new IllegalStateException(ErrorMessages.JSON_READ_FAILED.format(e));
-        }
+    @Inject
+    public JsonReaders(ICatalogConfig config) {
+        this(config.catalogResource());
     }
 
+    public JsonReaders(String resource) {
+        this.json = load(resource);
+    }
 
-
-
+    private static JSONObject load(String resource) {
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        try (InputStream in = loader.getResourceAsStream(resource)) {
+            if (in == null) {
+                throw new IllegalStateException(
+                        ErrorMessages.JSON_READ_FAILED.format("classpath-ზე ვერ მოიძებნა: " + resource));
+            }
+            String content = new String(in.readAllBytes(), StandardCharsets.UTF_8);
+            return new JSONObject(content);
+        } catch (IOException | JSONException e) {
+            throw new IllegalStateException(ErrorMessages.JSON_READ_FAILED.format(e), e);
+        }
+    }
 }

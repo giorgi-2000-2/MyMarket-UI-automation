@@ -1,4 +1,7 @@
-package core.exception;
+package core.config;
 
 public interface IRetryConfig {
+    int maxAttempts();
+
+
 }

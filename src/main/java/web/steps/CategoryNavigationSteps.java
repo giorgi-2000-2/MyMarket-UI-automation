@@ -4,12 +4,12 @@ import core.asserts.SoftVerifier;
 import core.annotations.TestScoped;
 import core.reporter.texts.AssertMessages;
 import core.reporter.texts.StepNames;
-import web.manager.ICategoryNavigator;
 import web.pages.advertisement.AdvertisementPage;
 import web.pages.advertisement.CategoryDropdownComponent;
-import web.pages.basepage.BasePage;
 import core.reporter.IReportNode;
 import core.reporter.ReportStatus;
+import web.pages.basepage.JavaScriptHelper;
+import web.pages.basepage.PageAction;
 
 import java.util.List;
 
@@ -18,18 +18,16 @@ import static core.reporter.NodeKey.DROPDOWN;
 public class CategoryNavigationSteps {
 
     private final AdvertisementPage advertisementPage;
-    private final BasePage basePage;
+    private final PageAction pageAction;
     private final SoftVerifier assertManager;
     private final IReportNode report;
-    private final ICategoryNavigator navigator;
     @Inject
-    public CategoryNavigationSteps(AdvertisementPage advertisementPage, BasePage basePage,
-                                   SoftVerifier assertManager, IReportNode report, ICategoryNavigator navigator) {
+    public CategoryNavigationSteps(AdvertisementPage advertisementPage, PageAction pageAction,
+                                   SoftVerifier assertManager, IReportNode report ) {
         this.advertisementPage = advertisementPage;
-        this.basePage = basePage;
+        this.pageAction = pageAction;
         this.assertManager = assertManager;
         this.report = report;
-        this.navigator = navigator;
     }
 
     public void verifyBackClickRestoresList() {
@@ -66,7 +64,7 @@ public class CategoryNavigationSteps {
 
 
     private void openCategory(int index) {
-        basePage.waitClick(dropdown().getOptions().get(index));
+        pageAction.waitClick(dropdown().getOptions().get(index));
     }
 
     private List<String> goBack() {

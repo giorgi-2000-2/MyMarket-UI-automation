@@ -1,16 +1,19 @@
 package web.pages.advertisement;
 import com.google.inject.Inject;
 import core.annotations.TestScoped;
-import web.pages.basepage.BasePage;
-import core.config.Waits;
-import core.driver.IDriver;
+import uicommon.utils.Waits;
+import uicommon.driver.IDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import web.pages.basepage.PageAction;
+import web.pages.basepage.JavaScriptHelper;
+
 @TestScoped
 public class UserInfoComponent  {
     private final Waits waitUtils;
-    private final BasePage basePage;
+    private final PageAction pageAction;
+    private final JavaScriptHelper javaScriptHelper;
 
     @FindBy(xpath = "(//div[@class='font-bold font-size-16 text-truncate user-name'])[2]")
     private WebElement pageUserName;
@@ -24,26 +27,27 @@ public class UserInfoComponent  {
     @FindBy(xpath = "(//div[contains(text(),'ID ')])[2]")
     private WebElement userNameID;
     @Inject
-    public UserInfoComponent(IDriver driver, Waits waitUtils , BasePage basePage) {
+    public UserInfoComponent(IDriver driver, Waits waitUtils , PageAction pageAction, JavaScriptHelper javaScriptHelper) {
         this.waitUtils = waitUtils;
-        this.basePage = basePage;
+        this.pageAction = pageAction;
+        this.javaScriptHelper = javaScriptHelper;
         PageFactory.initElements(driver.getDriver(), this);
     }
 
     public String getPageUserName() {
-        basePage.getWaitHelper().waitElementToBeVisible(waitUtils.getShortWait(), pageUserName);
+        pageAction.waitElementToBeVisible(waitUtils.getShortWait(), pageUserName);
         return pageUserName.getText();
     }
 
     public String getUserNameFromDropdown() {
-        basePage.getWaitHelper().waitElementToBeVisible(waitUtils.getWait(), usernameBtn);
-        basePage.scroll(usernameBtn);
-        basePage.click(usernameBtn);
+        pageAction.waitElementToBeVisible(waitUtils.getWait(), usernameBtn);
+        javaScriptHelper.scroll(usernameBtn);
+        pageAction.click(usernameBtn);
         return usernameBtnName.getText();
     }
 
     public WebElement getUserNameID() {
-        basePage.getWaitHelper().waitElementToBeVisible(waitUtils.getShortWait(), userNameID);
+        pageAction.waitElementToBeVisible(waitUtils.getShortWait(), userNameID);
         return userNameID;
     }
 }

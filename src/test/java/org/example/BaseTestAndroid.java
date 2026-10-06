@@ -1,16 +1,16 @@
 package org.example;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import core.driver.IDriver;
+import uicommon.driver.IDriver;
 import core.modules.CoreModule;
 import core.modules.SoftAssertListener;
 import core.modules.TestScope;
 import core.reporter.IReporter;
-import core.reporter.TestListener;
+import uicommon.utils.TestListener;
+import core.steps.ICategoryCheckSteps;
 import core.testdata.ITestDataPrepare;
 import core.utils.TestAttributes;
 import mobile.dimodulemobile.MobileModule;
-import mobile.steps.BusinessStepsMobile;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -28,7 +28,7 @@ public class BaseTestAndroid {
     @Inject private IReporter reporter;
     @Inject private Provider<SoftAssert> soft;
     @Inject private Provider<ITestDataPrepare> dataPreparer;
-    @Inject protected Provider<BusinessStepsMobile> steps;
+    @Inject protected Provider<ICategoryCheckSteps> steps;
 
     @BeforeMethod(alwaysRun = true)
     public void setup(Method method, Object[] args, ITestResult result) {

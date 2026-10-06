@@ -1,17 +1,18 @@
 package web.pages.advertisement;
 import com.google.inject.Inject;
 import core.annotations.TestScoped;
-import web.pages.basepage.BasePage;
-import core.config.Waits;
-import core.driver.IDriver;
+import uicommon.utils.Waits;
+import uicommon.driver.IDriver;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import web.pages.basepage.PageAction;
+
 @TestScoped
 public class TitleComponent  {
-private final BasePage basePage;
+private final PageAction pageAction;
     private final Waits waitUtils;
 
     @FindBy(xpath = "//*[@id=\"CatID\"]/div/div/div/div[1]/div[1]")
@@ -20,9 +21,9 @@ private final BasePage basePage;
     @FindBy(xpath = "//*[@id=\"root\"]/main/div/div/div/div[2]/form/div[1]/div[2]/div/div/span")
     private WebElement titleText;
     @Inject
-    public TitleComponent(IDriver driver, Waits waitUtils, BasePage basePage ) {
+    public TitleComponent(IDriver driver, Waits waitUtils, PageAction pageAction) {
         this.waitUtils = waitUtils;
-        this.basePage = basePage;
+        this.pageAction = pageAction;
         PageFactory.initElements(driver.getDriver(), this);
     }
 
@@ -40,7 +41,7 @@ private final BasePage basePage;
 
     public String getPreviewTitleAfterChange() {
         try {
-            basePage.getWaitHelper().waitElementToBeVisible(waitUtils.getTextWait(), titleText);
+            pageAction.waitElementToBeVisible(waitUtils.getTextWait(), titleText);
             String old = titleText.getText();
             waitUtils.getTextWait().until(
                     ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(titleText, old))

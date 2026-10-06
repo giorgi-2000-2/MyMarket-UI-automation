@@ -1,10 +1,7 @@
-package core.reporter.extentreport;
+package core.reporter;
 
 import com.google.inject.Inject;
 import core.annotations.TestScoped;
-import core.reporter.IReportNode;
-import core.reporter.NodeKey;
-import core.reporter.ReportStatus;
 
 @TestScoped
 public class RetryReporter {
@@ -28,7 +25,7 @@ public class RetryReporter {
     public void logAttempt(String action, String target, int attempt, Exception e) {
         ensureContainer();
 
-        String childName = "ცდა #" + attempt + " — " + action + " [" + target + "]";
+        String childName = "ცდა #" + attempt + " — " + action + " " + target + " ";
         reportNode.createChildNode(NodeKey.RETRY, NodeKey.RETRY_ATTEMPT, childName);
 
         reportNode.logToNode(NodeKey.RETRY_ATTEMPT, ReportStatus.WARNING,

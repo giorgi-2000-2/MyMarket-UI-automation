@@ -13,6 +13,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <lombok.version>1.18.34</lombok.version>
+    <aspectj.version>1.9.22</aspectj.version>
+    <allure.version>2.29.1</allure.version>
   </properties>
 
   <dependencies>
@@ -20,7 +22,6 @@
       <groupId>com.google.inject</groupId>
       <artifactId>guice</artifactId>
       <version>7.0.0</version>
-      <scope>compile</scope>
     </dependency>
 
     <dependency>
@@ -29,6 +30,18 @@
       <version>4.49.0</version>
     </dependency>
 
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-testng</artifactId>
+      <version>${allure.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>${aspectj.version}</version>
+      <scope>test</scope>
+    </dependency>
 
     <dependency>
       <groupId>io.appium</groupId>
@@ -85,7 +98,6 @@
       <version>2.0.17</version>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
 
   <build>
@@ -99,8 +111,16 @@
             <suiteXmlFile>testNG.xml</suiteXmlFile>
             <suiteXmlFile>testNGunit.xml</suiteXmlFile>
           </suiteXmlFiles>
-
+          <systemPropertyVariables>
+            <allure.results.directory>${project.basedir}/allure-results</allure.results.directory>
+          </systemPropertyVariables>
         </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-maven</artifactId>
+        <version>2.15.0</version>
       </plugin>
 
       <plugin>

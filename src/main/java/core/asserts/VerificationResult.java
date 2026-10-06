@@ -2,7 +2,7 @@ package core.asserts;
 
 import core.reporter.texts.AssertMessages;
 
-public final class VerificationResult {
+public class VerificationResult {
     private final String description;
     private final String expected;
     private final String actual;

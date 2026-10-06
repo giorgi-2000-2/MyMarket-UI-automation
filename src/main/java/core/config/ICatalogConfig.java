@@ -1,4 +1,5 @@
 package core.config;
 
-public interface დასდ {
+public interface ICatalogConfig {
+    String catalogResource();
 }

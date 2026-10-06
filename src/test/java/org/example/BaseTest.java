@@ -5,13 +5,16 @@ import core.modules.*;
 import core.reporter.*;
 import core.reporter.texts.AssertMessages;
 import core.reporter.texts.ErrorMessages;
+import core.steps.IBackNavigationSteps;
+import core.steps.ICategoryCheckSteps;
+import core.steps.ITitleCheckSteps;
 import core.testdata.ITestDataPrepare;
 import core.utils.TestAttributes;
+import uicommon.utils.TestListener;
 import web.dimoduleweb.WebModule;
 import web.pages.login.DialogContent;
-import web.steps.WebBusinessSteps;
 import core.config.IUrlConfig;
-import core.driver.IDriver;
+import uicommon.driver.IDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -29,7 +32,9 @@ public class BaseTest {
     @Inject private IUrlConfig config;
     @Inject private Provider<ITestDataPrepare> dataPreparer;
     @Inject private Provider<SoftAssert> soft;
-    @Inject protected Provider<WebBusinessSteps> steps;
+    @Inject protected Provider<ICategoryCheckSteps>  categoryChecks;
+    @Inject protected Provider<ITitleCheckSteps>     titleChecks;
+    @Inject protected Provider<IBackNavigationSteps> backChecks;
     @Inject private Provider<DialogContent> content;
 
     @BeforeMethod(alwaysRun = true)

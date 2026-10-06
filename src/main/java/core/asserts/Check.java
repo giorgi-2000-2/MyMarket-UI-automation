@@ -4,7 +4,7 @@ import core.reporter.NodeKey;
 
 import java.util.Objects;
 
-public final class Check {
+public class Check {
     private final SoftVerifier verifier;
     private final NodeKey node;
     private final String description;

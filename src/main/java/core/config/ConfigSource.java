@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
-final class ConfigSource {
+public class ConfigSource {
 
     private ConfigSource() {}
 

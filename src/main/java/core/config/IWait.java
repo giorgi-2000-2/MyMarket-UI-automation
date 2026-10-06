@@ -5,5 +5,4 @@ public interface IWait {
         int shortWait();
         int textWait();
 
-
 }

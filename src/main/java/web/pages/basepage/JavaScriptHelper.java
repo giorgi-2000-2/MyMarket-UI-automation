@@ -1,15 +1,16 @@
 package web.pages.basepage;
 import com.google.inject.Inject;
 import core.annotations.TestScoped;
-import core.driver.IDriver;
+import uicommon.driver.IDriver;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+
 import java.util.Map;
 @TestScoped
 public class JavaScriptHelper {
     private final IDriver driver;
     @Inject
-    public JavaScriptHelper(IDriver driver) {
+    public JavaScriptHelper(IDriver driver ) {
         this.driver = driver;
     }
 
@@ -17,6 +18,7 @@ public class JavaScriptHelper {
         ((JavascriptExecutor) driver.getDriver())
                 .executeScript("arguments[0].scrollIntoView({block:'center'});", element);
     }
+
 
     public boolean isElementInViewport(WebElement element) {
         Map<String, Object> rect = (Map<String, Object>) ((JavascriptExecutor) driver.getDriver())
@@ -31,4 +33,10 @@ public class JavaScriptHelper {
 
         return top >= 0 && bottom <= height;
     }
+
+
+
+
+
+
 }

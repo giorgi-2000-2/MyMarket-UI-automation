@@ -1,12 +1,11 @@
 package web.steps;
 import com.google.inject.Inject;
 import core.annotations.TestScoped;
-import core.reporter.NodeKey;
+import core.testdata.CategoryTestCase;
 import web.webasserts.TitleAsserts;
 import web.webasserts.CategoryAsserts;
 import web.webasserts.NavigationAsserts;
 import web.webasserts.UserInfoAsserts;
-import core.testdata.CategoryTestCase;
 import static core.reporter.NodeKey.CLICK_BTN_CHECK;
 @TestScoped
 public class WebAssertSteps {

@@ -14,7 +14,7 @@ public class JsonFinderTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
-        finder = new JsonFinder(new SubcategorySearch(), new JsonReaders());
+        finder = new JsonFinder(new SubcategorySearch(), new JsonReaders("category.json"));
     }
 
     @Test(groups = "unit")
@@ -24,7 +24,7 @@ public class JsonFinderTest {
                 "ხელოვნური ყვავილები და დეკორაციები",
                 new String[0]
         );
-        Assert.assertTrue(finder.findJsonData(path));
+        Assert.assertTrue(finder.categoryExists(path));
     }
 
     @Test(groups = "unit")
@@ -34,7 +34,7 @@ public class JsonFinderTest {
                 "___არარსებული_ნივთი___",
                 new String[0]
         );
-        Assert.assertFalse(finder.findJsonData(path));
+        Assert.assertFalse(finder.categoryExists(path));
     }
 
     @Test(groups = "unit")
@@ -44,7 +44,7 @@ public class JsonFinderTest {
                 "თაიგული",
                 new String[]{"სადღესასწაულო"}
         );
-        Assert.assertTrue(finder.findJsonData(path));
+        Assert.assertTrue(finder.categoryExists(path));
     }
 
     @Test(groups = "unit")
@@ -54,8 +54,8 @@ public class JsonFinderTest {
                 "სადღესასწაულო ნივთები",
                 new String[]{"სადღესასწაულო"}
         );
-        Assert.assertTrue(finder.findJsonBrand(path, "AMSCAN"));
-        Assert.assertTrue(finder.findJsonBrand(path, "amscan")); // ignore case
+        Assert.assertTrue(finder.brandExists(path, "AMSCAN"));
+        Assert.assertTrue(finder.brandExists(path, "amscan")); // ignore case
     }
 
     @Test(groups = "unit")
@@ -65,6 +65,6 @@ public class JsonFinderTest {
                 "სადღესასწაულო ნივთები",
                 new String[]{"სადღესასწაულო"}
         );
-        Assert.assertFalse(finder.findJsonBrand(path, "NO_SUCH_BRAND"));
+        Assert.assertFalse(finder.brandExists(path, "NO_SUCH_BRAND"));
     }
 }

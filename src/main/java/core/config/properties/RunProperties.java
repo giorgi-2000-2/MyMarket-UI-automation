@@ -7,11 +7,11 @@ import java.util.Set;
 
 
 @Singleton
-public class SystemPropertiesConfig implements IAppTree,IRetryConfig {
+public class RunProperties implements IAppTree,IRetryConfig {
 
    private final TypedPropertiesHelper helper;
     @Inject
-    public SystemPropertiesConfig(TypedPropertiesHelper helper) {
+    public RunProperties(TypedPropertiesHelper helper) {
 
         this.helper = helper;
     }

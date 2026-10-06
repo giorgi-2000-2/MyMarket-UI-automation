@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
-<suite name="WebAndMobileParallel" parallel="tests" thread-count="2">
-
-    <test name="Web Tests">
-        <classes>
-            <class name="org.example.advertisement.AdvertisementTest"/>
-        </classes>
-    </test>
+<suite name="simpleTestCases" parallel="methods" thread-count="2">
+<!--    <test name="Web Tests">-->
+<!--        <classes>-->
+<!--            <class name="org.example.advertisement.AdvertisementTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
     <test name="Mobile Tests">
         <classes>

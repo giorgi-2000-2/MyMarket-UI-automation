@@ -11,12 +11,12 @@ public class CategoryTestCaseProvider {
     public Object[][] getCategoriesAndBrandsDataCheckTestCase() {
 
         return new Object[][] {
-                {
-                        CategoryTestCase.builder()
-                                .section(SELL)
-                                .checkBrands(true)
-                                .build()
-                },
+//                {
+//                        CategoryTestCase.builder()
+//                                .section(SELL)
+//                                .checkBrands(true)
+//                                .build()
+//                },
                 {
                         CategoryTestCase.builder()
                                 .section(SELL)

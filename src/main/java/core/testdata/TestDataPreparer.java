@@ -1,12 +1,9 @@
-package core;
+package core.testdata;
 
 import com.google.inject.Inject;
 import core.annotations.NavigationToAdvertisementPage;
 import core.annotations.TestScoped;
 import core.steps.IAdvertisementBusinessFlow;
-import core.testdata.ITestDataPrepare;
-import mobile.steps.BusinessStepsMobile;
-import core.testdata.CategoryTestCase;
 
 import java.lang.reflect.Method;
 
@@ -15,7 +12,7 @@ public class TestDataPreparer implements ITestDataPrepare {
     private final IAdvertisementBusinessFlow steps;
 
     @Inject
-    public TestDataPreparer(BusinessStepsMobile steps) {
+    public TestDataPreparer(IAdvertisementBusinessFlow steps) {
         this.steps = steps;
     }
 
@@ -24,7 +21,7 @@ public class TestDataPreparer implements ITestDataPrepare {
 
         steps.navigateToAdvertisementPage();
 
-        if (args != null && args.length > 0 && args[0] instanceof CategoryTestCase testCase) {
+        if (args != null && args.length > 0 && args[0] instanceof core.testdata.CategoryTestCase testCase) {
             steps.navigationChecks(testCase);
         }
     }

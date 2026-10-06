@@ -1,7 +1,7 @@
 package mobile.category.model;
 
 
-public final class Item {
+public class Item {
     public final String raw;
     public final String name;
     public final int left;

@@ -1,18 +1,18 @@
 package mobile.category.navigation;
 
-import mobile.category.screen.RawScreenReader;
+import mobile.category.screen.IRawScreenReader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
-final class PickerOpenedCondition implements ExpectedCondition<Boolean> {
-    private final RawScreenReader rawScreenReader;
+public class PickerOpenedCondition implements ExpectedCondition<Boolean> {
+    private final IRawScreenReader IRawScreenReader;
 
-    PickerOpenedCondition(RawScreenReader rawScreenReader) {
-        this.rawScreenReader = rawScreenReader;
+    PickerOpenedCondition(IRawScreenReader IRawScreenReader) {
+        this.IRawScreenReader = IRawScreenReader;
     }
 
     @Override
     public Boolean apply(WebDriver driver) {
-        return rawScreenReader.readRaw().open();
+        return IRawScreenReader.readRaw().open();
     }
 }

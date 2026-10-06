@@ -1,7 +1,6 @@
 package mobile.category.driver;
-
 import com.google.inject.Inject;
-import core.config.IWaitSettings;
+import core.config.ITimeoutConfig;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -10,10 +9,10 @@ import java.time.Duration;
 
 public class WaitFactory {
     private final AppiumDriver driver;
-    private final IWaitSettings waitSettings;
+    private final ITimeoutConfig waitSettings;
 
     @Inject
-    public WaitFactory(AppiumDriver driver, IWaitSettings waitSettings) {
+    public WaitFactory(AppiumDriver driver, ITimeoutConfig waitSettings) {
         this.driver = driver;
         this.waitSettings = waitSettings;
     }

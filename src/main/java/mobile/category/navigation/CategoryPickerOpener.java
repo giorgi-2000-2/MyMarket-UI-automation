@@ -1,44 +1,41 @@
 package mobile.category.navigation;
+
 import com.google.inject.Inject;
-import core.config.IWaitSettings;
+import core.config.ITimeoutConfig;
 import core.reporter.texts.ErrorMessages;
-import core.reporter.texts.StepNames;
 import mobile.category.driver.WaitFactory;
 import mobile.category.model.Snapshot;
-import mobile.category.screen.RawScreenReader;
-import mobile.category.screen.ScreenReader;
-import mobile.pages.AdvertisementPage;
+import mobile.category.screen.IRawScreenReader;
+import mobile.category.screen.IScreenReader;
 import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebElement;
-
-import java.util.Collections;
-import java.util.List;
-
 
 public class CategoryPickerOpener {
-    private final ScreenReader screenReader;
-    private final RawScreenReader rawScreenReader;
+
+    private static final int MAX_OPEN_ATTEMPTS = 2;
+
+    private final IScreenReader IScreenReader;
+    private final IRawScreenReader IRawScreenReader;
     private final WaitFactory waitFactory;
-    private final AdvertisementPage advertisementPage;
-    private final IWaitSettings waitSettings;
+    private final ICategoryFieldActions fieldActions;
+    private final ITimeoutConfig waitSettings;
 
     @Inject
-    public CategoryPickerOpener(ScreenReader screenReader,
-                                RawScreenReader rawScreenReader, WaitFactory waitFactory, AdvertisementPage advertisementPage, IWaitSettings waitSettings) {
-        this.screenReader = screenReader;
-        this.rawScreenReader = rawScreenReader;
+    public CategoryPickerOpener(IScreenReader IScreenReader,
+                                IRawScreenReader IRawScreenReader,
+                                WaitFactory waitFactory,
+                                ICategoryFieldActions fieldActions,
+                                ITimeoutConfig waitSettings) {
+        this.IScreenReader = IScreenReader;
+        this.IRawScreenReader = IRawScreenReader;
         this.waitFactory = waitFactory;
-        this.advertisementPage = advertisementPage;
+        this.fieldActions = fieldActions;
         this.waitSettings = waitSettings;
-
     }
 
     public void openAtRoot() {
-        Snapshot snap = screenReader.read();
-        for (int i = 0; i < 2; i++) {
-            if (!snap.open()) {
-                snap = openField(snap);
-            } else break;
+        Snapshot snap = IScreenReader.read();
+        for (int i = 0; i < MAX_OPEN_ATTEMPTS && !snap.open(); i++) {
+            snap = openField(snap);
         }
         if (!snap.open()) {
             throw new IllegalStateException(ErrorMessages.CATEGORY_PICKER_OPEN_FAILED.get());
@@ -46,15 +43,16 @@ public class CategoryPickerOpener {
     }
 
     private Snapshot openField(Snapshot snap) {
-       List< WebElement> target = Collections.singletonList(snap.categorySelected ? advertisementPage.getEditBtn() : advertisementPage.getCategoryField());
-        if (!target.isEmpty()) {
-            target.get(0).click();
+        if (snap.categorySelected) {
+            fieldActions.editSelectedCategory();
+        } else {
+            fieldActions.openCategoryField();
         }
-
         try {
-            waitFactory.newWait(waitSettings.openTimeoutMs()).until(new PickerOpenedCondition(rawScreenReader));
-        } catch (TimeoutException ignored) {
+            waitFactory.newWait(waitSettings.openTimeoutMs())
+                    .until(new PickerOpenedCondition(IRawScreenReader));
+        } catch (TimeoutException notOpenedYet) {
         }
-        return screenReader.read();
+        return IScreenReader.read();
     }
 }

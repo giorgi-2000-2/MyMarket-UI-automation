@@ -2,19 +2,19 @@ package mobile.brand;
 
 import com.google.inject.Inject;
 import io.appium.java_client.AppiumDriver;
-import mobile.category.scroll.PageScroller;
+import mobile.category.scroll.IPageScroller;
 import core.annotations.TestScoped;
 
 @TestScoped
 public class BrandNavigator {
 
     private final AppiumDriver driver;
-    private final PageScroller pageScroller;
+    private final IPageScroller IPageScroller;
 
     @Inject
-    public BrandNavigator(AppiumDriver driver, PageScroller pageScroller) {
+    public BrandNavigator(AppiumDriver driver, IPageScroller IPageScroller) {
         this.driver = driver;
-        this.pageScroller = pageScroller;
+        this.IPageScroller = IPageScroller;
     }
 
     public void returnToForm(boolean characteristicsOpened) {
@@ -22,8 +22,14 @@ public class BrandNavigator {
             if (characteristicsOpened) {
                 driver.navigate().back();
             }
-            pageScroller.goBackToCategories();
+            IPageScroller.goBackToCategories();
         } catch (Exception ignored) {
         }
+    }
+
+    public void backToCategories(){
+        driver.navigate().back();
+        driver.navigate().back();
+        IPageScroller.goBackToCategories();
     }
 }

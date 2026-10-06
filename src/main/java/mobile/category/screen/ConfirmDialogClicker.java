@@ -1,7 +1,7 @@
 package mobile.category.screen;
 
 import com.google.inject.Inject;
-import core.config.IWaitSettings;
+import core.config.ITimeoutConfig;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import mobile.category.driver.WaitFactory;
@@ -17,10 +17,10 @@ import java.util.List;
 public class ConfirmDialogClicker {
     private final AppiumDriver driver;
     private final WaitFactory waitFactory;
-    private final IWaitSettings waitSettings;
+    private final ITimeoutConfig waitSettings;
 
     @Inject
-    public ConfirmDialogClicker(AppiumDriver driver, WaitFactory waitFactory, IWaitSettings waitSettings) {
+    public ConfirmDialogClicker(AppiumDriver driver, WaitFactory waitFactory, ITimeoutConfig waitSettings) {
         this.driver = driver;
         this.waitFactory = waitFactory;
         this.waitSettings = waitSettings;

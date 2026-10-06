@@ -47,4 +47,5 @@ public class FileCrawlState extends InMemoryCrawlState {
             reporter.log(ReportStatus.WARNING, "state ფაილში ვერ ჩაიწერა: " + e.getMessage());
         }
     }
+
 }

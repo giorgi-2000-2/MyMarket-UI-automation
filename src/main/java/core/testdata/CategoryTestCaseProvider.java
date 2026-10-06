@@ -1,7 +1,7 @@
 package core.testdata;
 import org.testng.annotations.DataProvider;
 
-import static core.config.properties.CategoryNameBtn.*;
+import static core.testdata.Section.*;
 
 public class CategoryTestCaseProvider {
 
@@ -13,43 +13,43 @@ public class CategoryTestCaseProvider {
         return new Object[][] {
                 {
                         CategoryTestCase.builder()
-                                .section(SELLBTN)
+                                .section(SELL)
                                 .checkBrands(true)
                                 .build()
                 },
                 {
                         CategoryTestCase.builder()
-                                .section(SELLBTN)
+                                .section(SELL)
                                 .checkBrands(false)
                                 .build()
                 },
 
                 {
                         CategoryTestCase.builder()
-                                .section(BUYBTN)
+                                .section(BUY)
                                 .checkBrands(true)
                                 .build()
                 },
                 {
                         CategoryTestCase.builder()
-                                .section(BUYBTN)
+                                .section(BUY)
                                 .checkBrands(false)
                                 .build()
                 },
                 {
                         CategoryTestCase.builder()
-                                .section(RENTBTN)
+                                .section(RENT)
                                 .checkBrands(false)
                                 .build()
                 },
                 {
                         CategoryTestCase.builder()
-                                .section(SERVICEBTN)
+                                .section(SERVICE)
                                 .checkBrands(false)
                                 .skipTitleCheck(true)
                                 .build()
                 },
-       };
+        };
     }
 
 
@@ -60,7 +60,7 @@ public class CategoryTestCaseProvider {
 
                 {
                         CategoryTestCase.builder()
-                                .section(RENTBTN)
+                                .section(RENT)
                                 .build()
                 },
         };
@@ -71,24 +71,24 @@ public class CategoryTestCaseProvider {
         return new Object[][] {
                 {
                         CategoryTestCase.builder()
-                                .section(SELLBTN)
+                                .section(SELL)
                                 .build()
                 },
 
                 {
                         CategoryTestCase.builder()
-                                .section(BUYBTN)
+                                .section(BUY)
                                 .build()
                 },
 
                 {
                         CategoryTestCase.builder()
-                                .section(RENTBTN)
+                                .section(RENT)
                                 .build()
                 },
                 {
                         CategoryTestCase.builder()
-                                .section(SERVICEBTN)
+                                .section(SERVICE)
                                 .skipTitleCheck(true)
                                 .build()
                 }

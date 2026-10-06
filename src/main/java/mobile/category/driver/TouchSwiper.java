@@ -3,7 +3,6 @@ package mobile.category.driver;
 import com.google.inject.Inject;
 import core.config.IScrollConfig;
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
 
@@ -11,7 +10,7 @@ import java.time.Duration;
 import java.util.Collections;
 
 
-public class TouchSwiper implements Swiper {
+public class TouchSwiper implements ISwiper {
     private final AppiumDriver driver;
     private final IScrollConfig scrollConfig;
 

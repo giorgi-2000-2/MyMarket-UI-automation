@@ -1,14 +1,14 @@
 package mobile.category.navigation;
 
 import mobile.category.model.Snapshot;
-import mobile.category.screen.ScreenReader;
+import mobile.category.screen.IScreenReader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
 import java.util.List;
 
-final class ClickTransitionCondition implements ExpectedCondition<ClickOutcome> {
-    private final ScreenReader screenReader;
+public class ClickTransitionCondition implements ExpectedCondition<ClickOutcome> {
+    private final IScreenReader IScreenReader;
     private final String name;
     private final Snapshot before;
     private final List<String> namesBefore;
@@ -16,8 +16,8 @@ final class ClickTransitionCondition implements ExpectedCondition<ClickOutcome> 
     private boolean sawClosed = false;
     private List<String> prevNames = null;
 
-    ClickTransitionCondition(ScreenReader screenReader, String name, Snapshot before, List<String> namesBefore) {
-        this.screenReader = screenReader;
+    ClickTransitionCondition(IScreenReader IScreenReader, String name, Snapshot before, List<String> namesBefore) {
+        this.IScreenReader = IScreenReader;
         this.name = name;
         this.before = before;
         this.namesBefore = namesBefore;
@@ -25,7 +25,7 @@ final class ClickTransitionCondition implements ExpectedCondition<ClickOutcome> 
 
     @Override
     public ClickOutcome apply(WebDriver driver) {
-        Snapshot snap = screenReader.read();
+        Snapshot snap = IScreenReader.read();
 
         if (!snap.open()) {
             if (snap.categorySelected) return ClickOutcome.LEAF;

@@ -23,4 +23,6 @@ public class InMemoryCrawlState implements IState {
     public int size() {
         return done.size();
     }
+
+
 }

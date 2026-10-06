@@ -2,7 +2,7 @@ package mobile.brand;
 
 import com.google.inject.Inject;
 import io.appium.java_client.AppiumDriver;
-import mobile.category.scroll.PageScroller;
+import mobile.category.scroll.IPageScroller;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import core.annotations.TestScoped;
@@ -16,12 +16,12 @@ import java.util.Set;
 public class BrandCollector {
 
     private final AppiumDriver driver;
-    private final PageScroller pageScroller;
+    private final IPageScroller IPageScroller;
 
     @Inject
-    public BrandCollector(AppiumDriver driver, PageScroller pageScroller) {
+    public BrandCollector(AppiumDriver driver, IPageScroller IPageScroller) {
         this.driver = driver;
-        this.pageScroller = pageScroller;
+        this.IPageScroller = IPageScroller;
     }
 
     public List<String> collectBrandsFromDropdown() {
@@ -50,7 +50,7 @@ public class BrandCollector {
             }
 
             if (stagnant < 2) {
-                pageScroller.scrollDown();
+                IPageScroller.scrollDown();
             }
         }
 

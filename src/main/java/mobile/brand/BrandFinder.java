@@ -3,25 +3,25 @@ package mobile.brand;
 import com.google.inject.Inject;
 import core.reporter.IReportTree;
 import core.reporter.texts.ErrorMessages;
-import mobile.category.screen.ScreenReader;
-import mobile.category.scroll.PageScroller;
+import mobile.category.screen.IScreenReader;
+import mobile.category.scroll.IPageScroller;
 import org.openqa.selenium.WebElement;
 import core.annotations.TestScoped;
 
 @TestScoped
 public class BrandFinder {
 
-    private final PageScroller pageScroller;
-    private final ScreenReader screenReader;
+    private final IPageScroller IPageScroller;
+    private final IScreenReader IScreenReader;
     private final BrandNavigator brandNavigator;
     private final IReportTree reportTree;
 
     @Inject
-    public BrandFinder(PageScroller pageScroller,
-                       ScreenReader screenReader,
+    public BrandFinder(IPageScroller IPageScroller,
+                       IScreenReader IScreenReader,
                        BrandNavigator brandNavigator, IReportTree reportTree) {
-        this.pageScroller = pageScroller;
-        this.screenReader = screenReader;
+        this.IPageScroller = IPageScroller;
+        this.IScreenReader = IScreenReader;
         this.brandNavigator = brandNavigator;
         this.reportTree = reportTree;
     }
@@ -31,13 +31,13 @@ public class BrandFinder {
         boolean characteristicsOpened = false;
 
         try {
-            WebElement Characteristic = pageScroller.scrollToField("მახასიათებლები *");
+            WebElement Characteristic = IPageScroller.scrollToField("მახასიათებლები *");
             if (Characteristic != null) {
-                screenReader.read();
+                IScreenReader.read();
                 Characteristic.click();
                 characteristicsOpened = true;
 
-                WebElement brandDropdown = pageScroller.scrollToField("ბრენდი *");
+                WebElement brandDropdown = IPageScroller.scrollToField("ბრენდი *");
                 if (brandDropdown != null && brandDropdown.isDisplayed()) {
                     found = true;
                 } else {

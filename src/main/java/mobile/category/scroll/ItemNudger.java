@@ -3,20 +3,20 @@ package mobile.category.scroll;
 import com.google.inject.Inject;
 import core.config.IScrollConfig;
 import mobile.category.driver.ScreenGeometry;
-import mobile.category.driver.Swiper;
+import mobile.category.driver.ISwiper;
 import mobile.category.model.Item;
 import org.openqa.selenium.Dimension;
 
 
 public class ItemNudger {
     private final ScreenGeometry screenGeometry;
-    private final Swiper swiper;
+    private final ISwiper ISwiper;
     private final IScrollConfig scrollConfig;
 
     @Inject
-    public ItemNudger(ScreenGeometry screenGeometry, Swiper swiper, IScrollConfig scrollConfig) {
+    public ItemNudger(ScreenGeometry screenGeometry, ISwiper ISwiper, IScrollConfig scrollConfig) {
         this.screenGeometry = screenGeometry;
-        this.swiper = swiper;
+        this.ISwiper = ISwiper;
         this.scrollConfig = scrollConfig;
     }
 
@@ -34,6 +34,6 @@ public class ItemNudger {
         int maxY = (int) (screen.getHeight() * scrollConfig.maxY());
         endY = Math.max(minY, Math.min(endY, maxY));
 
-        swiper.swipe(startX, startY, endY);
+        ISwiper.swipe(startX, startY, endY);
     }
 }

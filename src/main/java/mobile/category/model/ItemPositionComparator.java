@@ -4,7 +4,7 @@ import com.google.inject.Singleton;
 
 import java.util.Comparator;
 @Singleton
-public final class ItemPositionComparator implements Comparator<Item> {
+public class ItemPositionComparator implements Comparator<Item> {
 
     @Override
     public int compare(Item a, Item b) {

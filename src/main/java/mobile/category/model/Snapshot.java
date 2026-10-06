@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public final class Snapshot {
+public class Snapshot {
     public final List<Item> items;
 
     public final List<String> breadcrumbs;

@@ -1,66 +1,65 @@
 package mobile.category.navigation;
 
 import com.google.inject.Inject;
-import core.reporter.IReportNode;
-import core.reporter.NodeKey;
-import core.reporter.ReportStatus;
-import core.reporter.extentreport.RetryReporter;
+import core.utils.RetryPolicy;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import mobile.category.model.Item;
 import mobile.category.model.Snapshot;
-import mobile.category.screen.ScreenReader;
+import mobile.category.screen.IScreenReader;
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class CategoryItemClicker {
     private final AppiumDriver driver;
-    private final ScreenReader screenReader;
+    private final IScreenReader IScreenReader;
     private final CategoryItemFinder itemFinder;
     private final ComfortZoneAligner comfortZoneAligner;
-    private final RetryReporter retryReporter;
+    private final RetryPolicy retryPolicy;
+
     @Inject
-    public CategoryItemClicker(AppiumDriver driver, ScreenReader screenReader,
-                               CategoryItemFinder itemFinder, ComfortZoneAligner comfortZoneAligner , RetryReporter retryReporter) {
+    public CategoryItemClicker(AppiumDriver driver,
+                               IScreenReader IScreenReader,
+                               CategoryItemFinder itemFinder,
+                               ComfortZoneAligner comfortZoneAligner,
+                               RetryPolicy retryPolicy) {
         this.driver = driver;
-        this.screenReader = screenReader;
+        this.IScreenReader = IScreenReader;
         this.itemFinder = itemFinder;
         this.comfortZoneAligner = comfortZoneAligner;
-        this.retryReporter = retryReporter;
+        this.retryPolicy = retryPolicy;
     }
 
     public Snapshot clickByName(String name) {
-        int maxRetries = 3;
-        Exception last = null;
+        return retryPolicy.run(
+                "clickByName",
+                name,
+                () -> tryClick(name),
+                () -> { },
+                e -> isRetryable(e));
+    }
 
-        for (int attempt = 1; attempt <= maxRetries; attempt++) {
-            try {
-                Item target = itemFinder.findWithScroll(name);
-                target = comfortZoneAligner.bringIntoComfortZone(target);
+    private boolean isRetryable(RuntimeException e) {
+        return e instanceof StaleElementReferenceException
+                || e instanceof ElementClickInterceptedException
+                || e instanceof IndexOutOfBoundsException;
+    }
 
-                List<WebElement> found = driver.findElements(
-                        AppiumBy.accessibilityId(target.raw));
+    private Snapshot tryClick(String name) {
+        Item target = itemFinder.findWithScroll(name);
+        target = comfortZoneAligner.bringIntoComfortZone(target);
 
-                if (found.isEmpty()) {
-                    throw new NoSuchElementException("ვერ მოიძებნა: " + name);
-                }
-
-                Snapshot atTap = screenReader.read();
-                found.get(0).click();
-                return atTap;
-
-            } catch (StaleElementReferenceException
-                     | IndexOutOfBoundsException
-                     | NoSuchElementException e) {
-                last = e;
-                retryReporter.logAttempt("clickByName", name, attempt, e);
-            }
+        List<WebElement> found = driver.findElements(AppiumBy.accessibilityId(target.raw));
+        if (found.isEmpty()) {
+            throw new StaleElementReferenceException(
+                    "ელემენტი გაქრა DOM-იდან სნეპშოტის წაკითხვის შემდეგ: " + target.raw);
         }
 
-        throw new RuntimeException(
-                "კლიკი ვერ მოხერხდა " + maxRetries + " ცდის შემდეგ: " + name, last);
+        Snapshot atTap = IScreenReader.read();
+        found.get(0).click();
+        return atTap;
     }
 }

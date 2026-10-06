@@ -1,8 +1,7 @@
 package mobile.brand;
 
 import com.google.inject.Inject;
-import io.appium.java_client.AppiumDriver;
-import mobile.category.scroll.PageScroller;
+import mobile.category.scroll.IPageScroller;
 import org.openqa.selenium.WebElement;
 import core.annotations.TestScoped;
 
@@ -11,43 +10,28 @@ import java.util.List;
 
 @TestScoped
 public class BrandManager {
-
-    private final BrandFinder brandFinder;
     private final BrandCollector brandCollector;
     private final BrandNavigator brandNavigator;
-    private final PageScroller pageScroller;
-    private final AppiumDriver driver;
+    private final IPageScroller IPageScroller;
 
     @Inject
-    public BrandManager(BrandFinder brandFinder,
-                        BrandCollector brandCollector,
+    public BrandManager(BrandCollector brandCollector,
                         BrandNavigator brandNavigator,
-                        PageScroller pageScroller,
-                        AppiumDriver driver) {
-        this.brandFinder = brandFinder;
+                        IPageScroller IPageScroller) {
         this.brandCollector = brandCollector;
         this.brandNavigator = brandNavigator;
-        this.pageScroller = pageScroller;
-        this.driver = driver;
+        this.IPageScroller = IPageScroller;
     }
 
-    public boolean findBrandDropdown() {
-        return brandFinder.findBrandDropdown();
-    }
 
     public List<String> clickBrand(boolean found) {
         List<String> brandlist = new ArrayList<>();
         if (found) {
-            WebElement brandDropdown = pageScroller.scrollToField("ბრენდი *");
+            WebElement brandDropdown = IPageScroller.scrollToField("ბრენდი *");
             if (brandDropdown != null) {
                 brandDropdown.click();
                 brandlist = brandCollector.collectBrandsFromDropdown();
-                for (String name : brandlist) {
-                    System.out.println(name);
-                }
-                driver.navigate().back();
-                driver.navigate().back();
-                pageScroller.goBackToCategories();
+               brandNavigator.backToCategories();
             } else {
                 brandNavigator.returnToForm(true);
             }

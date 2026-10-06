@@ -1,46 +1,35 @@
 package mobile.pages;
+
 import com.google.inject.Inject;
-import core.reporter.texts.ErrorMessages;
-import io.appium.java_client.AppiumDriver;
-import core.config.properties.CategoryNameBtn;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import core.annotations.TestScoped;
+import core.testdata.Section;
+import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import uicommon.utils.Waits;
 
 @TestScoped
-public class MobileAdvertisementPage {
-    private final AppiumDriver driver;
+public class MobileAdvertisementPage extends BasePageMobile {
 
-    @FindBy(xpath = "//android.view.View[@content-desc='გაყიდვა']")
-    public WebElement sellBtn;
+    private final AdvertisementPage advertisementPage;
 
-    @FindBy(xpath = "//android.view.View[@content-desc='შეძენა']")
-    public WebElement buyBtn;
-
-    @FindBy(xpath = "//android.view.View[@content-desc='გაქირავება']")
-    public WebElement rentBtn;
-
-    @FindBy(xpath = "//android.view.View[@content-desc='მომსახურება']")
-    public WebElement serviceBtn;
     @Inject
-    public MobileAdvertisementPage(AppiumDriver driver) {
-        this.driver = driver;
+    public MobileAdvertisementPage(AppiumDriver driver, AdvertisementPage advertisementPage, Waits waits) {
+        super(waits);
         PageFactory.initElements(driver, this);
+        this.advertisementPage = advertisementPage;
     }
 
-    public WebElement sectionButton(CategoryNameBtn section) {
-        switch (section) {
-            case SELLBTN:    return sellBtn;
-            case BUYBTN:     return buyBtn;
-            case RENTBTN:    return rentBtn;
-            case SERVICEBTN: return serviceBtn;
-            default: throw new IllegalArgumentException(ErrorMessages.UNKNOWN_MOBILE_SECTION.format(section));
-        }
+    private By sectionButton(Section section) {
+        return By.xpath("//android.view.View[@content-desc='" + section.label() + "']");
     }
 
-    public void clickSection(CategoryNameBtn section) {
-        sectionButton(section).click();
+    public void selectSection(Section section) {
+        WebElement btn = waits.getWait()
+                .until(ExpectedConditions.visibilityOfElementLocated(sectionButton(section)));
+        btn.click();
+        visible(advertisementPage.categoryDropDown);
     }
-
 }

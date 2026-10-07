@@ -89,3 +89,112 @@ exeption ვარდება. android ტესტირებას გაც
 
 ```bash
 mvn clean test
+
+
+
+
+
+## Core
+
+### asserts
+- **BrandVerifier** — ამოწმებს, არსებობს თუ არა ბრენდები კატალოგში და აბრუნებს შედეგს
+- **Check** — soft assert-ების დამხმარე კლასი, რომელიც ტესტს არ აჩერებს შეცდომაზე
+- **VerificationResult** — ინახავს შემოწმების შედეგს (წარმატება/წარუმატებლობა + შეტყობინება)
+
+### catalog
+- **ICatalog** — კატალოგთან მუშაობის ინტერფეისი (კატეგორიები, ბრენდები)
+
+### config
+- **ConfigSource** — კონფიგურაციის მთავარი წყარო (properties-ებიდან კითხულობს)
+- **IAppTree** — აპლიკაციის კატეგორიების ხის კონფიგურაცია
+- **ICatalogConfig** — კატალოგის პარამეტრები
+- **IRetryConfig** — ხელახალი ცდების (retry) პარამეტრები
+- **ITimeoutConfig** — ლოდინის დროების კონფიგი
+- **IUrlConfig** — URL-ების კონფიგურაცია
+- **IWait** — explicit/implicit wait-ების პარამეტრები
+- **TypedPropertiesHelper** — properties ფაილიდან typed მნიშვნელობების წაკითხვა
+- **CatalogProperties, MobileParsingProperties, PageProperties, RunProperties, ScrollProperties, UserProperties, WaitProperties** — კონკრეტული properties კლასები შესაბამისი სექციებისთვის
+
+### exception
+- **CatalogException** — კატალოგთან დაკავშირებული შეცდომა
+- **CategoryNotFoundException** — კატეგორია ვერ მოიძებნა
+- **PermanentUiException** — მუდმივი UI შეცდომა (არ არის აზრი retry-ზე)
+- **TransientUiException** — დროებითი UI შეცდომა (შეიძლება ხელახლა სცადო)
+- **UiException** — ზოგადი UI exception
+
+### jsonmanager
+- **CategoryDataService** — კატეგორიების მონაცემების სერვისი JSON-იდან
+- **JsonFinder** — JSON სტრუქტურაში ელემენტების ძებნა
+- **JsonReaders** — JSON ფაილების წაკითხვა და პარსინგი
+
+### modules
+- **CoreModule** — Guice-ის DI მოდული core კომპონენტებისთვის
+
+### reporter
+- **RetryReporter** — retry მცდელობების ლოგირება რეპორტში
+- **AllureTestReporter** — Allure რეპორტის გენერაცია
+- **ExtentLogger** — ExtentReport-ის ლოგერი
+- **ExtentReportConfig** — ExtentReport-ის კონფიგურაცია
+- **ExtentTestReporter** — მთავარი ExtentReport რეპორტერი
+- **ReportNodeManager** — რეპორტის node-ების მართვა
+
+### steps
+- **IAdvertisementBusinessFlow** — განცხადების business flow-ის ინტერფეისი
+- **ITitleCheckSteps** — სათაურის შემოწმების ნაბიჯები
+- **LeafHandler** — leaf (ბოლო დონის) კატეგორიების დამუშავება
+
+### utils
+- **RetryPolicy** — ხელახალი ცდების პოლიტიკა (რამდენჯერ, რა ინტერვალით)
+- **IState** — crawl-ის მდგომარეობის ინტერფეისი
+- **InMemoryCrawlState** — crawl-ის მდგომარეობა მეხსიერებაში
+- **FileCrawlState** — crawl-ის მდგომარეობა ფაილში (resumable)
+- **CrawlStateCreator** — state ობიექტების შექმნა
+
+---
+
+## Mobile
+
+- **MobileCategoryDataService** — მობილური კატეგორიების მონაცემების სერვისი
+- **DriverManagerMobile** — Appium driver-ის შექმნა და მართვა
+- **BusinessStepsMobile** — მობილური business ნაბიჯები
+- **MobileBrandVerificationSteps** — ბრენდების შემოწმება მობილურზე
+- **MobilePageNavigator** — გვერდებს შორის ნავიგაცია მობილურზე
+- **AdvertisementPage / MainPage** — მობილური გვერდების Page Object-ები
+- **CategoryCrawler** — კატეგორიების ავტომატური გავლა (crawl)
+- **CategoryUiCursor** — კატეგორიების UI-ზე მიმდინარე პოზიციის თვალყური
+- **SnapshotParser** — page source-ის (XML) პარსინგი კატეგორიების გამოსაღებად
+- **BrandNavigator / BrandManager / BrandFinder / BrandCollector** — ბრენდების ძებნა, შეგროვება და ნავიგაცია
+- **CategoryPickerModule** — კატეგორიის picker-ის Guice მოდული
+- **scroll / screen / navigation / driver** პაკეტები — სქროლი, ეკრანის წაკითხვა, ნავიგაცია და swipe-ის ინტერფეისები და იმპლემენტაციები
+
+---
+
+## Web
+
+- **DriverManager** — Selenium WebDriver-ის შექმნა და მართვა
+- **CategoryNavigator** — კატეგორიებში ნავიგაცია
+- **CategoryWalker** — კატეგორიების ხის სრული გავლა
+- **AdvertisementPage** — განცხადების გვერდი
+- **BrandDropdownComponent / CategoryDropdownComponent / TitleComponent / UserInfoComponent** — განცხადების გვერდის კომპონენტები
+- **BaseTitleComponent / JavaScriptHelper / PageAction** — საერთო page helpers
+- **LoginPage / DialogContent** — ავტორიზაციის გვერდი და დიალოგი
+- **BrandVerificationSteps / CategoryNavigationSteps / CategorySteps** — კატეგორია/ბრენდის ნაბიჯები
+- **PageNavigator / WebAssertSteps / WebBusinessSteps** — ნავიგაცია, assert-ები და business flow
+- **CategoryAsserts / NavigationAsserts** — კატეგორიების და ნავიგაციის შემოწმებები
+- **WebModule** — Guice DI მოდული web ნაწილისთვის
+- **ISectionUrls** — სექციების URL-ების ინტერფეისი
+
+---
+
+## UI Common
+- **IDriver** — საერთო driver ინტერფეისი (web + mobile)
+- **TestListener** — TestNG listener (რეპორტი, soft assert და სხვა)
+- **Waits** — საერთო explicit wait-ები
+
+---
+
+## Tests
+- **BaseTest / BaseTestAndroid** — web და Android ტესტების საბაზისო კლასები
+- **AdvertisementTest** — განცხადების ძირითადი ტესტები
+- **CategoryTreeTest** — კატეგორიების ხის ტესტები
+- **JsonFinderTest** — JsonFinder-ის unit ტესტები

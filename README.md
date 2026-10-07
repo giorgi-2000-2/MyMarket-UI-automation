@@ -84,17 +84,8 @@ exeption ვარდება. android ტესტირებას გაც
 - ExtentReports
 - Gson / org.json
 - Lombok
-
-## გაშვება
-
-```bash
-mvn clean test
-
-
-
-
-
 ## Core
+
 
 ### asserts
 - **BrandVerifier** — ამოწმებს, არსებობს თუ არა ბრენდები კატალოგში და აბრუნებს შედეგს
@@ -198,3 +189,8 @@ mvn clean test
 - **AdvertisementTest** — განცხადების ძირითადი ტესტები
 - **CategoryTreeTest** — კატეგორიების ხის ტესტები
 - **JsonFinderTest** — JsonFinder-ის unit ტესტები
+- 
+## გაშვება
+
+```bash
+mvn clean test

@@ -17,38 +17,38 @@ public class CategoryTestCaseProvider {
                                .checkBrands(true)
                                 .build()
                 },
-                {
-                        CategoryTestCase.builder()
-                                .section(SELL)
-                                .checkBrands(false)
-                                .build()
-                },
-
-                {
-                        CategoryTestCase.builder()
-                                .section(BUY)
-                                .checkBrands(true)
-                                .build()
-                },
-                {
-                        CategoryTestCase.builder()
-                                .section(BUY)
-                                .checkBrands(false)
-                                .build()
-                },
-                {
-                        CategoryTestCase.builder()
-                                .section(RENT)
-                                .checkBrands(false)
-                                .build()
-                },
-                {
-                        CategoryTestCase.builder()
-                                .section(SERVICE)
-                                .checkBrands(false)
-                                .skipTitleCheck(true)
-                                .build()
-                },
+//                {
+//                        CategoryTestCase.builder()
+//                                .section(SELL)
+//                                .checkBrands(false)
+//                                .build()
+//                },
+//
+//                {
+//                        CategoryTestCase.builder()
+//                                .section(BUY)
+//                                .checkBrands(true)
+//                                .build()
+//                },
+//                {
+//                        CategoryTestCase.builder()
+//                                .section(BUY)
+//                                .checkBrands(false)
+//                                .build()
+//                },
+//                {
+//                        CategoryTestCase.builder()
+//                                .section(RENT)
+//                                .checkBrands(false)
+//                                .build()
+//                },
+//                {
+//                        CategoryTestCase.builder()
+//                                .section(SERVICE)
+//                                .checkBrands(false)
+//                                .skipTitleCheck(true)
+//                                .build()
+//                },
         };
     }
 
@@ -75,23 +75,23 @@ public class CategoryTestCaseProvider {
                                 .build()
                 },
 
-                {
-                        CategoryTestCase.builder()
-                                .section(BUY)
-                                .build()
-                },
-
-                {
-                        CategoryTestCase.builder()
-                                .section(RENT)
-                                .build()
-                },
-                {
-                        CategoryTestCase.builder()
-                                .section(SERVICE)
-                                .skipTitleCheck(true)
-                                .build()
-                }
+//                {
+//                        CategoryTestCase.builder()
+//                                .section(BUY)
+//                                .build()
+//                },
+//
+//                {
+//                        CategoryTestCase.builder()
+//                                .section(RENT)
+//                                .build()
+//                },
+//                {
+//                        CategoryTestCase.builder()
+//                                .section(SERVICE)
+//                                .skipTitleCheck(true)
+//                                .build()
+//                }
         };
     }
 

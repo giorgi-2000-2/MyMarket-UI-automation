@@ -1,5 +1,4 @@
 package core.config.properties;
-
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import core.config.IUserConfig;
@@ -21,14 +20,10 @@ public class UserProperties implements IUserConfig {
     public String loginPassword() { return helper.secret("MYMARKET_PASSWORD", "login.password"); }
 
     @Override
-    public String userId() {
-        return helper.require("login.id");
-    }
+    public String userId() {return helper.require("login.id");  }
 
     @Override
-    public String expectedUserName() {
-        return helper.require("name");
-    }
+    public String expectedUserName() {return helper.require("name");  }
 
 
 

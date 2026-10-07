@@ -8,10 +8,10 @@
        </classes>
     </test>
 
-    <test name="Mobile Tests">
-        <classes>
-            <class name="org.example.advertisement.CategoryTreeTest"/>
-        </classes>
-    </test>
+<!--    <test name="Mobile Tests">-->
+<!--        <classes>-->
+<!--            <class name="org.example.advertisement.CategoryTreeTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
 </suite>

@@ -191,6 +191,6 @@ exeption ვარდება. android ტესტირებას გაც
 - **JsonFinderTest** — JsonFinder-ის unit ტესტები
 - 
 ## გაშვება
-
+* კონფიგურაციებში გარემო ცვლადების დამატებაა საჭირო login.mail და login.password
 ```bash
 mvn clean test

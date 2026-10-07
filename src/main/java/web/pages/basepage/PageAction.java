@@ -1,5 +1,4 @@
 package web.pages.basepage;
-
 import com.google.inject.Inject;
 import core.annotations.TestScoped;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -9,6 +8,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+
 @TestScoped
 public class PageAction {
     private final Waits waitUtils;

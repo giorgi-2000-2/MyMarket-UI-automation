@@ -25,7 +25,6 @@ public class BrandDropdownComponent{
 
     @FindBy(xpath = "//*[@id=\"BrandID\"]/div/div/div[1]/div[2]")
     private WebElement dropdownBrandContainer;
-
     @FindBy(xpath = "//*[contains(@id,'react-select-') and contains(@id,'-placeholder')]")
     private WebElement brandDropdownPlaceholder;
     @Inject
@@ -62,7 +61,7 @@ public class BrandDropdownComponent{
         try {
             waitUtils.getTextWait().until(ExpectedConditions.visibilityOf(dropdownBrandContainer));
             return true;
-        } catch (TimeoutException | NoSuchElementException e) {   // org.openqa.selenium.*
+        } catch (TimeoutException | NoSuchElementException e) {
             return false;
         }
     }

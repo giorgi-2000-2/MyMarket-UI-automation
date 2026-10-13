@@ -34,7 +34,7 @@ public class CoreModule extends AbstractModule {
         bind(IScrollConfig.class).to(ScrollProperties.class);
         bind(ICategoryLabels.class).to(MobileParsingProperties.class);
         bind(IPatternConfig.class).to(MobileParsingProperties.class);
-        bind(IRetryConfig.class).to(RunProperties.class);
+        bind(ItryConfig.class).to(RunProperties.class);
         bind(ICatalog.class).to(JsonFinder.class);
         bind(ICatalogConfig.class).to(CatalogProperties.class);
         bind(ITestDataPrepare.class).to(TestDataPreparer.class);

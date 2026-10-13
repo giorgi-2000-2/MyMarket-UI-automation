@@ -2,7 +2,7 @@ package core.utils;
 
 import com.google.inject.Inject;
 import core.annotations.TestScoped;
-import core.config.IRetryConfig;
+import core.config.ItryConfig;
 import core.exception.PermanentUiException;
 import core.reporter.RetryReporter;
 
@@ -11,11 +11,11 @@ import java.util.function.Supplier;
 
 @TestScoped
 public class RetryPolicy {
-    private final IRetryConfig config;
+    private final ItryConfig config;
     private final RetryReporter retryReporter;
 
     @Inject
-    public RetryPolicy(IRetryConfig config, RetryReporter retryReporter) {
+    public RetryPolicy(ItryConfig config, RetryReporter retryReporter) {
         this.config = config;
         this.retryReporter = retryReporter;
     }

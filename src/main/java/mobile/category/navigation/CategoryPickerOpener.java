@@ -2,6 +2,7 @@ package mobile.category.navigation;
 
 import com.google.inject.Inject;
 import core.config.ITimeoutConfig;
+import core.config.ItryConfig;
 import core.reporter.texts.ErrorMessages;
 import mobile.category.driver.WaitFactory;
 import mobile.category.model.Snapshot;
@@ -10,9 +11,7 @@ import mobile.category.screen.IScreenReader;
 import org.openqa.selenium.TimeoutException;
 
 public class CategoryPickerOpener {
-
-    private static final int MAX_OPEN_ATTEMPTS = 2;
-
+    private final ItryConfig tryConfig;
     private final IScreenReader IScreenReader;
     private final IRawScreenReader IRawScreenReader;
     private final WaitFactory waitFactory;
@@ -20,11 +19,12 @@ public class CategoryPickerOpener {
     private final ITimeoutConfig waitSettings;
 
     @Inject
-    public CategoryPickerOpener(IScreenReader IScreenReader,
+    public CategoryPickerOpener(ItryConfig itryConfig, IScreenReader IScreenReader,
                                 IRawScreenReader IRawScreenReader,
                                 WaitFactory waitFactory,
                                 ICategoryFieldActions fieldActions,
                                 ITimeoutConfig waitSettings) {
+        this.tryConfig = itryConfig;
         this.IScreenReader = IScreenReader;
         this.IRawScreenReader = IRawScreenReader;
         this.waitFactory = waitFactory;
@@ -34,7 +34,7 @@ public class CategoryPickerOpener {
 
     public void openAtRoot() {
         Snapshot snap = IScreenReader.read();
-        for (int i = 0; i < MAX_OPEN_ATTEMPTS && !snap.open(); i++) {
+        for (int i = 0; i < tryConfig.openAttempts() && !snap.open(); i++) {
             snap = openField(snap);
         }
         if (!snap.open()) {

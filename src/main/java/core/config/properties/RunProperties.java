@@ -3,11 +3,9 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import core.config.*;
 
-import java.util.Set;
-
 
 @Singleton
-public class RunProperties implements IAppTree,IRetryConfig {
+public class RunProperties implements IAppTree, ItryConfig {
 
    private final TypedPropertiesHelper helper;
     @Inject
@@ -28,7 +26,7 @@ public class RunProperties implements IAppTree,IRetryConfig {
 
     @Override
     public int maxAttempts() {return helper.requireInt("max.attempts");}
-
+    public int openAttempts(){ return helper.requireInt("max.open.attempts");}
 
 }
 

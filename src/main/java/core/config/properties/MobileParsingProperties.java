@@ -37,4 +37,6 @@ public class MobileParsingProperties implements ICategoryLabels, IPatternConfig 
     @Override
     public String boundsPattern() {return helper.require("pattern.bounds");}
 
+
+
 }
